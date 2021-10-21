@@ -9,7 +9,7 @@
   <link rel="shortcut icon" href="BTAicon.png" type="image/png"> <!--ファビコン-->
 
 </head>
-<body><div id="div_soroe" style="text-align:left;padding-left:10px;margin-top:-5px">
+<body id="body"><div id="div_soroe" style="text-align:left;padding-left:10px;margin-top:-5px">
 	<div>
     <!--ボタンを揃える-->
     <button class="btn_lod" style="width:9em;border-width:1px;box-sizing:border-box;" id="btn_load_and_set" onclick="block_d_load_and_set()">読み込み、設定</button><button class="btn_pag" style="width:9em;border-width:1px;box-sizing:border-box;left:-1px;" id="btn_desc_and_item" onclick="block_d_desc_and_item()">ページ</button>
@@ -85,6 +85,31 @@
             </label>
           </p>
 
+					<p>
+						<label>色の詳細設定：<br>
+							<select id="selectCanvas">
+								<option value="body c">文字</option>
+								<option value="body bg">背景</option>
+								
+								<option value="lod bg">ボタン1背景</option>
+								<option value="lod c">ボタン1文字</option>
+								
+								<option value="pag bg">ボタン2背景</option>
+								<option value="pag c">ボタン2文字</option>
+								
+								<option value="load bg">読み込み部背景</option>
+								<option value="load bo">読み込み部枠</option>
+								<option value="load c">読み込み部文字</option>
+								
+								<option value="div bg">区画背景</option>
+								<option value="div bo">区画枠</option>
+								<option value="div c">区画文字</option>
+							</select>
+							
+							<input type="color" onchange="changecol(this.value)"></input>
+						</label>
+					</p>
+					
           <p>
             <label>セーブデータ書き込み<br>
               <button onclick="write_savefile()" style="border-width:1px;margin-bottom:5px;">セーブデータ取得</button>
@@ -135,8 +160,7 @@
             <label>道具欄の表示<br>
               <input type="checkbox" id="chb_noitem" onchange="show_item()">道具欄を非表示</input>
             </label>
-          </p>
-
+          </p>		  
         </div>
       </div>
     </div>
@@ -232,5 +256,6 @@
       alert("ファイル選択にエラーあり。");
     }
   });
+	
   </script>
 </html>
