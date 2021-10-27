@@ -119,12 +119,11 @@
             }else{
               //アイテムタグを、名前と説明に分ける
               if(arr[i].match(/\[(.+?)\](.+?)#(.+)/)){
-                //ルビの設定をはさむ。r2は名前、r3は説明のもの
-                var r1 = RegExp.$1;
-                var r2 = RegExp.$2.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-                var r3 = RegExp.$3.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-
-                itearr[parseInt(r1)] = {nam: r2, exp: r3, hav:false};
+                itearr[parseInt(RegExp.$1)] = 
+									{nam: OpenInlineTag(RegExp.$2), 
+									exp: OpenInlineTag(RegExp.$3),
+									hav:false};
+									//名前、説明文、所持しているか(初期値はfalse)
               }
             }
           }
@@ -146,20 +145,19 @@
               if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
                 temp_map=parseInt(RegExp.$1);
                 fiearr[temp_map]={nam: "", exp:"", sel:[]};
+								
               }else if(arr[i].match(/n:(.+)/)) {  //名前
-                //ルビの設定をはさむ
-                var r1 = RegExp.$1.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-                fiearr[temp_map]["nam"] = r1;
+                fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
+								
               }else if(arr[i].match(/e:(.+)/)) {  //説明文
-                //ルビの設定をはさむ
-                var r1 = RegExp.$1.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-                fiearr[temp_map]["exp"] = r1;
+                fiearr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
+								
               }else if(arr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
-                var r1 = RegExp.$1.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-                fiearr[temp_map]["exp"] += r1;
+                fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
+								
               }else if(arr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
-                var r1 = RegExp.$1.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-                fiearr[temp_map]["exp"] += r1 + "<br>";
+                fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
+								
               }else if(arr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
                 fiearr[temp_map]["exp"] += itearr[parseInt(RegExp.$1)]["exp"] + "<br>";
 
@@ -223,8 +221,20 @@
   return(arr);
   }
 
+//ルビやハイパーリンクなどのBTAPタブをHTMLになおす。==============================
 
-
+	function OpenInlineTag(scr){
+		var ans = scr;
+		
+		//ルビの設定<r> => <ruby>
+		ans = ans.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
+		
+		//ハイパーリンクの設定 <hl> => <span>
+		ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, "<span onclick=\"$2\"style=\"border-bottom: black solid 1px;font-weight:bold;\">$1</span>");
+    
+		return(ans);
+	}
+	
   //==============================================================================
   //「ページ」タブの表示
   function show_page(){

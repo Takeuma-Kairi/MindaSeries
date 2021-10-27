@@ -23,6 +23,8 @@
     <div id="d_load" class="mydiv" style="display:inline-block;float:left;margin-right:10px;overflow:auto">
       <div class="load_div" style="padding:20px;height:490px;overflow-y:scroll;">
         <p>ページデータを選択して下さい</p>
+					<button onclick="load_data(Dictionary)" style="margin:12px;background-color:#fdeaea;color:#ee0000;border:#e56565 solid 2px;font-weight:bold;">Dictionary</button>
+				<br>
 		      <button onclick="load_data(Kunugi)" style="margin:12px;background-color:#243444;color:#fdfdff;">Kunugi</button>
         <br>
           <button onclick="load_data(Minda)" style="margin:12px;background-color:#f4eaff;color:#000000;">Minda</button>
@@ -52,7 +54,6 @@
           <button onclick="load_data(Minda5_2)" style="margin:12px;background-color:#ad301c;color:#EEEEEE">Minda5_2</button>
         <br>
 		      <button onclick="load_data(Umiao)" style="margin:12px;background-color:#243444;color:#fdfdff;">Umiao</button>
-          <button onclick="load_data(Yoshine2)" style="margin:12px;background-color:#243444;color:#fdfdff;">Yoshine2</button>
       </div>
     </div>
 
@@ -91,26 +92,26 @@
 							<select id="selectCanvas">
 								<option value="body c">文字</option>
 								<option value="body bg">背景</option>
-
+								
 								<option value="lod bg">ボタン1背景</option>
 								<option value="lod c">ボタン1文字</option>
-
+								
 								<option value="pag bg">ボタン2背景</option>
 								<option value="pag c">ボタン2文字</option>
-
+								
 								<option value="load bg">読み込み部背景</option>
 								<option value="load bo">読み込み部枠</option>
 								<option value="load c">読み込み部文字</option>
-
+								
 								<option value="div bg">区画背景</option>
 								<option value="div bo">区画枠</option>
 								<option value="div c">区画文字</option>
 							</select>
-
+							
 							<input type="color" onchange="changecol(this.value)"></input>
 						</label>
 					</p>
-
+					
           <p>
             <label>セーブデータ書き込み<br>
               <button onclick="write_savefile()" style="border-width:1px;margin-bottom:5px;">セーブデータ取得</button>
@@ -161,7 +162,7 @@
             <label>道具欄の表示<br>
               <input type="checkbox" id="chb_noitem" onchange="show_item()">道具欄を非表示</input>
             </label>
-          </p>
+          </p>		  
         </div>
       </div>
     </div>
@@ -205,7 +206,8 @@
   <script src="StoryJS/Hitami2.js"></script>
   <script src="StoryJS/Kurokasa.js"></script>
   <script src="StoryJS/Umiao.js"></script>
-  <script src="StoryJS/Yoshine2.js"></script>
+	<script src="StoryJS/Dictionary.js"></script>
+	
   <script>
   var flgarr = [];  //フラグ
   var itearr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有]
@@ -258,73 +260,73 @@
       alert("ファイル選択にエラーあり。");
     }
   });
-
+	
 		//色の詳細設定===========================
 	function changecol(c){	//引数は色(RGB)である。コンボボックスselectCanvasで選択。
 		var arr_load = document.getElementsByClassName("load_div");
 		var arr_divbo = document.getElementsByClassName("div_border");
-
+		
 		switch(document.getElementById("selectCanvas").value){
 		case "body c":	//文字色
 			document.getElementById("body").style.color = c;
 			break;
-
+		
 		case "body bg":	//背景色
 			document.getElementById("body").style.backgroundColor = c;
 			break;
-
+			
 		case "lod bg":	//ボタン1背景
 			document.getElementById("btn_load_and_set").style.backgroundColor = c;
 			break;
-
+		
 		case "lod c":	//ボタン1文字色
 			document.getElementById("btn_load_and_set").style.color = c;
 			break;
-
+			
 		case "pag c":	//ボタン2背景
 			document.getElementById("btn_desc_and_item").style.color = c;
 			break;
-
+		
 		case "pag bg":	//ボタン2文字色
 			document.getElementById("btn_desc_and_item").style.backgroundColor = c;
 			break;
-
+			
 		case "load c":	//読み込み部文字色
 			for(var i=0; i< arr_load.length; i++){
 				arr_load[i].style.color = c;
 			}
 			break;
-
+		
 		case "load bg":	//読み込み部背景色
 			for(var i=0; i< arr_load.length; i++){
 				arr_load[i].style.backgroundColor = c;
 			}
 			break;
-
+			
 		case "load bo":	//読み込み部枠線色
 			for(var i=0; i< arr_load.length; i++){
 				arr_load[i].style.borderColor = c;
 			}
 			break;
-
+		
 		case "div c":	//区画文字色
 			for(var i= 0; i< arr_divbo.length; i++){
 				arr_divbo[i].style.color = c;
 			}
 			break;
-
+			
 		case "div bg":	//区画背景色
 			for(var i= 0; i< arr_divbo.length; i++){
 				arr_divbo[i].style.backgroundColor = c;
 			}
 			break;
-
+			
 		case "div bo":	//区画枠色
 			for(var i= 0; i< arr_divbo.length; i++){
 				arr_divbo[i].style.borderColor = c;
 			}
 			break;
-
+			
 		default:	//それいがいの部位の選択は不正
 			alert("error!");
 		}
