@@ -6,7 +6,7 @@ button{
 }
 
 /*ページ読み込みへのボタン*/
-    .btn_lod{
+.btn_lod{
 	margin-top: -5px;
 	width: 91px;
 	font-size: 15px;
@@ -17,10 +17,10 @@ button{
 	padding-bottom: 15px;
 	height: 49px;
 	left: 0px;
-    }
+}
 
 /*ページ描写へのボタン*/
-    .btn_pag{
+.btn_pag{
 	margin-top: -5px;
 	width: 91px;
 	padding: 5px;
@@ -28,10 +28,10 @@ button{
 	margin: 0px;	
 	margin-top: -8px;
 	left: -2px;
-    }
+}
 
 /*もちものへのボタン*/
-    .btn_ite{
+.btn_ite{
 	margin-top: -5px;
 	width: 91px;
 	padding: 5px;
@@ -39,10 +39,10 @@ button{
 	margin: 0px;
 	margin-top: -8px;
 	left: -4px;
-    }
+}
 
 /*設定へのボタン*/
-    .btn_set{
+.btn_set{
 	margin-top: -5px;
 	width: 91px;
 	padding: 5px;
@@ -53,4 +53,27 @@ button{
 	left: -6px;
 		
       font-weight: bold;
-    }
+}
+
+/*ページデータ選択*/
+.btn_story_select{
+	margin:5px;
+	margin-bottom:10px;
+	width:80px;
+	height:40px;
+	display:inline-block;
+}
+
+.general_story_color{
+	background-color:#243444;
+	color:#fdfdff;
+}
+
+.minda1_story_color{
+	background-color:#f4eaff;
+	color:#000000;
+}
+.minda2_story_color{
+	background-color:#ad301c;
+	color:#EEEEEE
+}
