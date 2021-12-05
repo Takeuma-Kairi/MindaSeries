@@ -131,49 +131,55 @@
         }
         if(arr[i].match(/BFmap:([0-9]+)>/)){
             arr = BFtoBTAP(arr, i);
-        }
+				}
 
-        //「マップ(フィールド)」タグ
-        if(arr[i].match(/map:([0-9]+)>/)){
-          fiearr = new Array(parseInt(RegExp.$1));
-          var temp_map=0;
+				//「マップ(フィールド)」タグ
+				if(arr[i].match(/map:([0-9]+)>/)){
+					fiearr = new Array(parseInt(RegExp.$1));
+					var temp_map=0;
 
-          for(;i<arr.length;i++){    //タグの終わりまでforを続行する
-            if(arr[i] == "</map>"){  //タグの終わり
-              break;
-            }else{
-              if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
-                temp_map=parseInt(RegExp.$1);
-                fiearr[temp_map]={nam: "", exp:"", sel:[]};
+					for(;i<arr.length;i++){    //タグの終わりまでforを続行する
+						if(arr[i] == "</map>"){  //タグの終わり
+							break;
+						}else{
+							if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
+								temp_map=parseInt(RegExp.$1);
+								fiearr[temp_map]={nam: "", exp:"", sel:[]};
 								
-              }else if(arr[i].match(/n:(.+)/)) {  //名前
-                fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
+							}else if(arr[i].match(/n:(.+)/)) {  //名前
+								fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
 								
-              }else if(arr[i].match(/e:(.+)/)) {  //説明文
-                fiearr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
+							}else if(arr[i].match(/e:(.+)/)) {  //説明文
+								fiearr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
 								
-              }else if(arr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
-                fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
+							}else if(arr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
+								fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
 								
-              }else if(arr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
-                fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
+							}else if(arr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
+								fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
 								
-              }else if(arr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
-                fiearr[temp_map]["exp"] += itearr[parseInt(RegExp.$1)]["exp"] + "<br>";
+							}else if(arr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
+								fiearr[temp_map]["exp"] += itearr[parseInt(RegExp.$1)]["exp"] + "<br>";
 
-              }else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
-                fiearr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
-              }
-            }
-          }
-      }
-    }
-    //ページ表示させる
-    block_d_desc_and_item();
-    mov(0);
-    show_page();
-    }
-  }
+							}else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
+								fiearr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
+							}
+						}
+					}
+				}
+			}
+			
+			//ページ表示させる
+			block_d_desc_and_item();
+			//イントロダクションを表示？もしくはページに直行？
+			if(document.getElementById("chb_abstract").checked){
+				show_introduction();
+			}else{
+				mov(0);
+				show_page();
+			}	
+		}
+	}
 
   //BFstyle to BTAP=========================================================
   function BFtoBTAP(arr,n){
@@ -253,6 +259,27 @@
 
     page.innerHTML = ans;
   }
+	
+	//========================================================================
+	
+	//イントロダクションを表示
+	function show_introduction(){
+    var page=document.getElementById("d_desc");
+		
+		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p>";
+		
+		abst += '<ul><li class="li_sel" onclick="mov(0)">始める</li></ul>';
+		
+		//ページ数
+		abst += "<p>[ ページ数 : " + fiearr.length + " ]</p>";
+		
+		//リードミー
+		abst += "<p>[ リードミー ]<br>" + itearr[itearr.length-1]["exp"] + "</p>";
+		
+		page.innerHTML = abst;
+	}
+	
+	
   //========================================================================
   function show_item(){ //道具欄の表示・非表示の切り替え
   var div_item=document.getElementById("d_item");
