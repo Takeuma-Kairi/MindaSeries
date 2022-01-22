@@ -171,13 +171,24 @@
 			
 			//ページ表示させる
 			block_d_desc_and_item();
-			//イントロダクションを表示？もしくはページに直行？
-			if(document.getElementById("chb_abstract").checked){
-				show_introduction();
-			}else{
-				mov(0);
-				show_page();
-			}	
+			
+			switch(document.getElementById("jsonize_change").value){
+				case "json":
+					//fiearrとitearrの内容を、＊JSON形式で＊、d_descに表示する。
+					var jstr = JSON.stringify({"fie": fiearr,"ite":itearr});
+					document.getElementById("d_desc").innerText = jstr;
+					break;
+					
+				default:
+					//イントロダクションを表示？もしくはページに直行？
+					if(document.getElementById("chb_abstract").checked){
+						show_introduction();
+					}else{
+						mov(0);
+						show_page();
+					}
+			}
+			
 		}
 	}
 
@@ -247,7 +258,7 @@
     var page=document.getElementById("d_desc");
 
     //ページ名＆ページ説明div
-    var ans= '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p><div>"
+		var ans = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p><div>"
                       + fiearr[fie]["exp"] + '</div><div style="display:inline-block;"><ul>';
 
     //ページの選択肢
@@ -257,7 +268,11 @@
     }
     ans += "</ul></div>";
 
-    page.innerHTML = ans;
+		if (document.getElementById("chb_pagestack").checked){	
+			page.innerHTML = ans + '<br><hr><br>' + page.innerHTML;
+		}else{
+			page.innerHTML = ans;
+		}
   }
 	
 	//========================================================================
@@ -369,16 +384,54 @@
   }
 
   //divのwidthの変更===============================================================
+	//うかつに触らないこと！
+	//本人もよくわかっていない、手探りの数値が設定されています。
+	//なぜかわからないけど現状この値が最適
   function yoko_resize(x){
   switch(x){
-  case "1":
+		case "1":
       v_d_desc_sizing.style.width = "360px";
+      v_d_desc_sizing.style.height = "550px";
+			document.getElementById("d_desc").style.width = "330px";
+			document.getElementById("d_desc").style.height = "510px";
       v_d_item.style.width = "360px";
+			
+			with(document.getElementById("desc_and_item").style){
+				width="730px";
+				height="100%";
+			}
       break;
-  case "2":
+		case "2":
       v_d_desc_sizing.style.width = "550px";
+      v_d_desc_sizing.style.height = "550px";
+			document.getElementById("d_desc").style.width = "520px";
+			document.getElementById("d_desc").style.height = "510px";
       v_d_item.style.width = "550px";
+			
+			with(document.getElementById("desc_and_item").style){
+				width="1110px";
+				height="100%";
+			}
       break;
+		case "3":
+		
+      v_d_item.style.width = "360px";
+			
+      with(v_d_desc_sizing.style){
+				width = "calc(100% - 400px)";
+				height = "80%";
+			}
+			
+			with(document.getElementById("d_desc").style){
+				width="100%";
+				height= "80%";
+			}
+			
+			with(document.getElementById("desc_and_item").style){
+				width="100%";
+				height="100%";
+			}
+			break;
   }
   }
 

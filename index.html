@@ -9,21 +9,21 @@
   <link rel="shortcut icon" href="BTAicon.png" type="image/png"> <!--ファビコン-->
 
 </head>
-<body id="body"><div id="div_soroe" style="text-align:left;padding-left:10px;margin-top:-5px">
+<body id="body" style="height:100vh"><div id="div_soroe" style="text-align:left;padding-left:10px;margin-top:-5px;height:100%">
 	<div>
     <!--ボタンを揃える-->
     <button class="btn_lod" style="width:9em;border-width:1px;box-sizing:border-box;" id="btn_load_and_set" onclick="block_d_load_and_set()">読み込み、設定</button><button class="btn_pag" style="width:9em;border-width:1px;box-sizing:border-box;left:-1px;" id="btn_desc_and_item" onclick="block_d_desc_and_item()">ページ</button>
   </div>
 
 
-    <div style="position: relative;margin:0px;"> <!--ボタン下の本文部分をそろえる-->
+    <div style="position: relative;margin:0px;height:100%"> <!--ボタン下の本文部分をそろえる-->
 
     <div id="load_and_set" style="display:block;text-align:left;">
     <!--ページロード -->
     <div id="d_load" class="mydiv" style="display:inline-block;float:left;margin-right:10px;overflow:auto">
       <div class="load_div" style="padding:20px;height:490px;overflow-y:scroll;text-align:center;">
-        <p>ページデータを選択して下さい</p>
-				
+        
+				<p>ページデータを選択して下さい</p>
 				<p>
 					<button onclick="load_data(Dictionary)" class="btn_story_select" style="background-color:#fdeaea;color:#ee0000;border:#e56565 solid 2px;font-weight:bold;">Dictionary</button>
 				</p>
@@ -67,6 +67,7 @@
 					<button onclick="load_data(Akisato)" class="btn_story_select general_story_color">Akisato</button>
 					<button onclick="load_data(Paripero)" class="btn_story_select general_story_color">Paripero</button>
 					<button onclick="load_data(Gebu)" class="btn_story_select general_story_color">Gebu</button>
+					<button onclick="load_data(Gerufaru)" class="btn_story_select general_story_color">Gerufaru</button>
 				</p>
 			</div>
 		</div>
@@ -76,6 +77,16 @@
       <div id="d_set" class="mydiv" style="height:510px;text-align:left;display:inline-block;">
         <div id="d_sette" class="div_border" style="height:510px;overflow:auto;">
           <p>
+					
+					<!--ページロード -->
+					<p>
+						<form id="form_page">
+							<label>ページデータファイルを選択してください<br>
+								<input id="myfile" type="file"/>
+							</label>
+						</form>
+					</p>
+					
             <label>色合いを変更</br>
               <select name="css" size="1" onchange="change_css(this.value);">
                 <optgroup label="ライト">
@@ -153,6 +164,7 @@
               <select name="yoko" size="1" onchange="yoko_resize(this.value)">
                 <option value="1" selected>縦長</option>
                 <option value="2">正方形</option>
+								<option value="3">描写部大きく</option>
               </select>
             </label>
           </p>
@@ -184,19 +196,32 @@
               <input type="checkbox" id="chb_noitem" onchange="show_item()">道具欄を非表示</input>
             </label>
           </p>		  
+					
+					<p>
+            <label>上方向ページ積み<br>
+              <input type="checkbox" id="chb_pagestack">上方向ページ積み</input>
+            </label>
+          </p>	
+
+					<p>
+            <label>BTAPの描写・JSON化<br>
+              <select name="jsonize" size="1" id="jsonize_change">
+                <option value="desc" selected>描写</option>
+                <option value="json">JSON</option>
+              </select>
+            </label>
+					</p>
         </div>
       </div>
     </div>
-
     <div id="desc_and_item" style="display:none;text-align:left;">
-          <!-- 描写 -->
-          <div id="d_desc_sizing" class="mydiv" style="display:block;text-align:left;float:left;margin-right:10px;">
+          <div id="d_desc_sizing" class="mydiv" style="display:block;text-align:left;float:left;margin-right:10px">
             <div id="d_desc" class="div_border" style="height:510px;overflow:auto;">
             </div>
           </div>
 
           <!-- アイテム -->
-            <div id="d_item" class="mydiv" style="display:block;text-align:left;float:right;overflow:auto;">
+            <div id="d_item" class="mydiv" style="display:block;text-align:left;float:right;overflow:auto">
               <div id="d_item_sel" class="div_border" style="overflow:auto;height:257px;">
               </div>
               <div id="d_item_exp" class="div_border" style="overflow:auto;height:230px;border-top-width:0px;">
@@ -204,7 +229,7 @@
             </div>
     </div>
   </div>
-</body>
+	
   <script src="source/script.js"></script>
   <script src="StoryJS/Kunugi.js"></script>
   <script src="StoryJS/Minda.js"></script>
@@ -233,6 +258,8 @@
 	<script src="StoryJS/Akisato.js"></script>
 	<script src="StoryJS/Paripero.js"></script>
 	<script src="StoryJS/Gebu.js"></script>
+	<script src="StoryJS/Gerufaru.js"></script>
+	
 	
 	
   <script>
@@ -287,6 +314,25 @@
       alert("ファイル選択にエラーあり。");
     }
   });
+	
+	//==============================================================================
+  //ページデータを得る。ファイルからの読み込み
+  document.getElementById("myfile").addEventListener('change', function(evt){
+    try{
+      var myFile = document.getElementById("myfile").files[0];
+      var reader = new FileReader();
+      reader.onload = function (evt){
+        var txt = evt.target.result;
+        load_data(txt);   //load_dataへと送る
+      }
+      reader.readAsText(myFile, "utf-8");
+      document.getElementById("form_page").reset();
+    }catch{
+      alert("ファイル選択にエラーがあります。");
+    }
+
+  });
+	
 	
 		//色の詳細設定===========================
 	function changecol(c){	//引数は色(RGB)である。コンボボックスselectCanvasで選択。
@@ -359,4 +405,5 @@
 		}
 	}
   </script>
+</body>
 </html>
