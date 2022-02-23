@@ -32,7 +32,8 @@
     }
 
     show_page();
-    block_d_desc_and_item();
+    //旧版
+    //block_d_desc_and_item();
     alert("セーブデータがロードされました。")
   }
 
@@ -68,11 +69,9 @@
     return(ans);
   }
 
-  //==============================================================================
-  //ページデータを得る。ファイルからの読み込み
-
-
-  var v_chb_readme = document.getElementById("chb_readme"); //リードミーの入手とアイテム欄非表示を初期化
+  //=========================================================================
+  //リードミーの入手とアイテム欄非表示を初期化
+  /*var v_chb_readme = document.getElementById("chb_readme"); 
   var v_chb_noitem = document.getElementById("chb_noitem");
 
   v_chb_readme.checked=false;
@@ -83,7 +82,7 @@
 
   if(v_chb_noitem.checked){
     show_item();
-  }
+  }*/
 
 
   //=======================================
@@ -169,8 +168,8 @@
 				}
 			}
 			
-			//ページ表示させる
-			block_d_desc_and_item();
+			//旧版ーページ表示させる
+			//block_d_desc_and_item();
 			
 			switch(document.getElementById("jsonize_change").value){
 				case "json":
@@ -268,11 +267,7 @@
     }
     ans += "</ul></div>";
 
-		if (document.getElementById("chb_pagestack").checked){	
-			page.innerHTML = ans + '<br><hr><br>' + page.innerHTML;
-		}else{
-			page.innerHTML = ans;
-		}
+    page.innerHTML = ans;
   }
 	
 	//========================================================================
@@ -294,76 +289,6 @@
 		page.innerHTML = abst;
 	}
 	
-	//========================================================================
-  function show_item(){ //道具欄の表示・非表示の切り替え
-    var div_item=document.getElementById("d_item");
-    if(document.getElementById("chb_noitem").checked){  //チェックボックス
-      if_show_item=false;
-    }else{
-      if_show_item=true;
-    }
-  }
-
-  //ボタンを押した場合のタブ移動=================================================
-  //div要素それぞれの参照を変数に
-  var v_d_load_and_set = document.getElementById("load_and_set");
-  var v_d_desc_and_item = document.getElementById("desc_and_item");
-
-  var v_d_desc_sizing = document.getElementById("d_desc_sizing");
-  var v_d_item = document.getElementById("d_item");
-
-  //button要素それぞれの参照を変数に
-  var v_b_load_and_set = document.getElementById("btn_load_and_set");
-  var v_b_desc_and_item = document.getElementById("btn_desc_and_item");
-
-  var arr_v_b = [v_b_load_and_set, v_b_desc_and_item];
-
-
-  //loadのdivを表示する
-  function block_d_load_and_set(){
-    v_d_load_and_set.style.display="inline-block";
-    v_d_desc_and_item.style.display="none";
-
-  for(var i=0; i<arr_v_b.length; i++){	//ボタンについて、まずは全て一緒の設定に
-    with(arr_v_b[i].style){
-      height= "38px";
-      paddingBottom = "5px";
-    }
-  }
-
-  with(arr_v_b[0].style){	//特定のボタンだけ、下に伸ばす
-    height = "49px";
-    paddingBottom = "15px";
-  }
-
-  }
-
-  //descのdivを表示する==================================================
-  function block_d_desc_and_item(){
-    v_d_load_and_set.style.display="none";
-    v_d_desc_and_item.style.display="inline-block";
-
-    if(if_show_item){
-      v_d_item.style.display="inline-block";
-    }else{
-      v_d_item.style.display="none";
-    }
-
-    for(var i=0; i<arr_v_b.length; i++){	//ボタンについて、まずは全て一緒の設定に
-    with(arr_v_b[i].style){
-      height= "38px";
-      paddingBottom = "5px";
-    }
-  }
-
-  with(arr_v_b[1].style){	//特定のボタンだけ、下に伸ばす
-    height = "49px";
-    paddingBottom = "15px";
-  }
-
-      display_ite();
-  }
-
   //アイテムの有無でオプションボタンを変える===========================================
   function display_ite(){
     var item_sel = document.getElementById("d_item_sel");
@@ -374,88 +299,14 @@
     for(var i=0;i<itearr.length;i++){
       if(itearr[i]["hav"]){
         //「もちもの」タブにラジオボタンを追加する。
-        item_sel.innerHTML += '<label><input type="radio" name="item" onclick="' +
-                                'document.getElementById(&quot;d_item_exp&quot;).innerHTML=&quot;' +
-                                itearr[i]["exp"] + '&quot;"/>' +
-                                itearr[i]["nam"] + "</label><br>";
+        item_sel.innerHTML +=
+          '<label><input type="radio" name="item" onclick="' +
+          'document.getElementById(&quot;d_item_exp&quot;).innerHTML=&quot;' +
+          itearr[i]["exp"] + '&quot;"/>' +
+          itearr[i]["nam"] + "</label><br>";
       }
     }
   }
-
-  //divのwidthの変更===============================================================
-	//うかつに触らないこと！
-	//本人もよくわかっていない、手探りの数値が設定されています。
-	//なぜかわからないけど現状この値が最適
-  function yoko_resize(x){
-  switch(x){
-		case "1":
-      v_d_desc_sizing.style.width = "360px";
-      v_d_desc_sizing.style.height = "550px";
-			document.getElementById("d_desc").style.width = "330px";
-			document.getElementById("d_desc").style.height = "510px";
-      v_d_item.style.width = "360px";
-			
-			with(document.getElementById("desc_and_item").style){
-				width="730px";
-				height="100%";
-			}
-      break;
-		case "2":
-      v_d_desc_sizing.style.width = "550px";
-      v_d_desc_sizing.style.height = "550px";
-			document.getElementById("d_desc").style.width = "520px";
-			document.getElementById("d_desc").style.height = "510px";
-      v_d_item.style.width = "550px";
-			
-			with(document.getElementById("desc_and_item").style){
-				width="1110px";
-				height="100%";
-			}
-      break;
-		case "3":
-		
-      v_d_item.style.width = "360px";
-			
-      with(v_d_desc_sizing.style){
-				width = "calc(100% - 400px)";
-				height = "80%";
-			}
-			
-			with(document.getElementById("d_desc").style){
-				width="100%";
-				height= "80%";
-			}
-			
-			with(document.getElementById("desc_and_item").style){
-				width="100%";
-				height="100%";
-			}
-			break;
-  }
-  }
-
-  //====================================================
-  //全体の左右中央そろえ
-  function sayuchuo_change(x){
-  var soroe = document.getElementById("div_soroe");
-
-  block_d_load_and_set(); //<-これをやらないと、表示が即時反映されない時がある
-  switch(x){
-    case "1":
-      soroe.style.textAlign = "left";
-      break;
-
-    case "2":
-      soroe.style.textAlign = "center";
-      break;
-
-    case "3":
-      soroe.style.textAlign = "right";
-      break;
-  }
-  }
-
-  
   //もとに戻す==================================
   function remov(){
   if (breadcrumbs.length <= 1){ //セーブパンくずがない場合（初期値）
@@ -496,6 +347,7 @@
       }else{
         itearr[itearr.length-1]["hav"]= false;
       }
+      
       display_ite();
     }
   }
