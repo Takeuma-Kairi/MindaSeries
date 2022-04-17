@@ -458,14 +458,30 @@
   
   //もとに戻す==================================
   function remov(){
-  if (breadcrumbs.length <= 1){ //セーブパンくずがない場合（初期値）
-    alert("戻せません");
-  }else{
-    breadcrumbs.shift();
-    load_savefile(breadcrumbs[0]);//セーブパンくずの最初の要素が１つ前のセーブデータ
-  }
+    if (breadcrumbs.length <= 1){ //セーブパンくずがない場合（初期値）
+      alert("戻せません");
+    }else{
+      breadcrumbs.shift();
+      load_savefile(breadcrumbs[0]);//セーブパンくずの最初の要素が１つ前のセーブデータ
+    }
   }
 
+  //選択肢スキップ==============================
+  function pageskip(){ 
+    while(1){
+      if(fiearr.length == 0){ //まだページが選択されていない
+        alert("スキップできません");
+        break;
+      }
+      
+      if (fiearr[fie]["sel"].length == 1){  //選択肢数が1の時、その先へ
+        eval(fiearr[fie]["sel"][0][1]);
+      }else{
+        alert("スキップしました");  //複数選択肢があるページ、もしくはページの終わり(選択肢0)までスキップ
+        break;
+      }
+    }
+  }
   //スクリプトでかける関数=========================================================-
   //マップ移動
   function mov(tow) {

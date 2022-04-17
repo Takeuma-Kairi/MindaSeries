@@ -7,11 +7,12 @@ button{
 
 /*ページ読み込みへのボタン*/
 .btn_lod{
+  width:9em;
+  border-width:1px;
+  box-sizing:border-box;
+  margin: 0px;
 	margin-top: -5px;
-	width: 91px;
 	font-size: 15px;
-	margin: 0px;
-	margin-top: -8px;
 	box-shadow: none;
 	padding: 5px;
 	padding-bottom: 15px;
@@ -20,7 +21,7 @@ button{
 }
 
 /*ページ描写へのボタン*/
-.btn_pag{
+.btn_pag{\
 	margin-top: -5px;
 	width: 91px;
 	padding: 5px;
@@ -28,20 +29,22 @@ button{
 	margin: 0px;	
 	margin-top: -8px;
 	left: -2px;
+  width:9em;border-width:1px;box-sizing:border-box;left:-1px;
 }
 
-/*もちものへのボタン*/
-.btn_ite{
+/*戻る、スキップのコマンドボタン*/
+.btn_command{
+  
 	margin-top: -5px;
 	width: 91px;
 	padding: 5px;
 	font-size: 15px;
 	margin: 0px;
 	margin-top: -8px;
-	left: -4px;
+	left: 30px;
 }
 
-/*設定へのボタン*/
+/*設定へのボタン
 .btn_set{
 	margin-top: -5px;
 	width: 91px;
@@ -53,7 +56,7 @@ button{
 	left: -6px;
 		
       font-weight: bold;
-}
+}*/
 
 /*ページデータ選択*/
 .btn_story_select{

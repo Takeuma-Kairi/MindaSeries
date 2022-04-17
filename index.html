@@ -10,11 +10,10 @@
 
 </head>
 <body id="body" style="height:100vh"><div id="div_soroe" style="text-align:left;padding-left:10px;margin-top:-5px;height:100%">
-	<div>
-    <!--ボタンを揃える-->
-    <button class="btn_lod" style="width:9em;border-width:1px;box-sizing:border-box;" id="btn_load_and_set" onclick="block_d_load_and_set()">読み込み、設定</button><button class="btn_pag" style="width:9em;border-width:1px;box-sizing:border-box;left:-1px;" id="btn_desc_and_item" onclick="block_d_desc_and_item()">ページ</button>
+	<div>    <!--ボタンを揃える-->
+  <button class="btn_lod" id="btn_load_and_set" onclick="block_d_load_and_set()">読み込み、設定</button><button class="btn_pag" id="btn_desc_and_item" onclick="block_d_desc_and_item()">ページ</button>
+  <button class="btn_ite" onclick="remov()">←戻る</button><button class="btn_ite" style="left:29px" onclick="pageskip()">スキップ→</button>
   </div>
-
 
     <div style="position: relative;margin:0px;height:100%"> <!--ボタン下の本文部分をそろえる-->
 
@@ -27,7 +26,6 @@
 				<p>
 					<button onclick="load_data(Dictionary)" class="btn_story_select" style="background-color:#fdeaea;color:#ee0000;border:#e56565 solid 2px;font-weight:bold;">Dictionary</button>
 				</p>
-				
                
 				<p>
 		      <button onclick="load_data(Kunugi)" class="btn_story_select general_story_color">Kunugi</button>
@@ -72,6 +70,7 @@
 					<button onclick="load_data(Goeibara)" class="btn_story_select general_story_color">Goeibara</button>
 					<button onclick="load_data(Uzinos)" class="btn_story_select general_story_color">Uzinos</button>
 					<button onclick="load_data(Seri)" class="btn_story_select general_story_color">Seri</button>
+					<button onclick="load_data(Meiju)" class="btn_story_select general_story_color">Meiju</button>
 				</p>
 			</div>
 		</div>
@@ -272,6 +271,7 @@
 	<script src="StoryJS/Goeibara.js"></script>
 	<script src="StoryJS/Uzinos.js"></script>
 	<script src="StoryJS/Seri.js"></script>
+	<script src="StoryJS/Meiju.js"></script>
 	
 	
   <script>
