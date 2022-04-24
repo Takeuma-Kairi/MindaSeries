@@ -247,7 +247,7 @@
 		ans = ans.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
 		
 		//ハイパーリンクの設定 <hl> => <span>
-		ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, "<span onclick=\"$2\"style=\"border-bottom: black solid 1px;font-weight:bold;\">$1</span>");
+		ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, "<span onclick=\"$2\" class=\"hl-border\">$1</span>");
     
 		return(ans);
 	}

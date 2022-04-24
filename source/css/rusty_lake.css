@@ -1,34 +1,29 @@
-body{
-	background-color:#a5293f;
-	color:#353045;
+:root{
+  --text-color: #353045;
 }
-/*ページ読み込み、ページ描写、アイテム、設定のdiv*/
-    .mydiv{
-      padding-top:10px;
-      width:360px;
-      height:550px;
-      display:none;
-    }
+
+
+body{
+	background-color: #a5293f
+	color:var(--text-color);
+}
+
 
 /*ページ読み込みへのボタン*/
     .btn_lod{
       background-color:#0f1510;
 			color: #ffffff;
-      box-shadow:3px 3px 0px 0px #ffffff;
-      margin:5px;
     }
 
 /*ページ描写へのボタン*/
     .btn_pag{
       background-color:#eeedef;
 			color: #000000;
-      margin:5px;
     }
 
 /*もちものへのボタン*/
     .btn_ite{
-      background-color:#d365ba;
-      margin:5px;
+      background-color: #d365ba;
     }
 
 /*設定へのボタン*/
@@ -36,7 +31,6 @@ body{
       background-color:#ce351d;
       color:white;
       font-weight: bold;
-      margin:5px;
     }
 
 /*ページ読み込みのinput fileのところ*/
@@ -47,14 +41,11 @@ body{
 
 /*もちものタグのラジオボタン*/
     .li_sel{
-      font-weight: bold;
-      text-decoration: underline;
-		font-size:x-large;
+      color:
     }
 
 
     .div_border{
-      padding: 10px;
       border:#a77727 solid 3px;
       background-color: #e0e0a0;
     }

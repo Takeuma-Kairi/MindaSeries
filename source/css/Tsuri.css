@@ -34,7 +34,6 @@ button{
 
 /*戻る、スキップのコマンドボタン*/
 .btn_command{
-  
 	margin-top: -5px;
 	width: 91px;
 	padding: 5px;
@@ -67,6 +66,26 @@ button{
 	display:inline-block;
 }
 
+
+/*ページ読み込み、ページ描写、アイテム、設定のdiv*/
+.mydiv{
+  padding-top:10px;
+  width:360px;
+  height:550px;
+  display:none;
+}
+
+/*ページの選択肢*/   
+.li_sel{
+  font-weight: bold;
+  text-decoration: underline;
+font-size:x-large;
+}    
+   
+.div_border{
+  padding:10px;
+}
+  
 .general_story_color{
 	background-color:#243444;
 	color:#fdfdff;
@@ -79,4 +98,17 @@ button{
 .minda2_story_color{
 	background-color:#ad301c;
 	color:#EEEEEE
+}
+
+
+
+:root{
+  --text-color: #000000;
+}
+
+
+/*ハイパーリンクのテキスト*/
+.hl-border{
+  border-bottom: var(--text-color) solid 1px;
+  font-weight: bold;
 }
