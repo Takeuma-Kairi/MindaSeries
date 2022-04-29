@@ -2,17 +2,17 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8"> <!--日本語-->
-  <title>大陸シリーズ</title>
+  <title>TanoCont-BTAP 大陸シリーズ</title>
   <meta name="viewport" content="width=device-width" />
   <link rel="stylesheet" href="source/css/Tsuri.css" type="text/css" id="css2"> <!--上からの吊り下げ-->
   <link rel="stylesheet" href="source/css/mono.css" type="text/css" id="css"> <!--色合い-->
   <link rel="shortcut icon" href="BTAicon.png" type="image/png"> <!--ファビコン-->
 
 </head>
-<body id="body" style="height:100vh"><div id="div_soroe" style="text-align:left;padding-left:10px;margin-top:-5px;height:100%">
+<body id="body" style="height:100vh"><div id="div_soroe" style="text-align:left;padding-left:5px;margin-top:-5px;height:100%">
 	<div>    <!--ボタンを揃える-->
-  <button class="btn_lod" id="btn_load_and_set" onclick="block_d_load_and_set()">読み込み、設定</button><button class="btn_pag" id="btn_desc_and_item" onclick="block_d_desc_and_item()">ページ</button>
-  <button class="btn_command" onclick="remov()">←戻る</button><button class="btn_command" style="left:29px" onclick="pageskip()">スキップ→</button>
+  <button class="btn_lod" style="width:90px;" id="btn_load_and_set" onclick="block_d_load_and_set()">読み込み</button><button class="btn_pag" style="width:90px;"id="btn_desc_and_item" onclick="block_d_desc_and_item()">ページ</button>
+  <button class="btn_command" style="left:10px;width:75px;" onclick="remov()">戻る</button><button class="btn_command" style="left:9px;width:75px;" onclick="pageskip()">スキップ</button>
   </div>
 
     <div style="position: relative;margin:0px;height:100%"> <!--ボタン下の本文部分をそろえる-->
@@ -71,6 +71,7 @@
 					<button onclick="load_data(Uzinos)" class="btn_story_select general_story_color">Uzinos</button>
 					<button onclick="load_data(Seri)" class="btn_story_select general_story_color">Seri</button>
 					<button onclick="load_data(Meiju)" class="btn_story_select general_story_color">Meiju</button>
+					<button onclick="load_data(Utagemaru)" class="btn_story_select general_story_color">Utagemaru</button>
 				</p>
 			</div>
 		</div>
@@ -90,6 +91,11 @@
 						</form>
 					</p>
 					
+          <p>
+            <label>レスポンシブル版に移行<br>
+              <a href="ResponsiveBTAP.html">ResponsiveBTAP</a>
+            </label>
+          </p>
           <p>
             <label>シンプル版に移行<br>
               <a href="SimpleBTAP/SimpleBTAPindex.html">SimpleBTAP</a>
@@ -272,6 +278,7 @@
 	<script src="StoryJS/Uzinos.js"></script>
 	<script src="StoryJS/Seri.js"></script>
 	<script src="StoryJS/Meiju.js"></script>
+	<script src="StoryJS/Utagemaru.js"></script>
 	
 	
   <script>
