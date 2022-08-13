@@ -85,7 +85,11 @@ font-size:x-large;
 .div_border{
   padding:10px;
 }
-  
+
+.sana_story_color{
+  background-color:#c9f0ff;
+  color:#1b0313;
+}
 .general_story_color{
 	background-color:#243444;
 	color:#fdfdff;
