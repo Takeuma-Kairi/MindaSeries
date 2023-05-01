@@ -366,8 +366,8 @@ function write_savefile(){
       break; */
 			document.getElementById("button_redo_and_skip").style.display="inline-block";		
       show_introduction();
-			scrollTo(0,0);
 			change_li(2);
+			scrollTo(0,0);
 		}
 	}
 
