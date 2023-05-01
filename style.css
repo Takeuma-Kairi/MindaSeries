@@ -86,7 +86,7 @@ nav ul li:last-of-type{
 }
 
 .openitem{
-  width: 12ch;
+  width: 12em;
   text-align: center;
   display: none;
 }
