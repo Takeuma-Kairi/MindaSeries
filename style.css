@@ -1,0 +1,130 @@
+body{
+  font-family: 'Noto Sans JP', 'Yu Gothic Medium', '游ゴシック Medium', sans-serif;
+  text-align:center;
+}
+
+h1{
+  margin:0px;
+}
+
+header {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+nav ul {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  width: 35%;
+  font-size: 1.2em;
+  line-height: 50px;
+}
+
+nav ul li:first-of-type{
+  border-top: white solid 1px;
+  border-right: white solid 1px;
+}
+
+
+nav ul li:nth-of-type(2){
+  border-top: white solid 1px;
+}
+
+nav ul li:last-of-type{
+  border-top: white solid 1px;
+  border-left: white solid 1px;
+}
+
+/* 欄 */
+.ran{
+  display: none;
+  margin-top: 120px;
+  text-align: center;
+}
+
+/*ページの選択肢*/   
+.li_sel{
+  font-weight: bold;
+  text-decoration: underline;
+	font-size: 150%;
+}    
+
+/* ページ選択用テーブルのtd */
+.page_sel_table{
+  border-collapse:collapse;
+	margin:auto;
+}
+
+.page_sel_table tr td{
+  padding:5px;
+  
+}
+.page_sel_table tr th{
+  padding:3px;
+}
+
+/* コマンドボタン */
+.tool_button{
+  padding:5px;
+  margin:5px;
+  display: inline-block;
+}
+
+.redo_and_skip{
+  width: 6em;
+  text-align:center;
+}
+
+.openitem{
+  width: 12ch;
+  text-align: center;
+  display: none;
+}
+
+
+/*ハイパーリンクのテキスト*/
+.hl-border{
+  font-weight: bold;
+}
+
+/* テーブルのセルの色 */
+.series_color_tag{
+  padding: 3px;
+}
+
+.meta{
+  background-color:#fdeaea;
+  border: #e56565 solid 2px;
+  color:#ee0000;
+}
+
+.variation{
+	background-color:#243444;
+	color:#fdfdff;
+}
+
+.minda1{
+	background-color:#f4eaff;
+	color:#000000;
+}
+.minda2{
+	background-color:#ad301c;
+	color:#EEEEEE;
+}
+
+.sana{
+  background-color: #c9f0ff;
+  color:#1b0313;
+}
+ 
+ 

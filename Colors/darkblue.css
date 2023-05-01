@@ -1,0 +1,55 @@
+
+body{
+	background-color: #293134;
+	color: #FFFFFF;
+}
+
+h1{
+  margin:0px;
+	color: #FFFFFF;
+}
+
+header {
+  background-color: #10161C;
+}
+
+.active-li{
+  background-color: #293134;
+	color: #B6F6F0;
+}
+
+/* 非アクティブなヘッダーのタブ */
+.non-active_li{
+  color: #ABCFF2;
+	/* #B9C2CC */
+}
+
+/*ハイパーリンクのテキスト*/
+.hl-border{
+  border-bottom: #c1e3ff solid 1px;
+}
+
+.li_sel{
+	color:	#c1e3ff;
+}
+
+.tool_button{
+  background-color:  #ABCFF2;
+	color: #2E2E2E;
+}
+
+.geti_alert{
+	background-color:  #E6E7E7;
+	color: #2E2E2E;
+}
+
+.page_sel_table tr{
+  border: #70EBDE solid 1px;
+}
+
+.page_sel_table tr td{
+  border:#70EBDE solid 1px;
+}
+.page_sel_table tr th{
+  border:#70EBDE solid 1px;
+}
