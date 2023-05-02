@@ -1,44 +1,53 @@
 
 body{
-	background-color: white;
-	color: #3D484D;
+	background-color: #FFFFFF;
+	color: #0A1C2E;
 }
 
 h1{
   margin:0px;
-	color: #278DDD;
+	color: #03A9F4;
 }
 
 header {
-  background-color: #E2E8EE;
+  background-color: #E6E8EB;
 }
 
 .active-li{
-  background-color: white;
-	color: #3D454A;
+  background-color: #8FA5C4;
+	color: #FFFFFF;
 }
 
 /* 非アクティブなヘッダーのタブ */
 .non-active_li{
-  color: #6F7D87;
+  color: #8FA5C4;
 	/* #B9C2CC */
 }
 
-
-.tool_button{
-  background-color: #E2E8EE;
-	color: #000000;
+/*ハイパーリンクのテキスト*/
+.hl-border{
+  border-bottom: #03A9F4 solid 1px;
 }
 
-
+.li_sel{
+	color:	#133659;
+}
+.tool_button{
+  background-color: #8395A7;
+	color: #FAFBFD;
+}
+.geti_alert{
+	background-color: #347D9F;
+	color: #EBEBEB;
+}
 .page_sel_table tr{
-  border: #2A2E2E solid 1px;
+  border: #123354 solid 1px;
 	color: black;
 }
 
 .page_sel_table tr td{
-  border:#2A2E2E solid 1px;
+  border:#123354 solid 1px;
 }
 .page_sel_table tr th{
-  border:#2A2E2E solid 1px;
+  border: #123354 solid 1px;
 }
