@@ -12,7 +12,8 @@
 </head>
 
 <body>
-	<header>
+
+	<header id="header">
 		<h1>BTAP4</h1>
 		<nav>
 			<ul>
@@ -23,6 +24,7 @@
 		</nav>
 	</header>
 	
+	<div id="tab_close" class="tool_button tab_close" onclick="tab_close()">↑タブ</div>
   <!-- ページを選択する欄================================================================ -->
 
 	
@@ -136,9 +138,7 @@
 			<select onchange="change_colorscheme(this.value)">
 				<option value="default">default</option>
 				<option value="dark">dark</option>
-				<option value="lightblue">lightblue</option>
 				<option value="darkblue">darkblue</option>
-				<option value="darkred">darkred</option>
 			</select>
 				
 		</p>

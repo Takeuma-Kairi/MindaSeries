@@ -63,7 +63,31 @@ function sort_page_sel_table(){
 			}
 		}
 	}
-
+//=タブを閉じる================================================================
+	function tab_close(){
+		var tab_close= document.getElementById("tab_close");
+		var header= document.getElementById("header");
+		var ran_select = document.getElementById("ran_select");
+		var ran_setting = document.getElementById("ran_setting");
+		var ran_page = document.getElementById("ran_page");
+		
+		if(header.style.display == "none"){
+			tab_close.innerHTML = "↑タブ";
+			header.style.display = "block";
+			
+			ran_select.className= "ran";
+			ran_setting.className= "ran";
+			ran_page.className = "ran";
+		}else{
+			tab_close.innerHTML = "↓タブ";
+			header.style.display = "none";
+			
+			ran_select.className= "ran ran_without_header";
+			ran_setting.className= "ran ran_without_header";
+			ran_page.className = "ran ran_without_header";
+		}
+		
+	}
 //ヘッダータブの変更=========================================================
 	function change_li(selected_li){
 		var li_setting = document.getElementById("li_setting");
@@ -121,6 +145,7 @@ function change_fontsize(){
 	ran_page.style.fontSize = range_fontsize.value + "px";
 	reibun.style.fontSize = range_fontsize.value + "px";
 }
+
 //設定のリセット(横幅、左揃え、フォントサイズ)==========================================================  
 function reset_setting(){
   var chb_yokohaba = document.getElementById("chb_yokohaba");
@@ -135,7 +160,7 @@ function reset_setting(){
 	change_align_left();
 	change_fontsize();
 }
-//アイテム欄の表示・非表示==========================================================  
+//アイテム欄の表示・非表示(3関数で1セット)==========================================================  
 function hide_item(){
 	var d_item = document.getElementById("d_item");
   var button_openitem = document.getElementById("button_openitem");
@@ -234,7 +259,7 @@ function write_savefile(){
 
 
 
-  //セーブデータ書き込み用
+  //セーブデータ書き込み=========================================================
   function makesave(){
     var ans = "flg:";    //フラグ
     for(var i=0;i<flgarr.length;i++){
@@ -516,8 +541,12 @@ function write_savefile(){
   //選択肢スキップ==============================
   function pageskip(){
 		
-		if(fiearr.length == 0 || fiearr[fie]["sel"].length != 1){ //まだページが選択されていない
+		if(fiearr.length == 0){ //まだページが選択されていない
 			alert("スキップできません");
+		}else if(fiearr[fie]["sel"].length == 0){
+			alert("現在のページでおわりです。");
+		}else if(fiearr[fie]["sel"].length != 1){
+			alert("現在のページには選択肢が複数あるため、スキップできません。");
 		}else{
 			var ifskip = window.confirm("次に来る、選択肢が複数あるページまでスキップしますか？（この先にそのようなページがない場合は、最後のページまでスキップされます）");
 			
@@ -526,7 +555,7 @@ function write_savefile(){
 					if (fiearr[fie]["sel"].length == 1){  //選択肢数が1の時、その先へ
 						eval(fiearr[fie]["sel"][0][1]);
 					}else{
-						alert("スキップしました");  //複数選択肢があるページ、もしくはページの終わり(選択肢0)までスキップ
+						//alert("スキップしました");  //複数選択肢があるページ、もしくはページの終わり(選択肢0)までスキップ
 						break;
 					}
 				}

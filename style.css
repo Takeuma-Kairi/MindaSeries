@@ -1,6 +1,7 @@
 body{
   font-family: 'Noto Sans JP', 'Yu Gothic Medium', '游ゴシック Medium', sans-serif;
   text-align:center;
+	font-size: 18px;
 }
 
 h1{
@@ -50,8 +51,12 @@ nav ul li:last-of-type{
   display: none;
   margin-top: 120px;
   text-align: center;
+	padding: 0px;
 }
 
+.ran_without_header{
+  margin-top: 0px;
+}
 /*ページの選択肢*/   
 .li_sel{
   font-weight: bold;
@@ -81,16 +86,25 @@ nav ul li:last-of-type{
 }
 
 .redo_and_skip{
-  width: 6em;
+  width: 5em;
   text-align:center;
 }
 
 .openitem{
+	margin-top:2em;
   width: 12em;
   text-align: center;
   display: none;
 }
 
+.tab_close{
+  position: fixed;
+  top: 6;
+  left: 0;
+  right: 0;
+	width:3.5em;
+	border: #FFFFFF solid 1px;
+}
 
 /*ハイパーリンクのテキスト*/
 .hl-border{
