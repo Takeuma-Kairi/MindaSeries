@@ -102,17 +102,7 @@
 	
   <!-- 設定欄================================================================ -->
 	<div class="ran" id="ran_setting">
-    <p>
-      <label>セーブデータ処理選択<br>
-        <button onclick="write_savefile()" style="border-width:1px;margin-bottom:5px;">セーブデータ取得</button>
-        <button onclick="load_savefile(document.getElementById('t_savedata').value)" style="border-width:1px;margin-bottom:5px;">再ロード</button><br>
-      </label>
-      <label>セーブデータ入出力<br>
-        <textarea id="t_savedata" rows="3" cols="20" ></textarea>
-      </label>
-    </p>
-    
-   
+    <h2>ページの表示設定</h2>
     <p>
       <label>ページの横幅を制限する<br>
         <input type="checkbox" id="chb_yokohaba" onchange="change_yokohaba()"/>横幅を制限する
@@ -147,6 +137,19 @@
 		<p>
 			<button onclick="reset_setting()"/>設定のリセット</button>
 		</p>
+    <hr>
+    <p>
+      <h2>セーブ機能</h2>
+      <p>
+        <label>セーブデータ処理選択<br>
+          <button onclick="write_savefile()" style="border-width:1px;margin-bottom:5px;">セーブデータ取得</button>
+          <button onclick="load_savefile(document.getElementById('t_savedata').value)" style="border-width:1px;margin-bottom:5px;">再ロード</button><br>
+        </label>
+        <label>セーブデータ入出力<br>
+          <textarea id="t_savedata" rows="3" cols="20" ></textarea>
+        </label>
+      </p>
+    </p>
 	</div>
 	
 
