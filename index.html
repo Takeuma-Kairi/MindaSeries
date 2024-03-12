@@ -1,10 +1,11 @@
+<!doctype html>
 <html>
 
 <head>
   <meta charset="UTF-8"> <!--日本語-->
   <title>大陸シリーズ BTAP4</title>
   <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet" href="style.css" type="text/css">  
+  <link rel="stylesheet" href="style.css" type="text/css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
@@ -14,7 +15,7 @@
 <body>
 
 	<header id="header">
-		<h1>BTAP4</h1>
+		<!-- <h1>BTAP4</h1> -->
 		<nav>
 			<ul>
 				<li onclick="change_li(0)" id="li_setting" class="non-active_li">設定</li>
@@ -23,19 +24,22 @@
 			</ul>
 		</nav>
 	</header>
-	
-	<div id="tab_close" class="tool_button tab_close" onclick="tab_close()">↑タブ</div>
+
+	<!-- <div id="tab_close" class="tool_button tab_close" onclick="tab_close()">↑タブ</div> -->
   <!-- ページを選択する欄================================================================ -->
 
-	
-	<div class="ran" style="display:block;" id="ran_select">
+
+	<div class="ran" style="display:block;text-align:center;" id="ran_select">
 		<p>
-			下の表の行を押し、ページを選択してください。選択後、ページタブに遷移します。<br>
-			条件をつけてソート可能です。<br>
-			デフォルトでは、最近作ったものから順に並んでいます（降順-作成順）。<br>
-			「シリーズ」「時系列」は単なる目安です。厳密な規定はありません。
+			<span style="font-size: large;font-weight: bold;">
+                下の表でページを選択してください。選択後、「ページ」タブに遷移し、閲覧を開始できます。
+            </span>
+        </p>
+        <p>
+            デフォルトでは、最近作ったものから順に並んでいます（降順-作成順）。<br>
+            また「シリーズ」「時系列」は目安であり、厳密な規定はありません。
 		</p>
-			
+
 		<p>
 			<label>ページのソート
 					<select onchange="sort_page_sel_table()" id="way_sel">
@@ -43,7 +47,7 @@
 						<option value="descend" selected>降順</option>
 					</select>
 
-			
+
 				<select onchange="sort_page_sel_table()" id="category_sel">
 					<option value="made" selected>作成順</option>
 					<option value="series">シリーズ順</option>
@@ -99,7 +103,7 @@
 
 		</table>
 	</div>
-	
+
   <!-- 設定欄================================================================ -->
 	<div class="ran" id="ran_setting">
     <h2>ページの表示設定</h2>
@@ -108,32 +112,46 @@
         <input type="checkbox" id="chb_yokohaba" onchange="change_yokohaba()"/>横幅を制限する
       </label>
     </p>
-    
+
     <p>
-      <label>ページを左揃えにする<br>
+      <label>ページを左揃えにする<br> <!-- 中央揃えにする、の間違い -->
         <input type="checkbox" id="chb_align_left" onchange="change_align_left()"/>左揃えにする
       </label>
     </p>
-    <p>
+    <!-- <p>
 			（ページの横幅を制限し、左揃えにすると、旧版と同じ見た目となります）
-		</p>
+		</p> -->
+
+        <p>
+            <label>横幅の調整（ディスプレイの横幅に占める%。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
+            <input type="range" id="ran_width_range" min="25" max="100" value="60" step="1"
+                 onchange="change_ranwidth(this.value)">
+            <input type="number" id="ran_width_number" min="25" max="100" value="60" step="1"
+                  onchange="change_ranwidth(this.value)">
+        </p>
+
 		<p>
 			<label>ページのフォントサイズの変更<br>
-			<input type="range" id="range_fontsize" min="12" max="24" value="16" step="1" onchange="change_fontsize()">フォントサイズ<br>
-			<span id="reibun">フォントサイズ確認サンプル文章</span>
+            <!-- 以下の、min or max or value を変更した場合、change_fontsize()も変更すること！-->
+			<input type="range" id="fontsize_range" min="12" max="30" value="16" step="1"
+             onchange="change_fontsize(this.value)">
+            <input type="number" id="fontsize_number" min="12" max="30" value="16" step="1"
+             onchange="change_fontsize(this.value)">
+            <br>
+            <span id="reibun">フォントサイズ確認サンプル文章</span>
 		</p>
-		
+
 		<p>
 			<label>色合いの変更<br>
 			<select onchange="change_colorscheme(this.value)">
-				<option value="default">default</option>
-				<option value="dark">dark</option>
-				<option value="darkblue">darkblue</option>
-				<option value="lightblue">lightblue</option>
+				<option value="default">ライト</option>
+				<option value="dark">ダーク</option>
+				<option value="lightblue">ライト　ブルー</option>
+				<option value="darkblue">ダーク　ブルー</option>
 			</select>
-				
+
 		</p>
-		
+
 		<p>
 			<button onclick="reset_setting()"/>設定のリセット</button>
 		</p>
@@ -151,31 +169,31 @@
       </p>
     </p>
 	</div>
-	
 
-  
-  
+
+
+
   <!-- ページ欄================================================================ -->
-  
+
 	<div class="ran" id="ran_page">
-    
+
     <div style="width:100%;display:inline-block" id="desc_and_item">
-    
+
       <div id="button_redo_and_skip" style="display:none;width:100%; text-align:right;">
         <div class="tool_button redo_and_skip" onclick="remov()">戻る</div>
         <div class="tool_button redo_and_skip" onclick="pageskip()">スキップ</div>
       </div>
-      
+
       <!--　描写 -->
       <div id="d_desc">
-				データがありません。ページを選択してください。
+				まだページのデータがありません。「選択」タブに戻って、ページを選択してください。
       </div>
 
-      
+
       <div style="width:100%; text-align:right;">
         <div class="tool_button openitem" style="display:none;" id="button_openitem" onclick="show_item()">↓アイテムを表示
       </div>
-      
+
       <!-- アイテム -->
       </div>
         <div id="d_item" style="display:none">
@@ -187,11 +205,11 @@
         </div>
 
     </div>
-    
+
 	</div>
-  
+
 <!--主要なJSコード-->
-<script src="script.js" defer></script> 
+<script src="script.js" defer></script>
 
 	<!-- ストーリーのJS -->
 <script src="StoryJS/Minda.js" defer></script>
@@ -232,7 +250,7 @@
 <script src="StoryJS/RNakia.js" defer></script>
 <script src="StoryJS/Abstract.js" defer></script>
 
-<link id="colorscheme" rel="stylesheet" href="Colors/default.css" type="text/css">  
+<link id="colorscheme" rel="stylesheet" href="Colors/default.css" type="text/css">
 
 </body>
 </html>

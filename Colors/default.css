@@ -7,13 +7,17 @@ header {
 }
 
 .active-li{
-  background-color: #414747;
+  background-color: #7b7b7b;
 	color: #eaeaea;
 }
 
 /* 非アクティブなヘッダーのタブ */
 .non-active_li{
-  color: #bdbdbd;
+  color: #ececec;
+}
+/* 非アクティブなヘッダーのタブ */
+.non-active_li:hover{
+	background-color: #5d645f;
 }
 
 .body{
@@ -31,7 +35,7 @@ header {
 }
 
 .tool_button{
-  background-color: #414747;
+  background-color: #000000;
   color:#eaeaea;
 }
 

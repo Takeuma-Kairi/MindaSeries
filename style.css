@@ -1,6 +1,6 @@
 body{
   font-family: 'Noto Sans JP', 'Yu Gothic Medium', '游ゴシック Medium', sans-serif;
-  text-align:center;
+  /* text-align:center; */
 	font-size: 18px;
 }
 
@@ -19,7 +19,7 @@ header {
 nav ul {
   display: flex;
   height: 50px;
-  justify-content: center;
+  /* justify-content: center; */
   list-style: none;
   padding: 0;
   margin: 0;
@@ -48,21 +48,24 @@ nav ul li:last-of-type{
 
 /* 欄 */
 .ran{
-  display: none;
-  margin-top: 120px;
-  text-align: center;
+    display: none;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    min-width: 360px;   /* iPhone8の画面の横幅 */
 	padding: 0px;
 }
 
 .ran_without_header{
   margin-top: 0px;
 }
-/*ページの選択肢*/   
+/*ページの選択肢*/
 .li_sel{
   font-weight: bold;
   text-decoration: underline;
 	font-size: 150%;
-}    
+}
 
 /* ページ選択用テーブルのtd */
 .page_sel_table{
@@ -72,7 +75,7 @@ nav ul li:last-of-type{
 
 .page_sel_table tr td{
   padding:5px;
-  
+
 }
 .page_sel_table tr th{
   padding:3px;
@@ -80,13 +83,15 @@ nav ul li:last-of-type{
 
 /* コマンドボタン */
 .tool_button{
-  padding:5px;
-  margin:5px;
+  padding: 5px;
+  margin: 5px;
   display: inline-block;
 }
 
 .redo_and_skip{
   width: 5em;
+  margin: 0px;
+  margin-left: 2px;
   text-align:center;
 }
 
@@ -104,6 +109,10 @@ nav ul li:last-of-type{
   right: 0;
 	width:3.5em;
 	border: #FFFFFF solid 1px;
+}
+
+.page_title{
+  margin:15px;
 }
 
 /*ハイパーリンクのテキスト*/
@@ -140,5 +149,3 @@ nav ul li:last-of-type{
   background-color: #c9f0ff;
   color:#1b0313;
 }
- 
- 

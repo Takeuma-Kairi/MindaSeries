@@ -12,18 +12,18 @@ function sort_page_sel_table(){
 		var way = document.getElementById("way_sel").value;
 		var category = document.getElementById("category_sel").value;
 		var table = document.getElementById("page_sel_table");
-		
+
 		const name_clm = 0;
 		const series_clm = 1;
 		const made_clm = 2;
 		const history_clm = 3;
-		
+
 		if(way == "ascend"){
 			way = 1;
 		}else{
 			way = -1;
 		}
-		
+
 		switch (category){
 			case "made":
 				category = made_clm;break;
@@ -31,10 +31,10 @@ function sort_page_sel_table(){
 				category = series_clm;break;
 			case "history":
 				category = history_clm;break;
-			default: 
+			default:
 				break;
 		}
-		
+
 		var jun=[];
 
 		for (i = 1; i < table.rows.length; i++) {
@@ -46,7 +46,7 @@ function sort_page_sel_table(){
 			}
 			jun.push(temp_jun);
 		}
-		
+
 		jun.sort(function(a, b) {
 			if (parseInt(a[category+1][1]) > parseInt(b[category+1][1])) {
 				return 1*way;
@@ -54,8 +54,8 @@ function sort_page_sel_table(){
 				return -1*way;
 			}
 		});
-		
-				
+
+
 		for (i = 1; i < table.rows.length; i++) {
       table.rows[i].onclick = jun[i-1][0];
 			for(j = 0; j < table.rows[i].cells.length; j++){
@@ -70,37 +70,37 @@ function sort_page_sel_table(){
 		var ran_select = document.getElementById("ran_select");
 		var ran_setting = document.getElementById("ran_setting");
 		var ran_page = document.getElementById("ran_page");
-		
+
 		if(header.style.display == "none"){
 			tab_close.innerHTML = "↑タブ";
 			header.style.display = "block";
-			
+
 			ran_select.className= "ran";
 			ran_setting.className= "ran";
 			ran_page.className = "ran";
 		}else{
 			tab_close.innerHTML = "↓タブ";
 			header.style.display = "none";
-			
+
 			ran_select.className= "ran ran_without_header";
 			ran_setting.className= "ran ran_without_header";
 			ran_page.className = "ran ran_without_header";
 		}
-		
+
 	}
 //ヘッダータブの変更=========================================================
 	function change_li(selected_li){
 		var li_setting = document.getElementById("li_setting");
 		var li_select = document.getElementById("li_select");
 		var li_page = document.getElementById("li_page");
-		
+
 		var ran_setting = document.getElementById("ran_setting");
 		var ran_select = document.getElementById("ran_select");
 		var ran_page = document.getElementById("ran_page");
-		
+
 		var li_arr = [li_setting, li_select, li_page];
 		var ran_arr = [ran_setting, ran_select, ran_page];
-		
+
 		for(var i = 0; i < li_arr.length; i++){
 			if(i==selected_li){
 				li_arr[i].className = "active-li";
@@ -111,60 +111,115 @@ function sort_page_sel_table(){
 			}
 		}
 	}
- 
+
 //横幅の制限--================================================================
   function change_yokohaba(){
     var chb_yokohaba = document.getElementById("chb_yokohaba");
     var desc_and_item = document.getElementById("desc_and_item");
-    
+
     if(chb_yokohaba.checked){
       desc_and_item.style.width = "330px";
     }else{
       desc_and_item.style.width = "100%";
     }
   }
-  
-//ページを左揃えにする--================================================================  
+
+//ページを左揃えにする--================================================================
   function change_align_left(){
     var chb_align_left = document.getElementById("chb_align_left");
     var desc_and_item = document.getElementById("desc_and_item");
-    
+
     if(chb_align_left.checked){
       desc_and_item.style.textAlign = "left";
     }else{
       desc_and_item.style.textAlign = "center";
     }
   }
-	
 
-//フォントサイズの変更========================================================== 	
-function change_fontsize(){
-	var range_fontsize = document.getElementById("range_fontsize");
+
+//フォントサイズの変更==========================================================
+function change_fontsize(p = "16"){
+	const MAX = "30";
+	const VALUE = "16";
+	const MIN = "12";
+
+	var parseInt_result = parseInt(p);
+	if (isNaN(parseInt_result)){
+		p = VALUE;
+	}else{
+		if(parseInt_result < 12){
+			p = MIN;
+		}else if (parseInt_result > 30){
+			p = MAX;
+		}
+	}
+
+	var fontsize_range = document.getElementById("fontsize_range");
+	var fontsize_number = document.getElementById("fontsize_number");
 	var ran_page = document.getElementById("ran_page");
 	var reibun = document.getElementById("reibun");
-	ran_page.style.fontSize = range_fontsize.value + "px";
-	reibun.style.fontSize = range_fontsize.value + "px";
+
+	// スクロールバーなどに反映し直す
+	ran_page.style.fontSize = p + "px";
+	reibun.style.fontSize = p + "px";
+
+	fontsize_range.value = p;
+	fontsize_number.value = p;
+
 }
 
-//設定のリセット(横幅、左揃え、フォントサイズ)==========================================================  
+//画面(ran)横幅の変更==========================================================
+function change_ranwidth(p="60"){
+
+	var parseInt_result = parseInt(p);
+
+	if (isNaN(parseInt_result)){
+		p = "60";
+	}else{
+		if(parseInt_result < 0){
+			p = "0";
+		}else if (parseInt_result > 100){
+			p = "100";
+		}
+	}
+
+	// スクロールバーなどに反映し直す
+	var ran_width_range = document.getElementById("ran_width_range");
+	var ran_width_number = document.getElementById("ran_width_number");
+
+	ran_width_range.value = p;
+	ran_width_number.value = p;
+
+	//各ranクラスのものに横幅を設定していく
+	var ran_select = document.getElementById("ran_select");
+	var ran_setting = document.getElementById("ran_setting");
+	var ran_page = document.getElementById("ran_page");
+	var ran_arr = [ran_select, ran_setting, ran_page];
+
+
+	for(var i=0; i<ran_arr.length; i++){
+		ran_arr[i].style.width = p + "%";
+	}
+}
+
+//設定のリセット(横幅、左揃え、フォントサイズ)==========================================================
 function reset_setting(){
-  var chb_yokohaba = document.getElementById("chb_yokohaba");
+ 	var chb_yokohaba = document.getElementById("chb_yokohaba");
 	var chb_align_left = document.getElementById("chb_align_left");
-	var range_fontsize = document.getElementById("range_fontsize");
-	
+
 	chb_yokohaba.checked = false;
 	chb_align_left.checked = false;
-	range_fontsize.value = 16;
-	
+
 	change_yokohaba();
 	change_align_left();
 	change_fontsize();
+	change_ranwidth();
 }
-//アイテム欄の表示・非表示(3関数で1セット)==========================================================  
+//アイテム欄の表示・非表示(3関数で1セット)==========================================================
 function hide_item(){
 	var d_item = document.getElementById("d_item");
   var button_openitem = document.getElementById("button_openitem");
-	
+
 	d_item.style.display = "none";
   button_openitem.innerHTML = "↓アイテムを表示";
 }
@@ -172,25 +227,25 @@ function hide_item(){
 function unvail_item(){
 	var d_item = document.getElementById("d_item");
   var button_openitem = document.getElementById("button_openitem");
-	
+
 	d_item.style.display = "inline-block";
   button_openitem.innerHTML = "↑アイテムを非表示";
 }
 
-  function show_item(){   
+  function show_item(){
     var d_item = document.getElementById("d_item");
     var button_openitem = document.getElementById("button_openitem");
-    
+
 		geti_alert(false);
-		
-		
+
+
 	  if(d_item.style.display == "none"){
       unvail_item();
     }else{
       hide_item();
     }
   }
-//カラースキームの変更==========================================================  
+//カラースキームの変更==========================================================
 function change_colorscheme(colorscheme_name) {
 	var colorscheme = document.getElementById("colorscheme");
 	colorscheme.href = "Colors/" + colorscheme_name + ".css";
@@ -218,7 +273,7 @@ function write_savefile(){
       alert("エラーあり。")
     }
   }
-  
+
 //================
 //セーブデータのロード
   function load_savefile(txt){
@@ -295,7 +350,7 @@ function write_savefile(){
   function load_data(scr){
     scr = scr.replace(/\r\n/g,'\n'); //改行コードの統一
     scr = scr.replace(/\r/g, '\n');	 //改行コードの統一
-    
+
     var arr = scr.split("\n");
     var myRE = new RegExp("flag:(.+)>");
 
@@ -305,11 +360,11 @@ function write_savefile(){
 		numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		breadcrumbs = [];
 		fie = 0;
-		
+
 		//アイテム欄の非表示
 		hide_item();
 		document.getElementById("button_openitem").style.display="none";
-		
+
     if(!arr[0].match(/flag:(.+)>/)){
       alert("ページデータとして不適なものが選択されました。");
     }else{
@@ -334,8 +389,8 @@ function write_savefile(){
             }else{
               //アイテムタグを、名前と説明に分ける
               if(arr[i].match(/\[(.+?)\](.+?)#(.+)/)){
-                itearr[parseInt(RegExp.$1)] = 
-									{nam: OpenInlineTag(RegExp.$2), 
+                itearr[parseInt(RegExp.$1)] =
+									{nam: OpenInlineTag(RegExp.$2),
 									exp: OpenInlineTag(RegExp.$3),
 									hav:false};
 									//名前、説明文、所持しているか(初期値はfalse)
@@ -360,19 +415,19 @@ function write_savefile(){
 							if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
 								temp_map=parseInt(RegExp.$1);
 								fiearr[temp_map]={nam: "", exp:"", sel:[]};
-								
+
 							}else if(arr[i].match(/n:(.+)/)) {  //名前
 								fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
-								
+
 							}else if(arr[i].match(/e:(.+)/)) {  //説明文
 								fiearr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
-								
+
 							}else if(arr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
 								fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
-								
+
 							}else if(arr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
 								fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
-								
+
 							}else if(arr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
 								fiearr[temp_map]["exp"] += itearr[parseInt(RegExp.$1)]["exp"] + "<br>";
 
@@ -383,13 +438,13 @@ function write_savefile(){
 					}
 				}
 			}
-			
+
 
       //fiearrとitearrの内容を、＊JSON形式で＊、d_descに表示するには…
       /*var jstr = JSON.stringify({"fie": fiearr,"ite":itearr});
       document.getElementById("d_desc").innerText = jstr;
       break; */
-			document.getElementById("button_redo_and_skip").style.display="inline-block";		
+			document.getElementById("button_redo_and_skip").style.display="inline-block";
       show_introduction();
 			change_li(2);
 			scrollTo(0,0);
@@ -446,22 +501,22 @@ function write_savefile(){
 
 	function OpenInlineTag(scr){
 		var ans = scr;
-		
+
 		//ルビの設定<r> => <ruby>
 		ans = ans.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
-		
+
 		//ハイパーリンクの設定 <hl> => <span>
 		ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, "<span onclick=\"$2\" class=\"hl-border\">$1</span>");
-    
+
 		return(ans);
 	}
-	
+
   //==============================================================================
   //「ページ」タブの表示
   function show_page(){
     var page=document.getElementById("d_desc");
     //ページ名＆ページ説明div
-		var ans = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p><div>"
+		var ans = '<p class="page-title"><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p><div>"
                       + fiearr[fie]["exp"] + '</div><div style="display:inline-block;text-align:left"><ul>';
 
     //ページの選択肢
@@ -474,26 +529,26 @@ function write_savefile(){
     page.innerHTML = ans;
 
   }
-	
+
 	//========================================================================
-	
+
 	//イントロダクションを表示
 	function show_introduction(){
     var page=document.getElementById("d_desc");
-		
+
 		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p>";
-		
+
 		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="mov(0)">始める</li></ul></div>';
-		
+
 		//ページ数
 		abst += "<p>[ ページ数 : " + fiearr.length + " ]</p>";
-		
+
 		//リードミー
 		abst += "<p>[ リードミー ]<br>" + itearr[itearr.length-1]["exp"] + "</p>";
-		
+
 		page.innerHTML = abst;
 	}
-	
+
 
 
   //アイテムの有無でオプションボタンを変える===========================================
@@ -513,12 +568,12 @@ function write_savefile(){
       }
     }
   }
-  //新アイテム獲得！アラートを発する==============================  
+  //新アイテム獲得！アラートを発する==============================
   function geti_alert(ifalert){
 		var button_openitem = document.getElementById("button_openitem");
-		
+
 		button_openitem.style.display="inline-block";
-		
+
 		if(ifalert){
 			button_openitem.className="tool_button openitem geti_alert";
 		}else{
@@ -527,7 +582,7 @@ function write_savefile(){
 	}
 
 
-  
+
   //もとに戻す==================================
   function remov(){
     if (breadcrumbs.length <= 1){ //セーブパンくずがない場合（初期値）
@@ -540,7 +595,7 @@ function write_savefile(){
 
   //選択肢スキップ==============================
   function pageskip(){
-		
+
 		if(fiearr.length == 0){ //まだページが選択されていない
 			alert("スキップできません");
 		}else if(fiearr[fie]["sel"].length == 0){
@@ -549,7 +604,7 @@ function write_savefile(){
 			alert("現在のページには選択肢が複数あるため、スキップできません。");
 		}else{
 			var ifskip = window.confirm("次に来る、選択肢が複数あるページまでスキップしますか？（この先にそのようなページがない場合は、最後のページまでスキップされます）");
-			
+
 			if(ifskip){
 				while(1){
 					if (fiearr[fie]["sel"].length == 1){  //選択肢数が1の時、その先へ
@@ -562,9 +617,9 @@ function write_savefile(){
 			}
 		}
   }
-	
 
-  
+
+
   //スクリプトでかける関数=========================================================-
   //マップ移動
   function mov(tow) {
@@ -578,7 +633,7 @@ function write_savefile(){
 		if(!itearr[n]["hav"]){
 			geti_alert(true);
 		}
-		
+
     itearr[n]["hav"]=true;
     display_ite();
   }
@@ -608,7 +663,7 @@ function write_savefile(){
   function hav(n){
     return(itearr[n]["hav"]);
   }
-	
+
   //document.getElementById(id).innerHTML = str の糖衣
   function gebi(id, str){
     document.getElementById(id).innerHTML = str;
@@ -659,4 +714,3 @@ function write_savefile(){
   function ceil(x){
     return(Math.ceil(x));
   }
-	
