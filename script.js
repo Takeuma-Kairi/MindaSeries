@@ -70,16 +70,19 @@ function sort_page_sel_table(){
 		var ran_select = document.getElementById("ran_select");
 		var ran_setting = document.getElementById("ran_setting");
 		var ran_page = document.getElementById("ran_page");
+		var tab_yajirushi = document.getElementById("tab_yajirushi");
 
 		if(header.style.display == "none"){
-			tab_close.innerHTML = "↑タブ";
+			tab_close.className = "tool_button tab_close";
+			tab_yajirushi.className="yajirushi_close";
 			header.style.display = "block";
 
 			ran_select.className= "ran";
 			ran_setting.className= "ran";
 			ran_page.className = "ran";
 		}else{
-			tab_close.innerHTML = "↓タブ";
+			tab_close.className = "tool_button tab_open";
+			tab_yajirushi.className="yajirushi_open";
 			header.style.display = "none";
 
 			ran_select.className= "ran ran_without_header";
@@ -112,35 +115,23 @@ function sort_page_sel_table(){
 		}
 	}
 
-//横幅の制限--================================================================
-  function change_yokohaba(){
-    var chb_yokohaba = document.getElementById("chb_yokohaba");
-    var desc_and_item = document.getElementById("desc_and_item");
-
-    if(chb_yokohaba.checked){
-      desc_and_item.style.width = "330px";
-    }else{
-      desc_and_item.style.width = "100%";
-    }
-  }
-
 //ページを左揃えにする--================================================================
-  function change_align_left(){
-    var chb_align_left = document.getElementById("chb_align_left");
+  function change_align_center(){
+    var chb_align_center = document.getElementById("chb_align_center");
     var desc_and_item = document.getElementById("desc_and_item");
 
-    if(chb_align_left.checked){
-      desc_and_item.style.textAlign = "left";
-    }else{
+    if(chb_align_center.checked){
       desc_and_item.style.textAlign = "center";
+    }else{
+      desc_and_item.style.textAlign = "left";
     }
   }
 
 
 //フォントサイズの変更==========================================================
-function change_fontsize(p = "16"){
+function change_fontsize(p = "18"){
 	const MAX = "30";
-	const VALUE = "16";
+	const VALUE = "18";
 	const MIN = "12";
 
 	var parseInt_result = parseInt(p);
@@ -205,13 +196,11 @@ function change_ranwidth(p="60"){
 //設定のリセット(横幅、左揃え、フォントサイズ)==========================================================
 function reset_setting(){
  	var chb_yokohaba = document.getElementById("chb_yokohaba");
-	var chb_align_left = document.getElementById("chb_align_left");
+	var chb_align_center = document.getElementById("chb_align_center");
 
-	chb_yokohaba.checked = false;
-	chb_align_left.checked = false;
+	chb_align_center.checked = false;
 
-	change_yokohaba();
-	change_align_left();
+	change_align_center();
 	change_fontsize();
 	change_ranwidth();
 }
@@ -309,7 +298,7 @@ function write_savefile(){
     }
 
     show_page();
-    alert("セーブデータがロードされました。")
+    alert("ロードされました。")
   }
 
 

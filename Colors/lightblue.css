@@ -24,6 +24,10 @@ header {
 	/* #B9C2CC */
 }
 
+.non-active_li:hover{
+	background-color:  #C1CEE1;
+}
+
 /*ハイパーリンクのテキスト*/
 .hl-border{
   border-bottom: #03A9F4 solid 1px;

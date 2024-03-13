@@ -14,16 +14,28 @@ header {
 }
 
 .active-li{
-  background-color: #293134;
-	color: #B6F6F0;
+  background-color: #4388a4;
+	color: #FDFDFD;
 }
 
 /* 非アクティブなヘッダーのタブ */
 .non-active_li{
-  color: #ABCFF2;
+  background-color: #abc4ce;
+  color: #3C4855;
 	/* #B9C2CC */
 }
 
+.non-active_li:hover{
+	background-color: #80acbd;
+}
+
+
+.yajirushi_close{
+	filter:invert(100%);
+}
+.yajirushi_open{
+	filter:invert(100%);
+}
 /*ハイパーリンクのテキスト*/
 .hl-border{
   border-bottom: #c1e3ff solid 1px;
@@ -34,7 +46,7 @@ header {
 }
 
 .tool_button{
-  background-color:  #ABCFF2;
+  background-color:  #C1D4E6;
 	color: #2E2E2E;
 }
 

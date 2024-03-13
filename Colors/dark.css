@@ -21,6 +21,19 @@ header {
 .non-active_li{
   color: #a1a1a1;
 }
+/* 非アクティブなヘッダーのタブ */
+.non-active_li:hover{
+	background-color: #4a4a4a;
+}
+
+
+.yajirushi_close{
+	filter:invert(100%);
+}
+.yajirushi_open{
+	filter:invert(100%);
+}
+
 
 /*ハイパーリンクのテキスト*/
 .hl-border{
@@ -33,8 +46,8 @@ header {
 
 
 .tool_button{
-  background-color:#535353;
-	color: #d7d7d7;
+  background-color:#d6d6d6;
+	color: #262626;
 }
 
 .geti_alert{
