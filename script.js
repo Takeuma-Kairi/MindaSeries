@@ -3,7 +3,7 @@ var itearr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有
 var fiearr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, 実行文章]]
 var fie = 0;      //フィールド番号
 var numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
-
+var ifAuthor = false;
 
 var breadcrumbs = []; //セーブデータの配列。パンくず。
 
@@ -244,6 +244,17 @@ function change_colorscheme(colorscheme_name) {
 window.addEventListener('DOMContentLoaded', function() {
   sort_page_sel_table();
 });
+
+//============================================================================
+function password_insert(){
+	var password = prompt("パスワード？");
+	if(password == "du34fushi@gmail.com"){
+		ifAuthor= true;
+	}else{
+		alert("パスワードが違います");
+	}
+}
+
 
 //================
 //セーブデータの書き出し
@@ -505,9 +516,30 @@ function write_savefile(){
   function show_page(){
     var page=document.getElementById("d_desc");
     //ページ名＆ページ説明div
-		var ans = '<p class="page-title"><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p><div>"
-                      + fiearr[fie]["exp"] + '</div><div style="display:inline-block;text-align:left"><ul>';
 
+		if(!ifAuthor){
+			var ans = '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
+					+ fiearr[fie]["nam"]
+					+ "</span></p><div>"
+                    + fiearr[fie]["exp"]
+					+ '</div><div style="display:inline-block;text-align:left"><ul>';
+		}else{
+			exp_for_textarea = fiearr[fie]["exp"];
+			exp_for_textarea = exp_for_textarea.replace(/<br>/g,'\n');
+			exp_for_textarea = exp_for_textarea.replace(/<\/?ruby>/g,'');
+			exp_for_textarea = exp_for_textarea.replace(/<\/?rt>/g,'');
+			exp_for_textarea = exp_for_textarea.replace(/<\/?rp>/g,'');
+			exp_for_textarea = exp_for_textarea.replace(/<\/?b>/g,'**');
+			//exp_for_textarea = exp_for_textarea.replace("<br>","\n");
+			var ans = '<textarea style="font-size:200%;font-weight:bold;width:100%;" rows="1">'
+					+ fiearr[fie]["nam"]
+					+ '</textarea><textarea id="temp_textarea" style="width:100%;" rows="10">'
+                    + exp_for_textarea
+					+ '</textarea>';
+
+
+					//document.getElementById("temp_textarea").value = exp_for_textarea;
+		}
     //ページの選択肢
     for(var i=0;i<fiearr[fie]["sel"].length;i++){
       ans += '<li class="li_sel" onclick="' + fiearr[fie]["sel"][i][1] + '">'
@@ -516,6 +548,7 @@ function write_savefile(){
     ans += "</ul></div>";
 
     page.innerHTML = ans;
+
 
   }
 
@@ -616,7 +649,7 @@ function write_savefile(){
     breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
     show_page();
   }
-
+  //===========================================================================
   //アイテム獲得
   function geti(n){
 		if(!itearr[n]["hav"]){
