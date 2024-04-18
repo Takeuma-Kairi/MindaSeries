@@ -117,7 +117,7 @@
     </p>
 
         <p>
-            <label>横幅の調整（ディスプレイの横幅に占める%。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
+            <label>横幅の調整（ディスプレイの横幅に占めるパーセント。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
             <!-- 以下の、min or max or value を変更した場合、change_ranwidthも変更すること！-->
             <input type="range" id="ran_width_range" min="25" max="100" value="60" step="1"
                  onchange="change_ranwidth(this.value)">
@@ -163,6 +163,13 @@
         </label>
       </p>
     </p>
+
+    <hr>
+    <p>
+        <h2>開発者モード</h2>
+        <button onclick="password_insert()">パスワード入力…</button>
+    </p>
+
 	</div>
 
   <!-- ページ欄================================================================ -->
@@ -178,6 +185,8 @@
         <div class="tool_button redo_and_skip" onclick="remov()">戻る</div>
         <div class="tool_button redo_and_skip" onclick="pageskip()">スキップ</div>
       </div>
+
+
 
       <!--　描写 -->
       <div id="d_desc">
