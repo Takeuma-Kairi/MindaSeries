@@ -3,6 +3,12 @@ var itearr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有
 var fiearr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, 実行文章]]
 var fie = 0;      //フィールド番号
 var numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
+
+
+    //gotoタブを実装
+var tabnamearr = {};
+    //ーーーーー
+
 var ifAuthor = false;
 
 var breadcrumbs = []; //セーブデータの配列。パンくず。
@@ -359,6 +365,11 @@ function write_savefile(){
 		fiearr = [];
 		numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		breadcrumbs = [];
+    
+    //gotoタブを実装
+    tabnamearr = {};
+    //ーーーーー
+    
 		fie = 0;
 
 		//アイテム欄の非表示
@@ -412,10 +423,16 @@ function write_savefile(){
 						if(arr[i] == "</map>"){  //タグの終わり
 							break;
 						}else{
+              
 							if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
 								temp_map=parseInt(RegExp.$1);
 								fiearr[temp_map]={nam: "", exp:"", sel:[]};
-
+                
+              //Gotoタブ実装==第0ページの上(<map>タグ直下)には、タブをおかない！tob()しても第「1」ページに飛んでしまう！
+              }else if(arr[i].match(/==(.+)==/)){
+                tabnamearr[RegExp.$1] = temp_map + 1;
+                
+              //======================================================
 							}else if(arr[i].match(/n:(.+)/)) {  //名前
 								fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
 
@@ -648,6 +665,11 @@ function write_savefile(){
     fie = tow;
     breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
     show_page();
+  }
+  
+  //タブGoto実装-=-----------------------------------------------------------------
+  function tob(tow){
+    mov(tabnamearr[tow]);
   }
   //===========================================================================
   //アイテム獲得
