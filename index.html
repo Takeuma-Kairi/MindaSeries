@@ -141,8 +141,8 @@
 			<select onchange="change_colorscheme(this.value)">
 				<option value="default">ライト</option>
 				<option value="dark">ダーク</option>
-				<option value="lightblue">ライト　ブルー</option>
-				<option value="darkblue">ダーク　ブルー</option>
+				<option value="lightblue">ライト ブルー</option>
+				<option value="darkblue">ダーク ブルー</option>
 			</select>
 
 		</p>
@@ -151,6 +151,18 @@
 			<button onclick="reset_setting()"/>設定のリセット</button>
 		</p>
     <hr>
+    
+    <p>
+    <h2>通常モード、全ページ閲覧モード</h2>
+    全ページ閲覧モード：「ページ」タブで、ページの内容全てを確認できます。
+    <br>
+    ボタンを押すと通常／全ページ閲覧モードを入れ替えます。
+    <br>
+    <button id="all_page_mode"
+onclick="all_page_mode_change()">→全ページ閲覧モード</button>
+    </p>
+    <hr>
+    
     <p>
       <h2>セーブ機能</h2>
       <p>
@@ -186,9 +198,23 @@
         <div class="tool_button redo_and_skip" onclick="pageskip()">スキップ</div>
       </div>
 
-
-
-      <!--　描写 -->
+      <!-- 全ページモード ----------------------------------- -->
+      <div id="all_page_view" style="display: none">
+        <!--セレクト リスト-->
+        全ページリスト：
+        <select id="all_page_sel" size="1" onchange="all_page_mov(this.value)"></select>
+        
+        <!--ボタン 「←」 「→」 -->
+        <button id="all_page_down" onclick="all_page_step(-1);">←</button>
+        <button id="all_page_up" onclick="all_page_step(1);">→</button>
+        
+        <!--ページの意義 未定-->
+        <div id="all_page_mean"> 
+        </div>
+      </div>
+      <!----------------------------------------------------->
+      
+      <!--描写 -->
       <div id="d_desc">
 				まだページのデータがありません。「選択」タブに戻って、ページを選択してください。
       </div>

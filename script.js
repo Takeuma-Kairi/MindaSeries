@@ -13,6 +13,11 @@ var ifAuthor = false;
 
 var breadcrumbs = []; //セーブデータの配列。パンくず。
 
+
+//通常モード、前ページ閲覧モードの文章
+const ToTSUJO= "→通常モード";
+const ToZENPAGE="→全ページ閲覧モード";
+
 //ページ選択テーブルのソート======================================================
 function sort_page_sel_table(){
 		var way = document.getElementById("way_sel").value;
@@ -251,7 +256,7 @@ window.addEventListener('DOMContentLoaded', function() {
   sort_page_sel_table();
 });
 
-//============================================================================
+//開発者モード==================================================================
 function password_insert(){
 	var password = prompt("パスワード？");
 	if(password == "du34fushi@gmail.com"){
@@ -259,6 +264,66 @@ function password_insert(){
 	}else{
 		alert("パスワードが違います");
 	}
+}
+
+//全ページモードで、セレクトリストで選んだ時================================================
+function all_page_mov(tow){
+  tow = parseInt(tow);
+  mov(tow);
+}
+
+//全ページモードで、←、→ボタンで選んだ時=======================================
+function all_page_step(step){
+  var all_page_sel = document.getElementById("all_page_sel");
+  tow_temp=fie+step;
+  
+  //選択ページ番号がオーバーフローしないか
+  if(tow_temp >=0 && tow_temp<fiearr.length){
+    mov(tow_temp);
+  }
+}
+
+//セレクト リストのリセットと書き直し=====================================================
+function all_page_sel_clean(){
+  var all_page_sel = document.getElementById("all_page_sel");
+
+  all_page_sel.length = 0;
+
+  for(var i=0; i<fiearr.length;i++){
+    let op = document.createElement('option');
+    op.text=i;
+    op.value=i;
+    all_page_sel.appendChild(op);
+  }
+
+  mov(0);
+  all_page_sel.selectedIndex=0;
+}
+
+
+//通常モード、前ページ閲覧モードの入れ替え=================================================
+function all_page_mode_change(){
+
+
+  var all_page_mode = document.getElementById("all_page_mode");
+  var all_page_sel = document.getElementById("all_page_sel");
+  var all_page_view = document.getElementById("all_page_view");
+
+  //全ページ閲覧モードへの移行
+  if (all_page_mode.textContent== ToZENPAGE){
+    all_page_mode.textContent= ToTSUJO;
+    all_page_view.style.display ="inline-block";
+
+    //ページがロードされているならば、いったんリセットしてセレクト リストを書き直す。さもなくば何もしない
+    if(fiearr.length != 0){
+      all_page_sel_clean();
+    }
+    
+  //通常モードへの移行
+  }else{
+    all_page_mode.textContent= ToZENPAGE;
+    all_page_view.style.display ="none";
+  }
 }
 
 
@@ -462,7 +527,15 @@ function write_savefile(){
       document.getElementById("d_desc").innerText = jstr;
       break; */
 			document.getElementById("button_redo_and_skip").style.display="inline-block";
-      show_introduction();
+      
+      var all_page_mode = document.getElementById("all_page_mode");
+      
+      if(all_page_mode.textContent==ToZENPAGE){
+        show_introduction();
+      }else{
+        all_page_sel_clean();
+      }
+      
 			change_li(2);
 			scrollTo(0,0);
 		}
@@ -664,6 +737,13 @@ function write_savefile(){
   function mov(tow) {
     fie = tow;
     breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
+    
+    //全ページ閲覧モードなら、セレクト リストに反映する
+    var all_page_mode = document.getElementById("all_page_mode");
+    if(all_page_mode.textContent == ToTSUJO){
+      all_page_sel.selectedIndex=tow;
+    }
+    
     show_page();
   }
   
