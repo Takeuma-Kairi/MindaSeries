@@ -261,6 +261,12 @@ function password_insert(){
 	var password = prompt("パスワード？");
 	if(password == "du34fushi@gmail.com"){
 		ifAuthor= true;
+
+		//全ページ閲覧モード
+		document.getElementById("all_page_mode").textContent= ToZENPAGE;
+		alert(document.getElementById("all_page_mode").textContent);
+		all_page_mode_change();
+
 	}else{
 		alert("パスワードが違います");
 	}
@@ -276,7 +282,7 @@ function all_page_mov(tow){
 function all_page_step(step){
   var all_page_sel = document.getElementById("all_page_sel");
   tow_temp=fie+step;
-  
+
   //選択ページ番号がオーバーフローしないか
   if(tow_temp >=0 && tow_temp<fiearr.length){
     mov(tow_temp);
@@ -318,7 +324,7 @@ function all_page_mode_change(){
     if(fiearr.length != 0){
       all_page_sel_clean();
     }
-    
+
   //通常モードへの移行
   }else{
     all_page_mode.textContent= ToZENPAGE;
@@ -430,11 +436,11 @@ function write_savefile(){
 		fiearr = [];
 		numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		breadcrumbs = [];
-    
+
     //gotoタブを実装
     tabnamearr = {};
     //ーーーーー
-    
+
 		fie = 0;
 
 		//アイテム欄の非表示
@@ -488,15 +494,15 @@ function write_savefile(){
 						if(arr[i] == "</map>"){  //タグの終わり
 							break;
 						}else{
-              
+
 							if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
 								temp_map=parseInt(RegExp.$1);
 								fiearr[temp_map]={nam: "", exp:"", sel:[]};
-                
+
               //Gotoタブ実装==第0ページの上(<map>タグ直下)には、タブをおかない！tob()しても第「1」ページに飛んでしまう！
               }else if(arr[i].match(/==(.+)==/)){
                 tabnamearr[RegExp.$1] = temp_map + 1;
-                
+
               //======================================================
 							}else if(arr[i].match(/n:(.+)/)) {  //名前
 								fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
@@ -527,15 +533,15 @@ function write_savefile(){
       document.getElementById("d_desc").innerText = jstr;
       break; */
 			document.getElementById("button_redo_and_skip").style.display="inline-block";
-      
+
       var all_page_mode = document.getElementById("all_page_mode");
-      
+
       if(all_page_mode.textContent==ToZENPAGE){
         show_introduction();
       }else{
         all_page_sel_clean();
       }
-      
+
 			change_li(2);
 			scrollTo(0,0);
 		}
@@ -621,9 +627,9 @@ function write_savefile(){
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rp>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?b>/g,'**');
 			//exp_for_textarea = exp_for_textarea.replace("<br>","\n");
-			var ans = '<textarea style="font-size:200%;font-weight:bold;width:100%;" rows="1">'
+			var ans = '<textarea style="font-size:200%;font-weight:bold;width:95%;" rows="1">'
 					+ fiearr[fie]["nam"]
-					+ '</textarea><textarea id="temp_textarea" style="width:100%;" rows="10">'
+					+ '</textarea><textarea id="temp_textarea" style="width:95%;" rows="20">'
                     + exp_for_textarea
 					+ '</textarea>';
 
@@ -737,16 +743,16 @@ function write_savefile(){
   function mov(tow) {
     fie = tow;
     breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
-    
+
     //全ページ閲覧モードなら、セレクト リストに反映する
     var all_page_mode = document.getElementById("all_page_mode");
     if(all_page_mode.textContent == ToTSUJO){
       all_page_sel.selectedIndex=tow;
     }
-    
+
     show_page();
   }
-  
+
   //タブGoto実装-=-----------------------------------------------------------------
   function tob(tow){
     mov(tabnamearr[tow]);
