@@ -648,6 +648,54 @@ function write_savefile(){
 
   }
 
+
+  //=============================================================================
+  function fie_title_write(fie){
+    var temp = 
+          '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
+            + fiearr[fie]["nam"]
+            + "</span></p>";
+    return(temp);
+  }
+  //=============================================================================
+  function fie_exp_write(fie){
+    var temp = "<div>" 
+          + fiearr[fie]["exp"]
+          + '</div>';
+    return(temp);
+  }
+  
+  //===========================================================================
+  function straight_mov(){  //movという名前だが、下に積み上げ式のfie表示
+    fie = 0;
+    
+     
+    var page=document.getElementById("d_desc"); 
+    var ans ="";  //最終表示内容
+    
+    
+    //====[ 表示する内容 ]=====
+    //0ページ目、および、前のページとタイトルが違うページ： タイトル(nam) & 内容(exp)
+    //                               それ以外： 内容(exp)のみ
+    //
+    //全ページをforで走査して、ansに表示事項を積み上げる。
+    
+    for(var eachfie=0; eachfie< fiearr.length; eachfie++){
+      if(eachfie != 0){
+        if(fiearr[eachfie-1]["nam"] == fiearr[eachfie]["nam"]){ 
+          ans += "<br>" + fie_exp_write(eachfie)+ "<hr>";
+        }else{
+          ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<hr>";
+        }
+      }else{
+        ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<hr>";
+      }
+    }
+    
+    page.innerHTML = ans; //表示
+    
+  }
+
 	//========================================================================
 
 	//イントロダクションを表示
@@ -656,7 +704,14 @@ function write_savefile(){
 
 		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p>";
 
-		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="mov(0)">始める</li></ul></div>';
+		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="mov(0)">始める</li>';
+    
+    //===========================
+    
+    abst+= '<li class="li_sel" onclick="straight_mov()">下に積み上げて表示(調整中！)</li>';
+    
+    //===========================
+    abst += '</ul></div>';                          
 
 		//ページ数
 		abst += "<p>[ ページ数 : " + fiearr.length + " ]</p>";
