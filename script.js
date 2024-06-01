@@ -4,6 +4,7 @@ var fiearr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, �
 var fie = 0;      //フィールド番号
 var numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
 
+var if_down_showable = false;
 
     //gotoタブを実装
 var tabnamearr = {};
@@ -76,24 +77,25 @@ function sort_page_sel_table(){
 	}
 //=タブを閉じる================================================================
 	function tab_close(){
-		var tab_close= document.getElementById("tab_close");
+		var tab_close= document.getElementById("tab_close_button");
 		var header= document.getElementById("header");
 		var ran_select = document.getElementById("ran_select");
 		var ran_setting = document.getElementById("ran_setting");
 		var ran_page = document.getElementById("ran_page");
-		var tab_yajirushi = document.getElementById("tab_yajirushi");
+		/* var tab_yajirushi = document.getElementById("tab_yajirushi"); */
 
 		if(header.style.display == "none"){
-			tab_close.className = "tool_button tab_close";
-			tab_yajirushi.className="yajirushi_close";
+			tab_close.innerHTML = "↑タブ非表示";
+			/* tab_yajirushi.className="yajirushi_close"; */
 			header.style.display = "block";
 
 			ran_select.className= "ran";
 			ran_setting.className= "ran";
 			ran_page.className = "ran";
 		}else{
-			tab_close.className = "tool_button tab_open";
-			tab_yajirushi.className="yajirushi_open";
+			tab_close.innerHTML = "↑タブ 表示";
+			/* tab_close.className = "tool_button tab_open"; */
+			/* tab_yajirushi.className="yajirushi_open"; */
 			header.style.display = "none";
 
 			ran_select.className= "ran ran_without_header";
@@ -424,7 +426,11 @@ function write_savefile(){
 
   //=======================================
   //ページデータを整形して得る
-  function load_data(scr){
+  function load_data(scr, temp_if_down_showable=false){
+    
+    /* 下に積み上げて表示するか(するならtrue) */
+    if_down_showable = temp_if_down_showable;
+    
     scr = scr.replace(/\r\n/g,'\n'); //改行コードの統一
     scr = scr.replace(/\r/g, '\n');	 //改行コードの統一
 
@@ -708,7 +714,9 @@ function write_savefile(){
     
     //===========================
     
-    abst+= '<li class="li_sel" onclick="straight_mov()">下に積み上げて表示(調整中！)</li>';
+    if(if_down_showable){
+      abst += '<li class="li_sel" onclick="straight_mov()">下に積み上げて表示</li>';
+    }
     
     //===========================
     abst += '</ul></div>';                          

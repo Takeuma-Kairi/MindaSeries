@@ -3,9 +3,6 @@ body{
   font-size: 18px;
 }
 
-h1{
-  margin:0px;
-}
 
 /* =========================================================== */
 /* タブ */
@@ -16,6 +13,7 @@ header {
   top: -1px;
   left: 0;
   right: 0;
+  
 }
 
 nav ul {
@@ -24,28 +22,32 @@ nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  justify-content: center;
 }
 
 nav ul li {
-  width: 35%;
+  width: 120px;
   font-size: 1.1em;
-  line-height: 50px;
+  line-height: 34px;
+  /* padding: 10px; */
+  margin: 7px;
+  border-radius: 10px;
 }
 
-nav ul li:first-of-type{
-  /* border-top: white solid 1px; */
+ /*nav ul li:first-of-type{
+  border-top: white solid 1px; 
   border-right: white solid 1px;
 }
 
 
 /* nav ul li:nth-of-type(2){
   border-top: white solid 1px;
-} */
+}
 
 nav ul li:last-of-type{
-  /* border-top: white solid 1px; */
+  /* border-top: white solid 1px;
   border-left: white solid 1px;
-}
+}*/
 
 /* =========================================================== */
 /* 欄 */
@@ -91,6 +93,8 @@ nav ul li:last-of-type{
 .tool_button{
   padding: 5px;
   margin: 5px;
+  border-radius: 11px;
+  font-size: 90%;
   display: inline-block;
 }
 

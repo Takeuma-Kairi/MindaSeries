@@ -1,57 +1,51 @@
-h1{
-	color: #eaeaea;
-}
-
-header {
-  background-color: #2e3235;
-}
-
-.active-li{
-  background-color: #7b7b7b;
-	color: #eaeaea;
-}
-
-/* 非アクティブなヘッダーのタブ */
-.non-active_li{
-  color: #ececec;
-}
-/* 非アクティブなヘッダーのタブ */
-.non-active_li:hover{
-	background-color: #5d645f;
-}
-
 .body{
 	background-color: #fbfbfb;
 	color: #515151;
 }
 
-.li_sel{
+/*ヘッダーのタブ*/
+header {
+  background-color: white; 
+  border-bottom: gray solid 1px;
+}
+
+.active-li{
+  background-color: #444444;
+  border: #444444 solid 1px;
+	color: #ebebeb;
+  
+}
+
+/* 非アクティブなヘッダーのタブ */
+.non-active_li{
+  border: #444444 solid 1px;
+  color: #303030; 
+}
+
+/* ページの選択肢、ハイパーリンクのテキストのフォントカラー */
+.li_sel, .hl-border{
 	color:	#911616;
 }
 
-/*ハイパーリンクのテキスト*/
+/*ハイパーリンクのテキストの下線 */
 .hl-border{
   border-bottom: #911616 solid 1px;
 }
 
+/* 戻る、スキップ、アイテム表示などのツールボタンの色 */
 .tool_button{
-  background-color: #303030;
-  color:#eaeaea;
+  background-color: #bfbfbf;
+  color: #1b1b1b;
 }
 
-
+/* 新規アイテム入手時のアラート色 */
 .geti_alert{
 	background-color:  #b32c2d;
 	color: #eaeaea;
 }
 
-.page_sel_table tr{
+/* ページ選択用の表 枠の色、フォントの色 */
+.page_sel_table tr, td, th{
   border: gray solid 1px;
-}
-
-.page_sel_table tr td{
-  border:gray solid 1px;
-}
-.page_sel_table tr th{
-  border:gray solid 1px;
+  color: black;
 }
