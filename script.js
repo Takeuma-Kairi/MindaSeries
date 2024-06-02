@@ -687,14 +687,14 @@ function write_savefile(){
     //全ページをforで走査して、ansに表示事項を積み上げる。
     
     for(var eachfie=0; eachfie< fiearr.length; eachfie++){
-      if(eachfie != 0){
+      if(eachfie != 0){ 
         if(fiearr[eachfie-1]["nam"] == fiearr[eachfie]["nam"]){ 
-          ans += "<br>" + fie_exp_write(eachfie)+ "<hr>";
+          ans += "<br>" + fie_exp_write(eachfie)+ "<br><hr>"; //0ページ目ではなく、名前は前と同じな場合
         }else{
-          ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<hr>";
+          ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<br><hr>"; //0ページ目ではなく、名前は前と違う場合
         }
       }else{
-        ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<hr>";
+        ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<br><hr>"; //0ページの場合
       }
     }
     
