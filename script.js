@@ -661,10 +661,10 @@ function copy_textarea_memo() {
   var desc = document.getElementById("desc_textarea");
 
   var ans = "[" 
-    + titl.textContent
+    + titl.value
     + "\n"
-    + desc.textContent
-    + "b]\n";
+    + desc.value
+    + "\nb]\n";
     
   navigator.clipboard.writeText(ans)
 }
