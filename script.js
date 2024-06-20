@@ -633,14 +633,14 @@ function write_savefile(){
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rp>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?b>/g,'**');
 			//exp_for_textarea = exp_for_textarea.replace("<br>","\n");
-			var ans = '<textarea style="font-size:200%;font-weight:bold;width:95%;" rows="1">'
+			var ans = '<button onclick="copy_textarea_memo()">コピー</button>'
+          +'<textarea id="title_textarea" style="font-size:36px;font-weight:bold;width:368px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="1">'
 					+ fiearr[fie]["nam"]
-					+ '</textarea><textarea id="temp_textarea" style="width:95%;" rows="20">'
+					+ '</textarea><textarea id="desc_textarea" style="width:368px;font-size:18px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="20">'
                     + exp_for_textarea
 					+ '</textarea>';
 
 
-					//document.getElementById("temp_textarea").value = exp_for_textarea;
 		}
     //ページの選択肢
     for(var i=0;i<fiearr[fie]["sel"].length;i++){
@@ -654,7 +654,20 @@ function write_savefile(){
 
   }
 
+//クリップボードにコピー==================================================================
+function copy_textarea_memo() {
 
+  var titl = document.getElementById("title_textarea");
+  var desc = document.getElementById("desc_textarea");
+
+  var ans = "[" 
+    + titl.textContent
+    + "\n"
+    + desc.textContent
+    + "b]\n";
+    
+  navigator.clipboard.writeText(ans)
+}
   //=============================================================================
   function fie_title_write(fie){
     var temp = 
