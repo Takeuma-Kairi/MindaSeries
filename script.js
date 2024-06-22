@@ -637,8 +637,8 @@ function write_savefile(){
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rp>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?b>/g,'**');
 			//exp_for_textarea = exp_for_textarea.replace("<br>","\n");
-			var ans = '<button style="font-size:200%" onclick="copy_textarea_memo()">コピー</button>'
-          +'<button style="font-size:200%" onclick="delete_textarea_memo()">クリア</button>'
+			var ans = '<button style="font-size:150%" onclick="copy_textarea_memo()">コピー</button>'
+          +'<button style="font-size:150%" onclick="delete_textarea_memo()">クリア</button>'
           +'<textarea id="title_textarea" style="font-size:36px;font-weight:bold;width:368px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="1">'
 					+ fiearr[fie]["nam"]
 					+ '</textarea><textarea id="desc_textarea" style="width:368px;font-size:18px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="20">'
@@ -674,7 +674,7 @@ function copy_textarea_memo() {
   navigator.clipboard.writeText(ans)
 }
 //================================================================================
-function copy_textarea_memo() {
+function delete_textarea_memo() {
 
   var desc = document.getElementById("desc_textarea");
 
