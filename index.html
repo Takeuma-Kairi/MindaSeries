@@ -64,49 +64,54 @@
 
 		<table class="page_sel_table" id="page_sel_table">
 			<tr>
-				<th>ストーリー名</th>
+				<th>補助タイトル</th>
+        <th>ファイル名</th>
 				<th>シリーズ</th>
-				<th>作成順</th>
-				<th>時系列順</th>
+				<th style="display:none">作成順</th>
+				<th style="display:none">時系列順</th>
 			</tr>
+      
+<tr onclick='load_data(Nitori, true)'>	<td>二鳥からの手紙</td>	<td>Nitori</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>35</td>	<td style='display:none'>23</td></tr>
+<tr onclick='load_data(RNakia, true)'>	<td>伝説の復古</td>	<td>RNakia</td>	<td><div class='series_color_tag sana'>4.サナ</div></td>	<td style='display:none'>34</td>	<td style='display:none'>13</td></tr>
+<tr onclick='load_data(Habaic, true)'>	<td>流星の夜</td>	<td>Habaic</td>	<td><div class='series_color_tag sana'>4.サナ</div></td>	<td style='display:none'>33</td>	<td style='display:none'>14</td></tr>
+<tr onclick='load_data(Utagemaru, true)'>	<td>宴丸の使命</td>	<td>Utagemaru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>32</td>	<td style='display:none'>5</td></tr>
+<tr onclick='load_data(Gerufaru, true)'>	<td>ゲルファルの身の上</td>	<td>Gerufaru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>27</td>	<td style='display:none'>31</td></tr>
+<tr onclick='load_data(Gebu, true)'>	<td>迷い子ゲブ</td>	<td>Gebu</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>26</td>	<td style='display:none'>2</td></tr>
+<tr onclick='load_data(Paripero, true)'>	<td>禁忌知見集</td>	<td>Paripero</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>25</td>	<td style='display:none'>12</td></tr>
+<tr onclick='load_data(Akisato, true)'>	<td>ばせる様の進軍</td>	<td>Akisato</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>24</td>	<td style='display:none'>9</td></tr>
+<tr onclick='load_data(Baseru, true)'>	<td>あらわれるばせる様</td>	<td>Baseru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>23</td>	<td style='display:none'>8</td></tr>
+<tr onclick='load_data(Yoshine2, true)'>	<td>ばせる様の暴動と芦音</td>	<td>Yoshine2</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>22</td>	<td style='display:none'>11</td></tr>
+<tr onclick='load_data(Umiao, true)'>	<td>緑ヶ淵の閉山</td>	<td>Umiao</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>21</td>	<td style='display:none'>10</td></tr>
+<tr onclick='load_data(Hitami2, true)'>	<td>煙石様の再来</td>	<td>Hitami2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>17</td>	<td style='display:none'>27</td></tr>
+<tr onclick='load_data(Inome3, true)'>	<td>猪目の失態と動揺</td>	<td>Inome3</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>15</td>	<td style='display:none'>22</td></tr>
+<tr onclick='load_data(Minda3, true)'>	<td>ミンダの夢と黒傘の不安</td>	<td>Minda3</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>14</td>	<td style='display:none'>21</td></tr>
+<tr onclick='load_data(Hitami, true)'>	<td>ひたみの苦悩</td>	<td>Hitami</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>12</td>	<td style='display:none'>24</td></tr>
+<tr onclick='load_data(Suihoun, true)'>	<td>乾いた大地、氷の大地</td>	<td>Suihoun</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>9</td>	<td style='display:none'>17</td></tr>
+<tr onclick='load_data(Meiju)'>	<td>空船なりの忠誠</td>	<td>Meiju</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>31</td>	<td style='display:none'>1</td></tr>
+<tr onclick='load_data(Seri)'>	<td>カッターの戦略</td>	<td>Seri</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>30</td>	<td style='display:none'>4</td></tr>
+<tr onclick='load_data(Uzinos)'>	<td>永王の衝撃</td>	<td>Uzinos</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>29</td>	<td style='display:none'>3</td></tr>
+<tr onclick='load_data(Goeibara)'>	<td>永王への帰依</td>	<td>Goeibara</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>28</td>	<td style='display:none'>34</td></tr>
+<tr onclick='load_data(Minda5_2)'>	<td>おわり、その先へ2</td>	<td>Minda5_2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>20</td>	<td style='display:none'>33</td></tr>
+<tr onclick='load_data(Minda5_1)'>	<td>おわり、その先へ1</td>	<td>Minda5_1</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>19</td>	<td style='display:none'>32</td></tr>
+<tr onclick='load_data(Minda4)'>	<td>光の足音と背後</td>	<td>Minda4</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>18</td>	<td style='display:none'>30</td></tr>
+<tr onclick='load_data(Kurokasa)'>	<td>大鹿が呼ぶ</td>	<td>Kurokasa</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>16</td>	<td style='display:none'>29</td></tr>
+<tr onclick='load_data(Inome2)'>	<td>揺れ動く猪目</td>	<td>Inome2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>13</td>	<td style='display:none'>6</td></tr>
+<tr onclick='load_data(Yoshine)'>	<td>爆薬運搬任務</td>	<td>Yoshine</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>11</td>	<td style='display:none'>26</td></tr>
+<tr onclick='load_data(Ippu)'>	<td>大鉱機の計画</td>	<td>Ippu</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>10</td>	<td style='display:none'>25</td></tr>
+<tr onclick='load_data(Fumi)'>	<td>五黒家と根の教会</td>	<td>Fumi</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>8</td>	<td style='display:none'>18</td></tr>
+<tr onclick='load_data(Baruru)'>	<td>バルルとニシン</td>	<td>Baruru</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>7</td>	<td style='display:none'>28</td></tr>
+<tr onclick='load_data(Sachi)'>	<td>白霧鉄山にて</td>	<td>Sachi</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>6</td>	<td style='display:none'>20</td></tr>
+<tr onclick='load_data(Sakuma)'>	<td>池家さくまの雑務</td>	<td>Sakuma</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>5</td>	<td style='display:none'>19</td></tr>
+<tr onclick='load_data(Inome)'>	<td>猪目 遥音の出張</td>	<td>Inome</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>4</td>	<td style='display:none'>15</td></tr>
+<tr onclick='load_data(Minda2)'>	<td>ミンダと赤い魚</td>	<td>Minda2</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>3</td>	<td style='display:none'>16</td></tr>
+<tr onclick='load_data(Minda)'>	<td>黒縄のミンダ</td>	<td>Minda</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>2</td>	<td style='display:none'>7</td></tr>
+<tr onclick='load_data(Kunugi)'>	<td>櫟木の一日</td>	<td>Kunugi</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>1</td>	<td style='display:none'>35</td></tr>
+<tr onclick='load_data(Abstract)'>	<td>あらすじ</td>	<td>Abstract</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
+<tr onclick='load_data(Dictionary)'>	<td>辞書</td>	<td>Dictionary</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
 
-<tr onclick="load_data(Abstract)">	<td>Abstract</td>	<td><div class="series_color_tag meta">0.メタ</div></td>	<td>0</td>	<td>0</td>	</tr>
-<tr onclick="load_data(Dictionary)">	<td>Dictionary</td>	<td><div class="series_color_tag meta">0.メタ</div></td>	<td>0</td>	<td>0</td>	</tr>
-<tr onclick="load_data(Meiju)">	<td>Meiju</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>31</td>	<td>1</td>	</tr>
-<tr onclick="load_data(Gebu,true)">	<td>Gebu</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>26</td>	<td>2</td>	</tr>
-<tr onclick="load_data(Uzinos)">	<td>Uzinos</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>29</td>	<td>3</td>	</tr>
-<tr onclick="load_data(Seri)">	<td>Seri</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>30</td>	<td>4</td>	</tr>
-<tr onclick="load_data(Utagemaru, true)">	<td>Utagemaru</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>32</td>	<td>5</td>	</tr>
-<tr onclick="load_data(Inome2)">	<td>Inome2</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>13</td>	<td>6</td>	</tr>
-<tr onclick="load_data(Minda)">	<td>Minda</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>2</td>	<td>7</td>	</tr>
-<tr onclick="load_data(Baseru, true)">	<td>Baseru</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>23</td>	<td>8</td>	</tr>
-<tr onclick="load_data(Akisato,true)">	<td>Akisato</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>24</td>	<td>9</td>	</tr>
-<tr onclick="load_data(Umiao, true)">	<td>Umiao</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>21</td>	<td>10</td>	</tr>
-<tr onclick="load_data(Yoshine2, true)">	<td>Yoshine2</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>22</td>	<td>11</td>	</tr>
-<tr onclick="load_data(Paripero,true)">	<td>Paripero</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>25</td>	<td>12</td>	</tr>
-<tr onclick="load_data(RNakia, true)">	<td>RNakia</td>	<td><div class="series_color_tag sana">4.サナ</div></td>	<td>34</td>	<td>13</td>	</tr>
-<tr onclick="load_data(Habaic,true)">	<td>Habaic</td>	<td><div class="series_color_tag sana">4.サナ</div></td>	<td>33</td>	<td>14</td>	</tr>
-<tr onclick="load_data(Inome)">	<td>Inome</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>4</td>	<td>15</td>	</tr>
-<tr onclick="load_data(Minda2)">	<td>Minda2</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>3</td>	<td>16</td>	</tr>
-<tr onclick="load_data(Suihoun,true)">	<td>Suihoun</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>9</td>	<td>17</td>	</tr>
-<tr onclick="load_data(Fumi)">	<td>Fumi</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>8</td>	<td>18</td>	</tr>
-<tr onclick="load_data(Sakuma)">	<td>Sakuma</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>5</td>	<td>19</td>	</tr>
-<tr onclick="load_data(Sachi)">	<td>Sachi</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>6</td>	<td>20</td>	</tr>
-<tr onclick="load_data(Minda3,true)">	<td>Minda3</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>14</td>	<td>21</td>	</tr>
-<tr onclick="load_data(Inome3,true)">	<td>Inome3</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>15</td>	<td>22</td>	</tr>
-<tr onclick="load_data(Hitami,true)">	<td>Hitami</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>12</td>	<td>23</td>	</tr>
-<tr onclick="load_data(Ippu)">	<td>Ippu</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>10</td>	<td>24</td>	</tr>
-<tr onclick="load_data(Yoshine)">	<td>Yoshine</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>11</td>	<td>25</td>	</tr>
-<tr onclick="load_data(Hitami2,true)">	<td>Hitami2</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>17</td>	<td>26</td>	</tr>
-<tr onclick="load_data(Baruru)">	<td>Baruru</td>	<td><div class="series_color_tag minda1">1.ミンダ前編</div></td>	<td>7</td>	<td>27</td>	</tr>
-<tr onclick="load_data(Kurokasa)">	<td>Kurokasa</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>16</td>	<td>28</td>	</tr>
-<tr onclick="load_data(Minda4)">	<td>Minda4</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>18</td>	<td>29</td>	</tr>
-<tr onclick="load_data(Gerufaru,true)">	<td>Gerufaru</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>27</td>	<td>30</td>	</tr>
-<tr onclick="load_data(Minda5_1)">	<td>Minda5_1</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>19</td>	<td>31</td>	</tr>
-<tr onclick="load_data(Minda5_2)">	<td>Minda5_2</td>	<td><div class="series_color_tag minda2">2.ミンダ後編</div></td>	<td>20</td>	<td>32</td>	</tr>
-<tr onclick="load_data(Goeibara)">	<td>Goeibara</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>28</td>	<td>33</td>	</tr>
-<tr onclick="load_data(Kunugi)">	<td>Kunugi</td>	<td><div class="series_color_tag variation">3.多様</div></td>	<td>1</td>	<td>34</td>	</tr>
-<tr onclick="load_data(Nitori,true)">	<td>Nitori</td>	<td><div class="series_color_tag minda2">3.ミンダ後編</div></td>	<td>35</td>	<td>16</td>	</tr>
+
+
+
 
 		</table>
 	</div>

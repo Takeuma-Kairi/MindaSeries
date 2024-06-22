@@ -21,15 +21,17 @@ const ToZENPAGE="→全ページ閲覧モード";
 
 //ページ選択テーブルのソート======================================================
 function sort_page_sel_table(){
-		var way = document.getElementById("way_sel").value;
-		var category = document.getElementById("category_sel").value;
-		var table = document.getElementById("page_sel_table");
+		var way = document.getElementById("way_sel").value; //降順？昇順？
+		var category = document.getElementById("category_sel").value; //どのカテゴリーでソート？
+		var table = document.getElementById("page_sel_table"); //表
 
-		const name_clm = 0;
-		const series_clm = 1;
-		const made_clm = 2;
-		const history_clm = 3;
-
+    //定数欄=====================
+		const sub_name_clm = 0;
+    const file_name_clm = 1;
+		const series_clm = 2;
+		const made_clm = 3;
+		const history_clm = 4;
+    //==========================
 		if(way == "ascend"){
 			way = 1;
 		}else{
@@ -47,8 +49,10 @@ function sort_page_sel_table(){
 				break;
 		}
 
+    //新しい表の順番を記録する配列
 		var jun=[];
-
+    //[ rowのクリック時処理, [innerHTML、innerText] ]
+  
 		for (i = 1; i < table.rows.length; i++) {
 			temp_jun = [table.rows[i].onclick];
 			for(j = 0; j<table.rows[i].cells.length; j++){
@@ -261,7 +265,7 @@ window.addEventListener('DOMContentLoaded', function() {
 //開発者モード==================================================================
 function password_insert(){
 	var password = prompt("パスワード？");
-	if(password == "du34fushi@gmail.com"){
+	if(password == "mmm"){
 		ifAuthor= true;
 
 		//全ページ閲覧モード
@@ -633,7 +637,8 @@ function write_savefile(){
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rp>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?b>/g,'**');
 			//exp_for_textarea = exp_for_textarea.replace("<br>","\n");
-			var ans = '<button onclick="copy_textarea_memo()">コピー</button>'
+			var ans = '<button style="font-size:200%" onclick="copy_textarea_memo()">コピー</button>'
+          +'<button style="font-size:200%" onclick="delete_textarea_memo()">クリア</button>'
           +'<textarea id="title_textarea" style="font-size:36px;font-weight:bold;width:368px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="1">'
 					+ fiearr[fie]["nam"]
 					+ '</textarea><textarea id="desc_textarea" style="width:368px;font-size:18px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="20">'
@@ -667,6 +672,13 @@ function copy_textarea_memo() {
     + "\nb]\n";
     
   navigator.clipboard.writeText(ans)
+}
+//================================================================================
+function copy_textarea_memo() {
+
+  var desc = document.getElementById("desc_textarea");
+
+  desc.innerHTML = "";
 }
   //=============================================================================
   function fie_title_write(fie){
