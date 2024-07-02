@@ -113,13 +113,15 @@ function sort_page_sel_table(){
 		var li_setting = document.getElementById("li_setting");
 		var li_select = document.getElementById("li_select");
 		var li_page = document.getElementById("li_page");
-
+		var li_summary = document.getElementById("li_summary");
+    
 		var ran_setting = document.getElementById("ran_setting");
 		var ran_select = document.getElementById("ran_select");
 		var ran_page = document.getElementById("ran_page");
+		var ran_summary = document.getElementById("ran_summary");
 
-		var li_arr = [li_setting, li_select, li_page];
-		var ran_arr = [ran_setting, ran_select, ran_page];
+		var li_arr = [li_setting, li_select, li_page, li_summary];
+		var ran_arr = [ran_setting, ran_select, ran_page, ran_summary];
 
 		for(var i = 0; i < li_arr.length; i++){
 			if(i==selected_li){
