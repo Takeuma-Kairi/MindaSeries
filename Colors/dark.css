@@ -9,17 +9,19 @@ h1{
 }
 
 header {
-  background-color: #2c2d2e;
+  background-color: #1e2022;
+  border-bottom: #535353 5px solid;
 }
+
 
 .active-li{
   background-color: #535353;
-	color: #d7d7d7;
+	color: #e4e3e3;
 }
 
 /* 非アクティブなヘッダーのタブ */
 .non-active_li{
-  color: #a1a1a1;
+  color: #e4e3e3;
 }
 /* 非アクティブなヘッダーのタブ */
 .non-active_li:hover{
@@ -56,13 +58,13 @@ header {
 }
 
 .page_sel_table tr{
-  border: #5f6363 solid 1px;
+  border: #5f6363 solid 2px;
 	color:white;
 }
 
 .page_sel_table tr td{
-  border:#5f6363 solid 1px;
+  border:#5f6363 solid 2px;
 }
 .page_sel_table tr th{
-  border:#5f6363 solid 1px;
+  border:#5f6363 solid 2px;
 }

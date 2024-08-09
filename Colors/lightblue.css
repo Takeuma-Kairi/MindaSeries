@@ -30,11 +30,11 @@ header {
 
 /*ハイパーリンクのテキスト*/
 .hl-border{
-  border-bottom: #03A9F4 solid 1px;
+  border-bottom: #03A9F4 solid 2px;
 }
 
 .li_sel{
-	color:	#133659;
+	color:	#1a66b3;
 }
 .tool_button{
   background-color: #8395A7;

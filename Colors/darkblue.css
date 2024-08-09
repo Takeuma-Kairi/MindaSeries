@@ -10,18 +10,19 @@ h1{
 }
 
 header {
-  background-color: #10161C;
+  background-color: #293134;
+  border-bottom: #999a9e solid 2px;
 }
 
 .active-li{
-  background-color: #4388a4;
+  background-color: #2d91b9;
 	color: #FDFDFD;
 }
 
 /* 非アクティブなヘッダーのタブ */
 .non-active_li{
-  background-color: #abc4ce;
-  color: #3C4855;
+  background-color: #1d1d23;
+  color: #cfcfcf;
 	/* #B9C2CC */
 }
 
@@ -38,7 +39,7 @@ header {
 }
 /*ハイパーリンクのテキスト*/
 .hl-border{
-  border-bottom: #c1e3ff solid 1px;
+  border-bottom: #c1e3ff solid 2px;
 }
 
 .li_sel{
