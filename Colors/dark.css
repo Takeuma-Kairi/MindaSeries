@@ -69,3 +69,17 @@ header {
 .page_sel_table tr th{
   border:#5f6363 solid 2px;
 }
+
+/*フォームだけ白背景にする*/
+input[type="number"]{
+  -webkit-appearance: none;
+}
+
+select{
+  background-color:white;
+}
+
+textarea{
+  background-color:white;
+}
+

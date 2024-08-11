@@ -11,7 +11,7 @@ h1{
 
 header {
   background-color: #006287;
-  border-bottom: #999a9e solid 2px;
+  border-bottom: #134069 solid 3px;
 }
 
 .active-li{
@@ -63,6 +63,21 @@ header {
 .page_sel_table tr td{
   border:#70EBDE solid 1px;
 }
+
 .page_sel_table tr th{
   border:#70EBDE solid 1px;
 }
+
+/*フォームだけ白背景にする*/
+input[type="number"]{
+  -webkit-appearance: none;
+}
+
+select{
+  background-color:white;
+}
+
+textarea{
+  background-color:white;
+}
+
