@@ -731,6 +731,7 @@ function delete_textarea_memo() {
   }
 
 	//========================================================================
+	//もーもー
 function close_modal() {
   document.getElementById("modal_abst").style.display = "none";
 }
