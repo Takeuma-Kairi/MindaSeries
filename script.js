@@ -554,8 +554,9 @@ function write_savefile(){
         all_page_sel_clean();
       }
 
-			change_li(2);
-			scrollTo(0,0);
+      //ここていい！？
+			//change_li(2);
+			//scrollTo(0,0);
 		}
 	}
 
@@ -730,19 +731,27 @@ function delete_textarea_memo() {
   }
 
 	//========================================================================
+function close_modal() {
+  document.getElementById("modal_abst").style.display = "none";
+}
+
+
+
+
 
 	//イントロダクションを表示
 	function show_introduction(){
-    var page=document.getElementById("d_desc");
-
+    var page=document.getElementById("abst_desc");
+    document.getElementById("modal_abst").style.display="inline-block";
+    
 		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p>";
 
-		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="mov(0)">始める</li>';
+		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="close_modal();change_li(2);scrollTo(0,0);mov(0);">始める</li>';
     
     //===========================
     
     if(if_down_showable){
-      abst += '<li class="li_sel" onclick="straight_mov()">下に積み上げて表示</li>';
+      abst += '<li class="li_sel" onclick="close_modal();change_li(2);scrollTo(0,0);straight_mov();">下に積み上げて表示</li>';
     }
     
     //===========================
