@@ -731,7 +731,7 @@ function delete_textarea_memo() {
   }
 
 	//========================================================================
-	//もーもー
+	//イントロダクションのモーダルメニューを閉じる
 function close_modal() {
   document.getElementById("modal_abst").style.display = "none";
 }
@@ -764,6 +764,9 @@ function close_modal() {
 		//リードミー
 		abst += "<p>[ リードミー ]<br>" + itearr[itearr.length-1]["exp"] + "</p>";
 
+    //スマホでの見切れ対策。空白入れる。
+    abst += "<br><br><br>";
+    
 		page.innerHTML = abst;
 	}
 
