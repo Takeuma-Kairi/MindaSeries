@@ -162,6 +162,44 @@ nav ul li:last-of-type{
     height:15px;
 }
 
+/*introduction、アブストラクトを表示するモーダルウィンドウ*/
+.modal_abst_ran{
+  background-color: white;
+  border:#474747 solid 9px;
+  position:fixed;
+  margin:auto;
+  inset:0;  /*margin:autoとinset:0とで、中央ぞろえ*/
+  margin-top:100px; /*上のタブにかからないような、ちょうどいい位置*/
+  height:65%;
+  width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
+  display:none; 
+  overflow-y: scroll;
+  padding-top: 40px;  /*introductionのタイトルを見切れさせない余白*/
+  border-radius:10px;
+}
+
+/*モーダルウィンドウを閉じるボタン*/
+.modal_abst_btn{
+  text-align: center;
+ font-size: 15px;
+ background-color:#6c6c6c;
+ color:white;
+ border:#6c6c6c solid 9px;
+ position:fixed;
+ margin:auto;
+ inset:0; /*margin:autoとinset:0とで、中央ぞろえ*/
+ margin-top:100px; /*上のタブにかからないような、ちょうどいい位置*/
+ height:20px;
+ width:360px;
+ margin-top: 100px;
+ border-radius: 10px 10px 0px 0px;/*左上、右上だけ角を丸くする*/
+}
+
+.modal_abst_desc{
+  font-size: 80%;
+  text-align: left;
+  padding: 20px;
+}
 
 /* =========================================================== */
 /* .page_title{

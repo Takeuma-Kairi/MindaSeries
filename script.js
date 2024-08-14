@@ -89,7 +89,7 @@ function sort_page_sel_table(){
 		/* var tab_yajirushi = document.getElementById("tab_yajirushi"); */
 
 		if(header.style.display == "none"){
-			tab_close.innerHTML = "↑タブ非表示";
+			tab_close.innerHTML = "タブ非表示";
 			/* tab_yajirushi.className="yajirushi_close"; */
 			header.style.display = "block";
 
@@ -97,7 +97,7 @@ function sort_page_sel_table(){
 			ran_setting.className= "ran";
 			ran_page.className = "ran";
 		}else{
-			tab_close.innerHTML = "↑タブ 表示";
+			tab_close.innerHTML = "タブ 表示";
 			/* tab_close.className = "tool_button tab_open"; */
 			/* tab_yajirushi.className="yajirushi_open"; */
 			header.style.display = "none";
@@ -512,7 +512,7 @@ function write_savefile(){
 								fiearr[temp_map]={nam: "", exp:"", sel:[]};
 
               //Gotoタブ実装==第0ページの上(<map>タグ直下)には、タブをおかない！tob()しても第「1」ページに飛んでしまう！
-              }else if(arr[i].match(/==(.+)==/)){
+              }else if(arr[i].match(/===(.+)===/)){
                 tabnamearr[RegExp.$1] = temp_map + 1;
 
               //======================================================
@@ -554,8 +554,9 @@ function write_savefile(){
         all_page_sel_clean();
       }
 
-			change_li(2);
-			scrollTo(0,0);
+      //ここていい！？
+			//change_li(2);
+			//scrollTo(0,0);
 		}
 	}
 
@@ -730,19 +731,28 @@ function delete_textarea_memo() {
   }
 
 	//========================================================================
+	//イントロダクションのモーダルメニューを閉じる
+function close_modal() {
+  document.getElementById("modal_abst").style.display = "none";
+}
+
+
+
+
 
 	//イントロダクションを表示
 	function show_introduction(){
-    var page=document.getElementById("d_desc");
-
+    var page=document.getElementById("abst_desc");
+    document.getElementById("modal_abst").style.display="inline-block";
+    
 		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p>";
 
-		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="mov(0)">始める</li>';
+		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="close_modal();change_li(2);scrollTo(0,0);mov(0);">始める</li>';
     
     //===========================
     
     if(if_down_showable){
-      abst += '<li class="li_sel" onclick="straight_mov()">下に積み上げて表示</li>';
+      abst += '<li class="li_sel" onclick="close_modal();change_li(2);scrollTo(0,0);straight_mov();">下に積み上げて表示</li>';
     }
     
     //===========================
@@ -754,6 +764,9 @@ function delete_textarea_memo() {
 		//リードミー
 		abst += "<p>[ リードミー ]<br>" + itearr[itearr.length-1]["exp"] + "</p>";
 
+    //スマホでの見切れ対策。空白入れる。
+    abst += "<br><br><br>";
+    
 		page.innerHTML = abst;
 	}
 
