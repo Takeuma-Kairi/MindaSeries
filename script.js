@@ -89,7 +89,7 @@ function sort_page_sel_table(){
 		/* var tab_yajirushi = document.getElementById("tab_yajirushi"); */
 
 		if(header.style.display == "none"){
-			tab_close.innerHTML = "↑タブ非表示";
+			tab_close.innerHTML = "タブ非表示";
 			/* tab_yajirushi.className="yajirushi_close"; */
 			header.style.display = "block";
 
@@ -97,7 +97,7 @@ function sort_page_sel_table(){
 			ran_setting.className= "ran";
 			ran_page.className = "ran";
 		}else{
-			tab_close.innerHTML = "↑タブ 表示";
+			tab_close.innerHTML = "タブ 表示";
 			/* tab_close.className = "tool_button tab_open"; */
 			/* tab_yajirushi.className="yajirushi_open"; */
 			header.style.display = "none";
@@ -512,7 +512,7 @@ function write_savefile(){
 								fiearr[temp_map]={nam: "", exp:"", sel:[]};
 
               //Gotoタブ実装==第0ページの上(<map>タグ直下)には、タブをおかない！tob()しても第「1」ページに飛んでしまう！
-              }else if(arr[i].match(/==(.+)==/)){
+              }else if(arr[i].match(/===(.+)===/)){
                 tabnamearr[RegExp.$1] = temp_map + 1;
 
               //======================================================

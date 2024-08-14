@@ -38,8 +38,9 @@
   <!-- ストーリーを選択する欄================================================================ -->
 
 	<div class="ran" style="display:block;text-align:center;padding-top:12px;" id="ran_select">
+	  <p style="font-size: 1.1em;font-weight: bold;">まずは<span onclick="load_data(UserTour);" style="color:blue;border-bottom:blue solid 1px;">画面説明</span>をご覧ください。</p>
 		<p style="font-size: 1.1em;font-weight: bold;">
-            下の表でストーリーを選択してください。選択後「②みる」タブに遷移します。
+            下の表でストーリーを選択してください。選択後「②みる」に遷移します。
         </p>
         <p style="font-size: 0.8em">
             デフォルトでは、最近作ったものから順に並んでいます（降順-作成順）。<br>
@@ -108,28 +109,24 @@
 <tr onclick='load_data(Minda)'>	<td>黒縄のミンダ</td>	<td>Minda</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>2</td>	<td style='display:none'>8</td></tr>
 <tr onclick='load_data(Abstract)'>	<td>あらすじ</td>	<td>Abstract</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
 <tr onclick='load_data(Dictionary)'>	<td>辞書</td>	<td>Dictionary</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
+<tr onclick='load_data(UserTour)'>	<td>画面説明</td>	<td>UserTour</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
 <tr onclick='load_data(Kunugi)'>	<td>櫟木の一日</td>	<td>Kunugi</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>1</td>	<td style='display:none'>36</td></tr>
 
 		</table>
-		
-		
-		
-		<div id="modal_abst" class="modal_abst_ran" >
-		  
-		  <div onclick="close_modal()" class="modal_abst_btn">閉じる</div>
-		  
-		  <div id="abst_desc" style="font-size: 80%;"></div>
-		  
-		</div>
-		
-		
-		
-		
-		
-		
 		 <br><br><br><!--スマホの下メニューに被らせないための空白-->
 	</div>
-
+	
+	<!-- ================================ -->
+	<!--Introduction表示用のモーダルウィンドウ  -->
+		
+	<div id="modal_abst" class="modal_abst_ran" >
+		  
+		<div onclick="close_modal()" class="modal_abst_btn">閉じる</div>
+		  
+		<div id="abst_desc" class="modal_abst_desc"></div>
+	</div>
+		
+		
   <!-- 設定欄================================================================ -->
 	<div class="ran" style="padding-top:12px;" id="ran_setting">
 
@@ -216,7 +213,7 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
     <div style="width:100%;display:inline-block" id="desc_and_item">
 
       <div id="button_redo_and_skip" style="display:none;width:100%; text-align:right;">
-        <div class="tool_button" id="tab_close_button" onclick="tab_close()">↑タブ非表示</div>
+        <div class="tool_button" id="tab_close_button" onclick="tab_close()">タブ非表示</div>
         <div class="tool_button redo_and_skip" onclick="remov()">戻る</div>
         <div class="tool_button redo_and_skip" onclick="pageskip()">スキップ</div>
       </div>
@@ -304,7 +301,6 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
 <script src="script.js" defer></script>
 
 	<!-- ストーリーのJS -->
-<script src="StoryJS/Minda.js" defer></script>
 <script src="StoryJS/Kunugi.js" defer></script>
 <script src="StoryJS/Minda.js" defer></script>
 <script src="StoryJS/Minda2.js" defer></script>
@@ -343,6 +339,7 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
 <script src="StoryJS/Abstract.js" defer></script>
 <script src="StoryJS/Nitori.js" defer></script>
 <script src="StoryJS/Mitsuyoshi.js" defer></script>
+<script src="StoryJS/UserTour.js" defer></script>
 
 <link id="colorscheme" rel="stylesheet" href="Colors/default.css" type="text/css">
 

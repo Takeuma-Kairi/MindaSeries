@@ -178,7 +178,9 @@ nav ul li:last-of-type{
   border-radius:10px;
 }
 
+/*モーダルウィンドウを閉じるボタン*/
 .modal_abst_btn{
+  text-align: center;
  font-size: 15px;
  background-color:#6c6c6c;
  color:white;
@@ -193,6 +195,11 @@ nav ul li:last-of-type{
  border-radius: 10px 10px 0px 0px;/*左上、右上だけ角を丸くする*/
 }
 
+.modal_abst_desc{
+  font-size: 80%;
+  text-align: left;
+  padding: 20px;
+}
 
 /* =========================================================== */
 /* .page_title{

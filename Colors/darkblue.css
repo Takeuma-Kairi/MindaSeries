@@ -4,6 +4,11 @@ body{
 	color: #FFFFFF;
 }
 
+.modal_abst_ran {
+  background-color: #293134;
+  border-color: #6D84BD;
+}
+
 h1{
   margin:0px;
 	color: #FFFFFF;
