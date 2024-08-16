@@ -34,6 +34,10 @@ nav ul li {
   border-radius: 15px;
 }
 
+.system_hl{
+  color:#7378ff;
+  text-decoration: underline;
+}
  /*nav ul li:first-of-type{
   border-top: white solid 1px; 
   border-right: white solid 1px;
