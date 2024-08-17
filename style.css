@@ -177,7 +177,7 @@ nav ul li:last-of-type{
   height:65%;
   width:80%;
   max-width: 580px;
-  /*min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
+  min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
   display:none; 
   overflow-y: scroll;
   padding-top: 40px;  /*introductionのタイトルを見切れさせない余白*/
@@ -196,9 +196,9 @@ nav ul li:last-of-type{
  inset:0; /*margin:autoとinset:0とで、中央ぞろえ*/
  margin-top:100px; /*上のタブにかからないような、ちょうどいい位置*/
  height:20px;
-  width:80%;
-  max-width: 580px;
-  /*min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
+ width:80%;
+ max-width: 580px;
+ min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
  margin-top: 100px;
  border-radius: 10px 10px 0px 0px;/*左上、右上だけ角を丸くする*/
 }
