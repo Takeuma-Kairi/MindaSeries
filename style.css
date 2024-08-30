@@ -97,8 +97,8 @@ nav ul li:last-of-type{
 .tool_button{
   padding: 5px;
   margin: 5px;
-  border-radius: 11px;
-  font-size: 90%;
+  border-radius: 15px;
+  font-size: 80%;
   display: inline-block;
 }
 
