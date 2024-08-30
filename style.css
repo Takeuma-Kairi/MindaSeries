@@ -201,6 +201,7 @@ nav ul li:last-of-type{
  min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
  margin-top: 100px;
  border-radius: 10px 10px 0px 0px;/*左上、右上だけ角を丸くする*/
+  z-index: 10;  /*一番上にボタンが来るように*/
 }
 
 .modal_abst_desc{
@@ -224,13 +225,13 @@ nav ul li:last-of-type{
 .series_color_tag{
   padding: 3px;
 }
-/* =========================================================== */
-/* まとめ内の画像について */
+/* =========================================================== */                           
+ /* まとめ内の画像について */
 .matome_img{
   border:black double 5px;
   /*max-width:360px;*/
   height:235px;
-}
+}           
 
 /* =========================================================== */
 

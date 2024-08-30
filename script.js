@@ -4,6 +4,11 @@ var fiearr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, �
 var fie = 0;      //フィールド番号
 var numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
 
+//---------------
+var map_src = "";
+var local_map =[];
+//----------------
+
 var if_down_showable = false;
 
     //gotoタブを実装
@@ -493,6 +498,12 @@ function write_savefile(){
           }
           i++;
         }
+        
+        if(arr[i].match(/mapimg:(.+)>/)){
+          map_src = "Assist/" + RegExp.$1 + "/map/";
+          
+        }
+        
         if(arr[i].match(/BFmap:([0-9]+)>/)){
             arr = BFtoBTAP(arr, i);
 				}
@@ -533,6 +544,9 @@ function write_savefile(){
 
 							}else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
 								fiearr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
+                
+							}else if(arr[i].match(/m:(.*)/)) { //選択肢
+								local_map.push(new Array(temp_map, RegExp.$1));
 							}
 						}
 					}
@@ -736,7 +750,28 @@ function close_modal() {
   document.getElementById("modal_abst").style.display = "none";
 }
 
+function open_map(){
+  document.getElementById("modal_abst").style.display = "block";
+  //mapping(0);
+}
+function mapping(mokuji){
+  var page=document.getElementById("abst_desc");
+  //var map = '<img src="map_point.png" id="map_point" style="position:relative;top:60px; left:101px;" />' ; //style="position:relative;top:0px; left:0px;"
+  /* map+=itearr[itearr.length-2]["exp"]; //←実際の運用例*/ 
+  var map = "";
+  for(var i=0;i<local_map.length; i++){
+    if(local_map[i][0]==mokuji){
+      map +='<img src="' + map_src + local_map[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
+    }
+  }
+ 
+  map+= '<img src="' +  map_src  + 'map.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+  page.innerHTML = map;
+}
 
+function move_map_point_test(){
+ var map_point = document.getElementById("map_point"); 
+}
 
 
 
@@ -846,7 +881,10 @@ function close_modal() {
   function mov(tow) {
     fie = tow;
     breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
-
+    
+    //========-
+    mapping(tow);
+    //=========
     //全ページ閲覧モードなら、セレクト リストに反映する
     var all_page_mode = document.getElementById("all_page_mode");
     if(all_page_mode.textContent == ToTSUJO){
