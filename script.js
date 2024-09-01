@@ -4,6 +4,11 @@ var fiearr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, �
 var fie = 0;      //フィールド番号
 var numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
 
+//---------------
+var map_src = "";
+var local_map =[];
+//----------------
+
 var if_down_showable = false;
 
     //gotoタブを実装
@@ -392,9 +397,8 @@ function write_savefile(){
         numarr = RegExp.$1.split(",");
       }
     }
-
-    show_page();
-    alert("ロードされました。")
+    mov(fie);
+    alert("ロードされました。");
   }
 
 
@@ -447,6 +451,9 @@ function write_savefile(){
 		itearr = [];
 		fiearr = [];
 		numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    map_src="";
+    local_map= [];
+    
 		breadcrumbs = [];
 
     //gotoタブを実装
@@ -493,6 +500,12 @@ function write_savefile(){
           }
           i++;
         }
+        
+        if(arr[i].match(/mapimg:(.+)>/)){
+          map_src = "Assist/" + RegExp.$1 + "/map/";
+          
+        }
+        
         if(arr[i].match(/BFmap:([0-9]+)>/)){
             arr = BFtoBTAP(arr, i);
 				}
@@ -533,6 +546,11 @@ function write_savefile(){
 
 							}else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
 								fiearr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
+                
+							}else if(arr[i].match(/m:(.+)m(.+)/)) { //マップのレイヤー
+								local_map.push(new Array(temp_map, RegExp.$1, parseInt(RegExp.$2)));
+							}else if(arr[i].match(/m:(.+)/)) { //マップのレイヤー
+								local_map.push(new Array(temp_map, RegExp.$1, 1));
 							}
 						}
 					}
@@ -559,6 +577,8 @@ function write_savefile(){
 			//scrollTo(0,0);
 		}
 	}
+
+  
 
   //BFstyle to BTAP=========================================================
   function BFtoBTAP(arr,n){
@@ -736,9 +756,37 @@ function close_modal() {
   document.getElementById("modal_abst").style.display = "none";
 }
 
+function open_map(){
+  document.getElementById("modal_abst").style.display = "block";
+}
 
+	//ローカルマップ============================================================
+function mapping(mokuji){
+  var page=document.getElementById("abst_desc");
+  
+  var map = "";
+  var ifmapappoint = false; //m:タグでマップが指定されている？されていなければ1に。
+  
+  if(map_src==""){
+    map = "このページではマップが用意されておりません。";
+  }else{
+    for(var i=0;i<local_map.length; i++){
+      if(local_map[i][0]==mokuji){
+        map += '<img src="' + map_src + local_map[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
+        map += '<img src="' +  map_src  + 'map' + local_map[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+        ifmapappoint = true;
+        break;
+      }
+    }
+   
+    if(!ifmapappoint){
+      map+= '<img src="' +  map_src  + 'map1.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+    }
+  }
+    page.innerHTML = map;
+}
 
-
+	//========================================================================
 
 	//イントロダクションを表示
 	function show_introduction(){
@@ -846,7 +894,10 @@ function close_modal() {
   function mov(tow) {
     fie = tow;
     breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
-
+    
+    //========-
+    mapping(tow);
+    //=========
     //全ページ閲覧モードなら、セレクト リストに反映する
     var all_page_mode = document.getElementById("all_page_mode");
     if(all_page_mode.textContent == ToTSUJO){
