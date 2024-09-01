@@ -397,9 +397,8 @@ function write_savefile(){
         numarr = RegExp.$1.split(",");
       }
     }
-
-    show_page();
-    alert("ロードされました。")
+    mov(fie);
+    alert("ロードされました。");
   }
 
 
@@ -548,8 +547,10 @@ function write_savefile(){
 							}else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
 								fiearr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
                 
-							}else if(arr[i].match(/m:(.*)/)) { //マップのレイヤー
-								local_map.push(new Array(temp_map, RegExp.$1));
+							}else if(arr[i].match(/m:(.+)m(.+)/)) { //マップのレイヤー
+								local_map.push(new Array(temp_map, RegExp.$1, parseInt(RegExp.$2)));
+							}else if(arr[i].match(/m:(.+)/)) { //マップのレイヤー
+								local_map.push(new Array(temp_map, RegExp.$1, 1));
 							}
 						}
 					}
@@ -759,31 +760,33 @@ function open_map(){
   document.getElementById("modal_abst").style.display = "block";
 }
 
+	//ローカルマップ============================================================
 function mapping(mokuji){
   var page=document.getElementById("abst_desc");
   
   var map = "";
+  var ifmapappoint = false; //m:タグでマップが指定されている？されていなければ1に。
   
   if(map_src==""){
     map = "このページではマップが用意されておりません。";
   }else{
     for(var i=0;i<local_map.length; i++){
       if(local_map[i][0]==mokuji){
-        map +='<img src="' + map_src + local_map[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
+        map += '<img src="' + map_src + local_map[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
+        map += '<img src="' +  map_src  + 'map' + local_map[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+        ifmapappoint = true;
+        break;
       }
     }
    
-    map+= '<img src="' +  map_src  + 'map.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+    if(!ifmapappoint){
+      map+= '<img src="' +  map_src  + 'map1.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+    }
   }
     page.innerHTML = map;
-  
 }
 
-function move_map_point_test(){
- var map_point = document.getElementById("map_point"); 
-}
-
-
+	//========================================================================
 
 	//イントロダクションを表示
 	function show_introduction(){
