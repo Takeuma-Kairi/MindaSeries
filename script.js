@@ -397,6 +397,7 @@ function write_savefile(){
         numarr = RegExp.$1.split(",");
       }
     }
+    ite_reflesh();
     mov(fie);
     alert("ロードされました。");
   }
@@ -443,7 +444,8 @@ function write_savefile(){
     
     scr = scr.replace(/\r\n/g,'\n'); //改行コードの統一
     scr = scr.replace(/\r/g, '\n');	 //改行コードの統一
-
+    
+    document.getElementById("map_button").style.display="none"; //「マップ」ボタンは基本的に出さない
     var arr = scr.split("\n");
     var myRE = new RegExp("flag:(.+)>");
 
@@ -501,7 +503,8 @@ function write_savefile(){
           i++;
         }
         
-        if(arr[i].match(/mapimg:(.+)>/)){
+        if(arr[i].match(/mapimg:(.+)>/)){//マップがあるとき、「マップ」ボタンを出し、表示させる
+          document.getElementById("map_button").style.display="inline-block";
           map_src = "Assist/" + RegExp.$1 + "/map/";
           
         }
@@ -851,6 +854,27 @@ function mapping(mokuji){
 	}
 
 
+  //アイテム欄をリフレッシュする。戻るなど==============================
+  function ite_reflesh(){
+    var if_hav_any_item = false;  
+    //アイテムが存在していないなら、「アイテムを表示」ボタンは表示させないための判定
+    for(var i=0; i< itearr.length;i++){
+      if(itearr[i]["hav"]){
+        geti(i);
+        if_hav_any_item = true;
+      }
+    } 
+
+    hide_item();
+    
+    var button_openitem = document.getElementById("button_openitem");
+		button_openitem.className="tool_button openitem";
+    
+    //アイテムが存在していないなら、「アイテムを表示」ボタンは表示させない
+    if(!if_hav_any_item){
+      button_openitem.style.display="none";    
+    }
+  } 
 
   //もとに戻す==================================
   function remov(){
@@ -893,7 +917,8 @@ function mapping(mokuji){
   //マップ移動
   function mov(tow) {
     fie = tow;
-    breadcrumbs.unshift(makesave());  //セーブを追加、パンくずを追加する
+    var temp  =makesave();
+    breadcrumbs.unshift(temp);  //セーブを追加、パンくずを追加する
     
     //========-
     mapping(tow);
@@ -925,6 +950,7 @@ function mapping(mokuji){
   //アイテムをなくす
   function losi(n){
     itearr[n]["hav"]=false;
+    ite_reflesh();
     display_ite();
   }
 
