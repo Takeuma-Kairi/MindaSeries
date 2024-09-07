@@ -621,7 +621,10 @@ function write_savefile(){
         arr.splice(i,1,"s:次へ#mov(" + front_num +")", "s:戻る#mov(" + back_num +")");
       }
       ifpage = 0;
-    }else if((ifpage == 1) && !(arr[i].match(/s:/)) && !(arr[i].match(/v:/)))　{ //e要素に「^」を追加
+    }else if((ifpage == 1) &&
+            !(arr[i].match(/s:/)) &&
+            !(arr[i].match(/v:/)) &&
+            !(arr[i].match(/m:/))){ //e要素に「^」を追加
       arr[i] = "^" + arr[i];
     }
   }
