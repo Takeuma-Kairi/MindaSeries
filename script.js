@@ -94,7 +94,7 @@ function sort_page_sel_table(){
 		/* var tab_yajirushi = document.getElementById("tab_yajirushi"); */
 
 		if(header.style.display == "none"){
-			tab_close.innerHTML = "タブ非表示";
+			tab_close.innerHTML = "↑非表示";
 			/* tab_yajirushi.className="yajirushi_close"; */
 			header.style.display = "block";
 
@@ -102,7 +102,7 @@ function sort_page_sel_table(){
 			ran_setting.className= "ran";
 			ran_page.className = "ran";
 		}else{
-			tab_close.innerHTML = "タブ 表示";
+			tab_close.innerHTML = "↑ 表示";
 			/* tab_close.className = "tool_button tab_open"; */
 			/* tab_yajirushi.className="yajirushi_open"; */
 			header.style.display = "none";
@@ -251,7 +251,6 @@ function unvail_item(){
 
 		geti_alert(false);
 
-
 	  if(d_item.style.display == "none"){
       unvail_item();
     }else{
@@ -386,9 +385,11 @@ function write_savefile(){
       }else if(arr[i].match(/ite:(.*)/)){       //道具
         for(var j = 0; j < RegExp.$1.length; j++){
           if(RegExp.$1.charAt(j) == "f"){
-            itearr[j]["hav"] = false;
+            //itearr[j]["hav"] = false;
+            losi(j);
           }else{
             itearr[j]["hav"] = true;
+            geti(j);
           }
         }
       }else if(arr[i].match(/fie:(.*)/)){       //ページ名
@@ -441,6 +442,10 @@ function write_savefile(){
     
     /* 下に積み上げて表示するか(するならtrue) */
     if_down_showable = temp_if_down_showable;
+
+    //最初からボタンを表示（この前後で、straight_movで非表示になる可能性がある）
+    document.getElementById("fromScratch").style.display="inline-block";
+
     
     scr = scr.replace(/\r\n/g,'\n'); //改行コードの統一
     scr = scr.replace(/\r/g, '\n');	 //改行コードの統一
@@ -574,10 +579,6 @@ function write_savefile(){
       }else{
         all_page_sel_clean();
       }
-
-      //ここていい！？
-			//change_li(2);
-			//scrollTo(0,0);
 		}
 	}
 
@@ -729,7 +730,9 @@ function delete_textarea_memo() {
   function straight_mov(){  //movという名前だが、下に積み上げ式のfie表示
     fie = 0;
     
-     
+    //下に積み上げて表示するなら、「最初から」ボタンは表示しないで良い
+    document.getElementById("fromScratch").style.display="none";
+    
     var page=document.getElementById("d_desc"); 
     var ans ="";  //最終表示内容
     
@@ -914,7 +917,32 @@ function mapping(mokuji){
 		}
   }
 
-
+  //選択肢スキップ==============================
+  function fromScratch(){
+    var ifscratch = window.confirm("進捗を最初に戻しますか？この操作は取り消せません。");
+    breadcrumbs = [];
+    if(ifscratch){
+      //load_data(scr, if_down_showable);
+      var temp_save= "flg:";
+      
+      for(var i = 0; i<flgarr.length;i++){
+        temp_save +="f";
+      }
+      
+      temp_save +="\nite:";
+      
+      for(var j = 0; j<itearr.length;j++){
+        temp_save +="f";
+      }
+      
+      temp_save += "\nfie:0\nnum:0"
+      for(var k = 0; k<numarr.length-1;k++){
+        temp_save +=",0";
+      }
+      
+      load_savefile(temp_save);
+    }
+  }
 
   //スクリプトでかける関数=========================================================-
   //マップ移動

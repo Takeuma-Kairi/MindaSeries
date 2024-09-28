@@ -110,6 +110,7 @@
 <tr onclick='load_data(Minda2)'>	<td>ミンダと赤い魚</td>	<td>Minda2</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>3</td>	<td style='display:none'>19</td></tr>
 <tr onclick='load_data(Minda)'>	<td>黒縄のミンダ</td>	<td>Minda</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>2</td>	<td style='display:none'>10</td></tr>
 <tr onclick='load_data(Kunugi)'>	<td>櫟木の一日</td>	<td>Kunugi</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>1</td>	<td style='display:none'>38</td></tr>
+<tr onclick='load_data(UserTour)'>	<td>画面説明</td>	<td>UserTour</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
 <tr onclick='load_data(Abstract)'>	<td>あらすじ</td>	<td>Abstract</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
 <tr onclick='load_data(Dictionary)'>	<td>辞書</td>	<td>Dictionary</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
 
@@ -216,9 +217,10 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
     <div style="width:100%;display:inline-block" id="desc_and_item">
 
       <div id="button_redo_and_skip" style="display:none;width:100%; text-align:right;">
-        <div class="tool_button" id="tab_close_button" onclick="tab_close()">タブ非表示</div>
+        <div class="tool_button redo_and_skip" id="tab_close_button" onclick="tab_close()">↑非表示</div>
         <div class="tool_button redo_and_skip" onclick="remov()">戻る</div>
-        <div class="tool_button redo_and_skip" onclick="pageskip()">スキップ</div>
+        <div class="tool_button redo_and_skip" onclick="pageskip()">とばす</div>
+        <div class="tool_button redo_and_skip" id="fromScratch" onclick="fromScratch()">最初から</div>
         <div class="tool_button redo_and_skip" style="display:none;" id="map_button" onclick="open_map()">マップ</div>
       </div>
 

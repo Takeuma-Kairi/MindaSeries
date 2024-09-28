@@ -98,13 +98,13 @@ nav ul li:last-of-type{
   padding: 5px;
   margin: 5px;
   border-radius: 15px;
-  font-size: 80%;
+  font-size: 75%;
   display: inline-block;
 }
 
 /* 戻す＆スキップ */
 .redo_and_skip{
-  width: 5em;
+  width: 4em;
   margin: 0px;
   margin-left: 2px;
   text-align:center;
