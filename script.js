@@ -888,7 +888,24 @@ function mapping(mokuji){
       alert("戻せません");
     }else{
       breadcrumbs.shift();
-      load_savefile(breadcrumbs[0]);//セーブパンくずの最初の要素が１つ前のセーブデータ
+      load_savefile(breadcrumbs.shift());//セーブパンくずの最初の要素が１つ前のセーブデータ
+	  
+	  /*　やっていることは何か
+	  　breadcrumbs(これまで進んできたページのパンくずリスト)には、セーブデータの文字列が入っている。
+	  　仮にＡページ→Ｂページ→Cページの順に移動する場合を考える。
+	  それぞれのページにいるときのセーブデータ文字列をa, b, cとすると
+		
+	  　1. Aページにいるとき			breadcrumbs=[a]
+	  　2. Bページに移動したあと		breadcrumbs=[b,a]
+	  　3. Cページに移動したあと		breadcrumbs=[c,b,a]
+		↑
+		3.でremov()実行時	① まずbreadcrumbs.shift()→ [b,a]だけ残る
+							② つぎにload_savefile(breadcrumbs.shift()) ←load_savefile(b)と同じ
+								shiftによりbreadcrumbsは一時的に[a]のみ残る。
+							③ load_savefile(b)によりBページに移動
+							④ movによりbreadcrumbsの先頭にbがunshiftされる
+							⑤ 結果としてBページに移動したうえでbreadcrumbs=[b,a]。上のリストでいうところの2.に移動する
+	  */
     }
   }
 
