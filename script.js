@@ -1,15 +1,15 @@
-var flgarr = [];  //フラグ
-var itearr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有]
-var fiearr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, 実行文章]]
-var fie = 0;      //フィールド番号
-var numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
+var flagArr = [];  //フラグ
+var itemArr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有]
+var pageArr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, 実行文章]]
+var page_number = 0;      //フィールド番号
+var numArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
 
 //---------------
 var map_src = "";
-var local_map =[];
+var local_mapArr =[];
 //----------------
 
-var if_down_showable = false;
+var if_under_writable = false;
 
     //gotoタブを実装
 var tabnamearr = {};
@@ -91,11 +91,9 @@ function sort_page_sel_table(){
 		var ran_select = document.getElementById("ran_select");
 		var ran_setting = document.getElementById("ran_setting");
 		var ran_page = document.getElementById("ran_page");
-		/* var tab_yajirushi = document.getElementById("tab_yajirushi"); */
-
+		
 		if(header.style.display == "none"){
 			tab_close.innerHTML = "↑非表示";
-			/* tab_yajirushi.className="yajirushi_close"; */
 			header.style.display = "block";
 
 			ran_select.className= "ran";
@@ -103,8 +101,6 @@ function sort_page_sel_table(){
 			ran_page.className = "ran";
 		}else{
 			tab_close.innerHTML = "↑ 表示";
-			/* tab_close.className = "tool_button tab_open"; */
-			/* tab_yajirushi.className="yajirushi_open"; */
 			header.style.display = "none";
 
 			ran_select.className= "ran ran_without_header";
@@ -114,7 +110,7 @@ function sort_page_sel_table(){
 
 	}
 //ヘッダータブの変更=========================================================
-	function change_li(selected_li){
+	function change_tab(selected_tab){
 		var li_setting = document.getElementById("li_setting");
 		var li_select = document.getElementById("li_select");
 		var li_page = document.getElementById("li_page");
@@ -128,8 +124,10 @@ function sort_page_sel_table(){
 		var li_arr = [li_setting, li_select, li_page, li_summary];
 		var ran_arr = [ran_setting, ran_select, ran_page, ran_summary];
 
+		//選ばれたタブに当たるli要素と、それ以外の要素の見た目を変更する
+		//また、選ばれたタブを表示し、それ以外は非表示にする
 		for(var i = 0; i < li_arr.length; i++){
-			if(i==selected_li){
+			if(i==selected_tab){
 				li_arr[i].className = "active-li";
 				ran_arr[i].style.display="block";
 			}else{
@@ -293,10 +291,10 @@ function all_page_mov(tow){
 //全ページモードで、←、→ボタンで選んだ時=======================================
 function all_page_step(step){
   var all_page_sel = document.getElementById("all_page_sel");
-  tow_temp=fie+step;
+  tow_temp=page_number+step;
 
   //選択ページ番号がオーバーフローしないか
-  if(tow_temp >=0 && tow_temp<fiearr.length){
+  if(tow_temp >=0 && tow_temp<pageArr.length){
     mov(tow_temp);
   }
 }
@@ -307,7 +305,7 @@ function all_page_sel_clean(){
 
   all_page_sel.length = 0;
 
-  for(var i=0; i<fiearr.length;i++){
+  for(var i=0; i<pageArr.length;i++){
     let op = document.createElement('option');
     op.text=i;
     op.value=i;
@@ -333,7 +331,7 @@ function all_page_mode_change(){
     all_page_view.style.display ="inline-block";
 
     //ページがロードされているならば、いったんリセットしてセレクト リストを書き直す。さもなくば何もしない
-    if(fiearr.length != 0){
+    if(pageArr.length != 0){
       all_page_sel_clean();
     }
 
@@ -376,30 +374,30 @@ function write_savefile(){
       if(arr[i].match(/flg:(.*)/)){             //フラグ
         for(var j = 0;j < RegExp.$1.length;j++){
           if(RegExp.$1.charAt(j) == "f"){
-            flgarr[j] = false;
+            flagArr[j] = false;
           }else{
-            flgarr[j] = true;
+            flagArr[j] = true;
           }
         }
 
       }else if(arr[i].match(/ite:(.*)/)){       //道具
         for(var j = 0; j < RegExp.$1.length; j++){
           if(RegExp.$1.charAt(j) == "f"){
-            //itearr[j]["hav"] = false;
+            //itemArr[j]["hav"] = false;
             losi(j);
           }else{
-            itearr[j]["hav"] = true;
+            itemArr[j]["hav"] = true;
             geti(j);
           }
         }
       }else if(arr[i].match(/fie:(.*)/)){       //ページ名
-        fie = parseInt(RegExp.$1);
+        page_number = parseInt(RegExp.$1);
       }else if(arr[i].match(/num:(.*)/)){       //ページ名
-        numarr = RegExp.$1.split(",");
+        numArr = RegExp.$1.split(",");
       }
     }
     ite_reflesh();
-    mov(fie);
+    mov(page_number);
     alert("ロードされました。");
   }
 
@@ -408,8 +406,8 @@ function write_savefile(){
   //セーブデータ書き込み=========================================================
   function makesave(){
     var ans = "flg:";    //フラグ
-    for(var i=0;i<flgarr.length;i++){
-      if(flgarr[i]){
+    for(var i=0;i<flagArr.length;i++){
+      if(flagArr[i]){
         ans += "t";
       }else{
         ans += "f";
@@ -417,19 +415,19 @@ function write_savefile(){
     }
 
     ans += "\nite:";     //アイテム
-    for(var i=0;i<itearr.length;i++){
-      if(itearr[i]["hav"]){
+    for(var i=0;i<itemArr.length;i++){
+      if(itemArr[i]["hav"]){
         ans += "t";
       }else{
         ans += "f";
       }
     }
 
-    ans += "\nfie:" + fie + "";  //ページ番号
+    ans += "\nfie:" + page_number + "";  //ページ番号
 
-    ans += "\nnum:" + numarr[0];     //番号
-    for(var i = 1;i < numarr.length; i++){
-      ans += "," + numarr[i];
+    ans += "\nnum:" + numArr[0];     //番号
+    for(var i = 1;i < numArr.length; i++){
+      ans += "," + numArr[i];
     }
 
     return(ans);
@@ -438,10 +436,10 @@ function write_savefile(){
 
   //=======================================
   //ページデータを整形して得る
-  function load_data(scr, temp_if_down_showable=false){
+  function load_data(scr, temp_if_under_writable=false){
     
     /* 下に積み上げて表示するか(するならtrue) */
-    if_down_showable = temp_if_down_showable;
+    if_under_writable = temp_if_under_writable;
 
     //最初からボタンを表示（この前後で、straight_movで非表示になる可能性がある）
     document.getElementById("fromScratch").style.display="inline-block";
@@ -454,12 +452,12 @@ function write_savefile(){
     var arr = scr.split("\n");
     var myRE = new RegExp("flag:(.+)>");
 
-		flgarr = [];
-		itearr = [];
-		fiearr = [];
-		numarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		flagArr = [];
+		itemArr = [];
+		pageArr = [];
+		numArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     map_src="";
-    local_map= [];
+    local_mapArr= [];
     
 		breadcrumbs = [];
 
@@ -467,7 +465,7 @@ function write_savefile(){
     tabnamearr = {};
     //ーーーーー
 
-		fie = 0;
+		page_number = 0;
 
 		//アイテム欄の非表示
 		hide_item();
@@ -481,15 +479,15 @@ function write_savefile(){
       for(i=0;i<arr.length;i++){
         //「フラグ」タグ
         if(arr[i].match(/flag:(.+)>/)){
-          flgarr = new Array(parseInt(RegExp.$1));
-          for(var j=0;j<flgarr.length;j++){
-            flgarr[j]=false;   //flagarrの初期化
+          flagArr = new Array(parseInt(RegExp.$1));
+          for(var j=0;j<flagArr.length;j++){
+            flagArr[j]=false;   //flagarrの初期化
           }
           i++;
         }
         //「アイテム」タグ
         if(arr[i].match(/item:(.+)>/)){
-          itearr = new Array(parseInt(RegExp.$1));
+          itemArr = new Array(parseInt(RegExp.$1));
 
           for(;i<arr.length;i++){     //タグの終わりまでforを続行する
             if(arr[i].match(/<\/item>/)){  //タグの終わり
@@ -497,7 +495,7 @@ function write_savefile(){
             }else{
               //アイテムタグを、名前と説明に分ける
               if(arr[i].match(/\[(.+?)\](.+?)#(.+)/)){
-                itearr[parseInt(RegExp.$1)] =
+                itemArr[parseInt(RegExp.$1)] =
 									{nam: OpenInlineTag(RegExp.$2),
 									exp: OpenInlineTag(RegExp.$3),
 									hav:false};
@@ -520,7 +518,7 @@ function write_savefile(){
 
 				//「マップ(フィールド)」タグ
 				if(arr[i].match(/map:([0-9]+)>/)){
-					fiearr = new Array(parseInt(RegExp.$1));
+					pageArr = new Array(parseInt(RegExp.$1));
 					var temp_map=0;
 
 					for(;i<arr.length;i++){    //タグの終わりまでforを続行する
@@ -530,7 +528,7 @@ function write_savefile(){
 
 							if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
 								temp_map=parseInt(RegExp.$1);
-								fiearr[temp_map]={nam: "", exp:"", sel:[]};
+								pageArr[temp_map]={nam: "", exp:"", sel:[]};
 
               //Gotoタブ実装==第0ページの上(<map>タグ直下)には、タブをおかない！tob()しても第「1」ページに飛んでしまう！
               }else if(arr[i].match(/===(.+)===/)){
@@ -538,27 +536,27 @@ function write_savefile(){
 
               //======================================================
 							}else if(arr[i].match(/n:(.+)/)) {  //名前
-								fiearr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
+								pageArr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
 
 							}else if(arr[i].match(/e:(.+)/)) {  //説明文
-								fiearr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
+								pageArr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
 
 							}else if(arr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
-								fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
+								pageArr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
 
 							}else if(arr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
-								fiearr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
+								pageArr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
 
 							}else if(arr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
-								fiearr[temp_map]["exp"] += itearr[parseInt(RegExp.$1)]["exp"] + "<br>";
+								pageArr[temp_map]["exp"] += itemArr[parseInt(RegExp.$1)]["exp"] + "<br>";
 
 							}else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
-								fiearr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
+								pageArr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
                 
 							}else if(arr[i].match(/m:(.+)m(.+)/)) { //マップのレイヤー
-								local_map.push(new Array(temp_map, RegExp.$1, parseInt(RegExp.$2)));
+								local_mapArr.push(new Array(temp_map, RegExp.$1, parseInt(RegExp.$2)));
 							}else if(arr[i].match(/m:(.+)/)) { //マップのレイヤー
-								local_map.push(new Array(temp_map, RegExp.$1, 1));
+								local_mapArr.push(new Array(temp_map, RegExp.$1, 1));
 							}
 						}
 					}
@@ -566,8 +564,8 @@ function write_savefile(){
 			}
 
 
-      //fiearrとitearrの内容を、＊JSON形式で＊、d_descに表示するには…
-      /*var jstr = JSON.stringify({"fie": fiearr,"ite":itearr});
+      //pageArrとitemArrの内容を、＊JSON形式で＊、d_descに表示するには…
+      /*var jstr = JSON.stringify({"fie": pageArr,"ite":itemArr});
       document.getElementById("d_desc").innerText = jstr;
       break; */
 			document.getElementById("button_redo_and_skip").style.display="inline-block";
@@ -655,12 +653,12 @@ function write_savefile(){
 
 		if(!ifAuthor){
 			var ans = '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
-					+ fiearr[fie]["nam"]
+					+ pageArr[page_number]["nam"]
 					+ "</span></p><div>"
-                    + fiearr[fie]["exp"]
+                    + pageArr[page_number]["exp"]
 					+ '</div><div style="display:inline-block;text-align:left"><ul>';
 		}else{
-			exp_for_textarea = fiearr[fie]["exp"];
+			exp_for_textarea = pageArr[page_number]["exp"];
 			exp_for_textarea = exp_for_textarea.replace(/<br>/g,'\n');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?ruby>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rt>/g,'');
@@ -670,7 +668,7 @@ function write_savefile(){
 			var ans = '<button style="font-size:150%" onclick="copy_textarea_memo()">コピー</button>'
           +'<button style="font-size:150%" onclick="delete_textarea_memo()">クリア</button>'
           +'<textarea id="title_textarea" style="font-size:36px;font-weight:bold;width:368px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="1">'
-					+ fiearr[fie]["nam"]
+					+ pageArr[page_number]["nam"]
 					+ '</textarea><textarea id="desc_textarea" style="width:368px;font-size:18px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="20">'
                     + exp_for_textarea
 					+ '</textarea>';
@@ -678,9 +676,9 @@ function write_savefile(){
 
 		}
     //ページの選択肢
-    for(var i=0;i<fiearr[fie]["sel"].length;i++){
-      ans += '<li class="li_sel" onclick="' + fiearr[fie]["sel"][i][1] + '">'
-                        + fiearr[fie]["sel"][i][0] + "</li>";
+    for(var i=0;i<pageArr[page_number]["sel"].length;i++){
+      ans += '<li class="li_sel" onclick="' + pageArr[page_number]["sel"][i][1] + '">'
+                        + pageArr[page_number]["sel"][i][0] + "</li>";
     }
     ans += "</ul></div>";
 
@@ -711,24 +709,24 @@ function delete_textarea_memo() {
   desc.innerHTML = "";
 }
   //=============================================================================
-  function fie_title_write(fie){
+  function fie_title_write(page_number){
     var temp = 
           '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
-            + fiearr[fie]["nam"]
+            + pageArr[page_number]["nam"]
             + "</span></p>";
     return(temp);
   }
   //=============================================================================
-  function fie_exp_write(fie){
+  function fie_exp_write(page_number){
     var temp = "<div>" 
-          + fiearr[fie]["exp"]
+          + pageArr[page_number]["exp"]
           + '</div>';
     return(temp);
   }
   
   //===========================================================================
   function straight_mov(){  //movという名前だが、下に積み上げ式のfie表示
-    fie = 0;
+    page_number = 0;
     
     //下に積み上げて表示するなら、「最初から」ボタンは表示しないで良い
     document.getElementById("fromScratch").style.display="none";
@@ -743,15 +741,15 @@ function delete_textarea_memo() {
     //
     //全ページをforで走査して、ansに表示事項を積み上げる。
     
-    for(var eachfie=0; eachfie< fiearr.length; eachfie++){
-      if(eachfie != 0){ 
-        if(fiearr[eachfie-1]["nam"] == fiearr[eachfie]["nam"]){ 
-          ans += "<br>" + fie_exp_write(eachfie)+ "<br><hr>"; //0ページ目ではなく、名前は前と同じな場合
+    for(var each_page_number=0; each_page_number< pageArr.length; each_page_number++){
+      if(each_page_number != 0){ 
+        if(pageArr[each_page_number-1]["nam"] == pageArr[each_page_number]["nam"]){ 
+          ans += "<br>" + fie_exp_write(each_page_number)+ "<br><hr>"; //0ページ目ではなく、名前は前と同じな場合
         }else{
-          ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<br><hr>"; //0ページ目ではなく、名前は前と違う場合
+          ans += fie_title_write(each_page_number) +  fie_exp_write(each_page_number) + "<br><hr>"; //0ページ目ではなく、名前は前と違う場合
         }
       }else{
-        ans += fie_title_write(eachfie) +  fie_exp_write(eachfie) + "<br><hr>"; //0ページの場合
+        ans += fie_title_write(each_page_number) +  fie_exp_write(each_page_number) + "<br><hr>"; //0ページの場合
       }
     }
     
@@ -779,10 +777,10 @@ function mapping(mokuji){
   if(map_src==""){
     map = "このページではマップが用意されておりません。";
   }else{
-    for(var i=0;i<local_map.length; i++){
-      if(local_map[i][0]==mokuji){
-        map += '<img src="' + map_src + local_map[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
-        map += '<img src="' +  map_src  + 'map' + local_map[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+    for(var i=0;i<local_mapArr.length; i++){
+      if(local_mapArr[i][0]==mokuji){
+        map += '<img src="' + map_src + local_mapArr[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
+        map += '<img src="' +  map_src  + 'map' + local_mapArr[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
         ifmapappoint = true;
         break;
       }
@@ -802,24 +800,24 @@ function mapping(mokuji){
     var page=document.getElementById("abst_desc");
     document.getElementById("modal_abst").style.display="inline-block";
     
-		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + fiearr[fie]["nam"] + "</span></p>";
+		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + pageArr[page_number]["nam"] + "</span></p>";
 
-		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="close_modal();change_li(2);scrollTo(0,0);mov(0);">始める</li>';
+		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="close_modal();change_tab(2);scrollTo(0,0);mov(0);">始める</li>';
     
     //===========================
     
-    if(if_down_showable){
-      abst += '<li class="li_sel" onclick="close_modal();change_li(2);scrollTo(0,0);straight_mov();">下に積み上げて表示</li>';
+    if(if_under_writable){
+      abst += '<li class="li_sel" onclick="close_modal();change_tab(2);scrollTo(0,0);straight_mov();">下に積み上げて表示</li>';
     }
     
     //===========================
     abst += '</ul></div>';                          
 
 		//ページ数
-		abst += "<p>[ ページ数 : " + fiearr.length + " ]</p>";
+		abst += "<p>[ ページ数 : " + pageArr.length + " ]</p>";
 
 		//リードミー
-		abst += "<p>[ リードミー ]<br>" + itearr[itearr.length-1]["exp"] + "</p>";
+		abst += "<p>[ リードミー ]<br>" + itemArr[itemArr.length-1]["exp"] + "</p>";
 
     //スマホでの見切れ対策。空白入れる。
     abst += "<br><br><br>";
@@ -836,13 +834,13 @@ function mapping(mokuji){
     item_exp.innerHTML="";
     item_sel.innerHTML="";
 
-    for(var i=0;i<itearr.length;i++){
-      if(itearr[i]["hav"]){
+    for(var i=0;i<itemArr.length;i++){
+      if(itemArr[i]["hav"]){
         //「もちもの」タブにラジオボタンを追加する。
         item_sel.innerHTML += '<label><input type="radio" name="item" onclick="' +
                                 'document.getElementById(&quot;d_item_exp&quot;).innerHTML=&quot;' +
-                                itearr[i]["exp"] + '&quot;"/>' +
-                                itearr[i]["nam"] + "</label><br>";
+                                itemArr[i]["exp"] + '&quot;"/>' +
+                                itemArr[i]["nam"] + "</label><br>";
       }
     }
   }
@@ -864,8 +862,8 @@ function mapping(mokuji){
   function ite_reflesh(){
     var if_hav_any_item = false;  
     //アイテムが存在していないなら、「アイテムを表示」ボタンは表示させないための判定
-    for(var i=0; i< itearr.length;i++){
-      if(itearr[i]["hav"]){
+    for(var i=0; i< itemArr.length;i++){
+      if(itemArr[i]["hav"]){
         geti(i);
         if_hav_any_item = true;
       }
@@ -912,19 +910,19 @@ function mapping(mokuji){
   //選択肢スキップ==============================
   function pageskip(){
 
-		if(fiearr.length == 0){ //まだページが選択されていない
+		if(pageArr.length == 0){ //まだページが選択されていない
 			alert("スキップできません");
-		}else if(fiearr[fie]["sel"].length == 0){
+		}else if(pageArr[page_number]["sel"].length == 0){
 			alert("現在のページでおわりです。");
-		}else if(fiearr[fie]["sel"].length != 1){
+		}else if(pageArr[page_number]["sel"].length != 1){
 			alert("現在のページには選択肢が複数あるため、スキップできません。");
 		}else{
 			var ifskip = window.confirm("次に来る、選択肢が複数あるページまでスキップしますか？（この先にそのようなページがない場合は、最後のページまでスキップされます）");
 
 			if(ifskip){
 				while(1){
-					if (fiearr[fie]["sel"].length == 1){  //選択肢数が1の時、その先へ
-						eval(fiearr[fie]["sel"][0][1]);
+					if (pageArr[page_number]["sel"].length == 1){  //選択肢数が1の時、その先へ
+						eval(pageArr[page_number]["sel"][0][1]);
 					}else{
 						//alert("スキップしました");  //複数選択肢があるページ、もしくはページの終わり(選択肢0)までスキップ
 						break;
@@ -939,21 +937,21 @@ function mapping(mokuji){
     var ifscratch = window.confirm("進捗を最初に戻しますか？この操作は取り消せません。");
     breadcrumbs = [];
     if(ifscratch){
-      //load_data(scr, if_down_showable);
+      //load_data(scr, if_under_writable);
       var temp_save= "flg:";
       
-      for(var i = 0; i<flgarr.length;i++){
+      for(var i = 0; i<flagArr.length;i++){
         temp_save +="f";
       }
       
       temp_save +="\nite:";
       
-      for(var j = 0; j<itearr.length;j++){
+      for(var j = 0; j<itemArr.length;j++){
         temp_save +="f";
       }
       
       temp_save += "\nfie:0\nnum:0"
-      for(var k = 0; k<numarr.length-1;k++){
+      for(var k = 0; k<numArr.length-1;k++){
         temp_save +=",0";
       }
       
@@ -964,7 +962,7 @@ function mapping(mokuji){
   //スクリプトでかける関数=========================================================-
   //マップ移動
   function mov(tow) {
-    fie = tow;
+    page_number = tow;
     var temp  =makesave();
     breadcrumbs.unshift(temp);  //セーブを追加、パンくずを追加する
     
@@ -987,39 +985,39 @@ function mapping(mokuji){
   //===========================================================================
   //アイテム獲得
   function geti(n){
-		if(!itearr[n]["hav"]){
+		if(!itemArr[n]["hav"]){
 			geti_alert(true);
 		}
 
-    itearr[n]["hav"]=true;
+    itemArr[n]["hav"]=true;
     display_ite();
   }
 
   //アイテムをなくす
   function losi(n){
-    itearr[n]["hav"]=false;
+    itemArr[n]["hav"]=false;
     ite_reflesh();
     display_ite();
   }
 
   //フラグtrueに
   function onflg(n){
-    flgarr[n]=true;
+    flagArr[n]=true;
   }
 
   //フラグfalseに
   function offlg(n){
-    flgarr[n]=false;
+    flagArr[n]=false;
   }
 
   //フラグがtrueか
   function iflg(n){
-    return(flgarr[n]);
+    return(flagArr[n]);
   }
 
   //道具を持っているか
   function hav(n){
-    return(itearr[n]["hav"]);
+    return(itemArr[n]["hav"]);
   }
 
   //document.getElementById(id).innerHTML = str の糖衣
@@ -1029,33 +1027,33 @@ function mapping(mokuji){
 
   //番号の書き込み
   function wnum(i, num){
-    numarr[i] = num;
+    numArr[i] = num;
   }
 
   //番号の読み込み
   function rnum(i){
-    return(numarr[i]);
+    return(numArr[i]);
   }
 
-  //numarrの引き算(numarr要素からnumarr要素を引く)
+  //numArrの引き算(numArr要素からnumArr要素を引く)
   function nminn(n1, n2){
-    numarr[n1] -= numarr[n2];
+    numArr[n1] -= numArr[n2];
   }
 
-  //numarrの引き算(numarr要素から実際に数字を引く)
+  //numArrの引き算(numArr要素から実際に数字を引く)
   function nminx(n, x){
-    numarr[n] -= x;
+    numArr[n] -= x;
   }
 
 
-  //numarrの足し算(numarr要素にnumarr要素を足す)
+  //numArrの足し算(numArr要素にnumArr要素を足す)
   function naddn(n1, n2){
-    numarr[n1] += numarr[n2];
+    numArr[n1] += numArr[n2];
   }
 
-  //numarrの足し算(numarr要素に実際に数字を足す)
+  //numArrの足し算(numArr要素に実際に数字を足す)
   function naddx(n, x){
-    numarr[n] += x;
+    numArr[n] += x;
   }
 
   //Math.randomの糖衣

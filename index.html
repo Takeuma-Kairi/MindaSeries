@@ -2,38 +2,37 @@
 <html>
 
 <head>
-  <meta charset="UTF-8"> <!--日本語-->
+  <!--日本語対応-->
+  <meta charset="UTF-8"> 
+  
   <title>大陸シリーズ BTAP4</title>
   <meta name="viewport" content="width=device-width" />
   <link rel="stylesheet" href="style.css" type="text/css">
+  
+  
+  <!--NotoSansフォント導入-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="BTAicon.png" type="image/png"> <!--ファビコン-->
+  
+  <!--ファビコン-->
+  <link rel="shortcut icon" href="BTAicon.png" type="image/png"> 
 </head>
 
 <body>
-
-	<header id="header">
+	<!--====== ページ上部のタブ選択リボン　===============================-->
+	<header id="header">		
 		<nav>
 			<ul>
-                <!-- <li onclick="tab_close()" id="li_tabclosing" class="non-active_li">
-                </li> -->
-
-				<!-- <li onclick="tab_close()" class="non-active_li">
-                    <img src="tab_yajirushi.png" id="tab_yajirushi" class="yajirushi_close"/></li> -->
-				<li onclick="change_li(1)" id="li_select" class="active-li">①選ぶ</li>
-				<li onclick="change_li(2)" id="li_page" class="non-active_li">②みる</li>
-        <hr>
-        <li onclick="change_li(3)" id="li_summary" class="non-active_li">まとめ</li>
-				<li onclick="change_li(0)" id="li_setting" class="non-active_li">設定</li>
+                <li onclick="change_tab(1)" id="li_select" class="active-li">①選ぶ</li>
+				<li onclick="change_tab(2)" id="li_page" class="non-active_li">②みる</li>
+				<hr>　<!--区切り線-->
+				<li onclick="change_tab(3)" id="li_summary" class="non-active_li">まとめ</li>
+				<li onclick="change_tab(0)" id="li_setting" class="non-active_li">設定</li>
 			</ul>
 		</nav>
 	</header>
 
-       <!--  <div id="tab_close" class="tool_button tab_close" onclick="tab_close()">
-              <img src="tab_yajirushi.png" id="tab_yajirushi" class="yajirushi_close"/>
-      </div> -->
 
   <!-- ストーリーを選択する欄================================================================ -->
 
