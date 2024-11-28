@@ -25,10 +25,10 @@ const ToTSUJO= "→通常モード";
 const ToZENPAGE="→全ページ閲覧モード";
 
 //ページ選択テーブルのソート======================================================
-function sort_page_sel_table(){
+function sort_story_select_table(){
 		var way = document.getElementById("way_sel").value; //降順？昇順？
 		var category = document.getElementById("category_sel").value; //どのカテゴリーでソート？
-		var table = document.getElementById("page_sel_table"); //表
+		var table = document.getElementById("story_select_table"); //表
 
     //定数欄=====================
 		const sub_name_clm = 0;
@@ -88,24 +88,24 @@ function sort_page_sel_table(){
 	function tab_close(){
 		var tab_close= document.getElementById("tab_close_button");
 		var header= document.getElementById("header");
-		var ran_select = document.getElementById("ran_select");
-		var ran_setting = document.getElementById("ran_setting");
-		var ran_page = document.getElementById("ran_page");
+		var tabDiv_select = document.getElementById("tabDiv_select");
+		var tabDiv_setting = document.getElementById("tabDiv_setting");
+		var tabDiv_page = document.getElementById("tabDiv_page");
 		
 		if(header.style.display == "none"){
 			tab_close.innerHTML = "↑非表示";
 			header.style.display = "block";
 
-			ran_select.className= "ran";
-			ran_setting.className= "ran";
-			ran_page.className = "ran";
+			tabDiv_select.className= "tabDiv";
+			tabDiv_setting.className= "tabDiv";
+			tabDiv_page.className = "tabDiv";
 		}else{
 			tab_close.innerHTML = "↑ 表示";
 			header.style.display = "none";
 
-			ran_select.className= "ran ran_without_header";
-			ran_setting.className= "ran ran_without_header";
-			ran_page.className = "ran ran_without_header";
+			tabDiv_select.className= "tabDiv tabDiv_without_header";
+			tabDiv_setting.className= "tabDiv tabDiv_without_header";
+			tabDiv_page.className = "tabDiv tabDiv_without_header";
 		}
 
 	}
@@ -116,23 +116,23 @@ function sort_page_sel_table(){
 		var li_page = document.getElementById("li_page");
 		var li_summary = document.getElementById("li_summary");
     
-		var ran_setting = document.getElementById("ran_setting");
-		var ran_select = document.getElementById("ran_select");
-		var ran_page = document.getElementById("ran_page");
-		var ran_summary = document.getElementById("ran_summary");
+		var tabDiv_setting = document.getElementById("tabDiv_setting");
+		var tabDiv_select = document.getElementById("tabDiv_select");
+		var tabDiv_page = document.getElementById("tabDiv_page");
+		var tabDiv_summary = document.getElementById("tabDiv_summary");
 
 		var li_arr = [li_setting, li_select, li_page, li_summary];
-		var ran_arr = [ran_setting, ran_select, ran_page, ran_summary];
+		var tabDiv_arr = [tabDiv_setting, tabDiv_select, tabDiv_page, tabDiv_summary];
 
 		//選ばれたタブに当たるli要素と、それ以外の要素の見た目を変更する
 		//また、選ばれたタブを表示し、それ以外は非表示にする
 		for(var i = 0; i < li_arr.length; i++){
 			if(i==selected_tab){
 				li_arr[i].className = "active-li";
-				ran_arr[i].style.display="block";
+				tabDiv_arr[i].style.display="block";
 			}else{
 				li_arr[i].className = "non-active_li";
-				ran_arr[i].style.display="none";
+				tabDiv_arr[i].style.display="none";
 			}
 		}
 	}
@@ -169,11 +169,11 @@ function change_fontsize(p = "18"){
 
 	var fontsize_range = document.getElementById("fontsize_range");
 	var fontsize_number = document.getElementById("fontsize_number");
-	var ran_page = document.getElementById("ran_page");
+	var tabDiv_page = document.getElementById("tabDiv_page");
 	var reibun = document.getElementById("reibun");
 
 	// スクロールバーなどに反映し直す
-	ran_page.style.fontSize = p + "px";
+	tabDiv_page.style.fontSize = p + "px";
 	reibun.style.fontSize = p + "px";
 
 	fontsize_range.value = p;
@@ -181,8 +181,8 @@ function change_fontsize(p = "18"){
 
 }
 
-//画面(ran)横幅の変更==========================================================
-function change_ranwidth(p="60"){
+//画面(tabDiv)横幅の変更==========================================================
+function change_tabDivwidth(p="60"){
 
 	var parseInt_result = parseInt(p);
 
@@ -197,21 +197,21 @@ function change_ranwidth(p="60"){
 	}
 
 	// スクロールバーなどに反映し直す
-	var ran_width_range = document.getElementById("ran_width_range");
-	var ran_width_number = document.getElementById("ran_width_number");
+	var tabDiv_width_range = document.getElementById("tabDiv_width_range");
+	var tabDiv_width_number = document.getElementById("tabDiv_width_number");
 
-	ran_width_range.value = p;
-	ran_width_number.value = p;
+	tabDiv_width_range.value = p;
+	tabDiv_width_number.value = p;
 
-	//各ranクラスのものに横幅を設定していく
-	var ran_select = document.getElementById("ran_select");
-	var ran_setting = document.getElementById("ran_setting");
-	var ran_page = document.getElementById("ran_page");
-	var ran_arr = [ran_select, ran_setting, ran_page];
+	//各tabDivクラスのものに横幅を設定していく
+	var tabDiv_select = document.getElementById("tabDiv_select");
+	var tabDiv_setting = document.getElementById("tabDiv_setting");
+	var tabDiv_page = document.getElementById("tabDiv_page");
+	var tabDiv_arr = [tabDiv_select, tabDiv_setting, tabDiv_page];
 
 
-	for(var i=0; i<ran_arr.length; i++){
-		ran_arr[i].style.width = p + "%";
+	for(var i=0; i<tabDiv_arr.length; i++){
+		tabDiv_arr[i].style.width = p + "%";
 	}
 }
 
@@ -224,7 +224,7 @@ function reset_setting(){
 
 	change_align_center();
 	change_fontsize();
-	change_ranwidth();
+	change_tabDivwidth();
 }
 //アイテム欄の表示・非表示(3関数で1セット)==========================================================
 function hide_item(){
@@ -247,7 +247,7 @@ function unvail_item(){
     var d_item = document.getElementById("d_item");
     var button_openitem = document.getElementById("button_openitem");
 
-		geti_alert(false);
+		get_item_alert(false);
 
 	  if(d_item.style.display == "none"){
       unvail_item();
@@ -263,7 +263,7 @@ function change_colorscheme(colorscheme_name) {
 
 
 window.addEventListener('DOMContentLoaded', function() {
-  sort_page_sel_table();
+  sort_story_select_table();
 });
 
 //開発者モード==================================================================
@@ -760,11 +760,11 @@ function delete_textarea_memo() {
 	//========================================================================
 	//イントロダクションのモーダルメニューを閉じる
 function close_modal() {
-  document.getElementById("modal_abst").style.display = "none";
+  document.getElementById("modalDiv").style.display = "none";
 }
 
 function open_map(){
-  document.getElementById("modal_abst").style.display = "block";
+  document.getElementById("modalDiv").style.display = "block";
 }
 
 	//ローカルマップ============================================================
@@ -798,7 +798,7 @@ function mapping(mokuji){
 	//イントロダクションを表示
 	function show_introduction(){
     var page=document.getElementById("abst_desc");
-    document.getElementById("modal_abst").style.display="inline-block";
+    document.getElementById("modalDiv").style.display="inline-block";
     
 		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + pageArr[page_number]["nam"] + "</span></p>";
 
@@ -845,13 +845,13 @@ function mapping(mokuji){
     }
   }
   //新アイテム獲得！アラートを発する==============================
-  function geti_alert(ifalert){
+  function get_item_alert(ifalert){
 		var button_openitem = document.getElementById("button_openitem");
 
 		button_openitem.style.display="inline-block";
 
 		if(ifalert){
-			button_openitem.className="tool_button openitem geti_alert";
+			button_openitem.className="tool_button openitem get_item_alert";
 		}else{
 			button_openitem.className="tool_button openitem";
 		}
@@ -986,7 +986,7 @@ function mapping(mokuji){
   //アイテム獲得
   function geti(n){
 		if(!itemArr[n]["hav"]){
-			geti_alert(true);
+			get_item_alert(true);
 		}
 
     itemArr[n]["hav"]=true;

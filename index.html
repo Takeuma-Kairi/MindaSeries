@@ -9,7 +9,6 @@
   <meta name="viewport" content="width=device-width" />
   <link rel="stylesheet" href="style.css" type="text/css">
   
-  
   <!--NotoSansフォント導入-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +19,8 @@
 </head>
 
 <body>
-	<!--====== ページ上部のタブ選択リボン　===============================-->
+	<!--====== 画面上部のタブ選択リボン　===============================-->
+	<!--====== 最初は「①選ぶ」タブがアクティブになっている======================-->
 	<header id="header">		
 		<nav>
 			<ul>
@@ -36,7 +36,7 @@
 
   <!-- ストーリーを選択する欄================================================================ -->
 
-	<div class="ran" style="display:block;text-align:center;padding-top:12px;" id="ran_select">
+	<div class="tabDiv" style="display:block;text-align:center;padding-top:12px;" id="tabDiv_select">
 	  <p style="font-size: 1.1em;font-weight: bold;">まずは<span onclick="load_data(UserTour);" class="system_hl">画面説明</span>をご覧ください。</p>
 		<p style="font-size: 1.1em;font-weight: bold;">
             下の表でストーリーを選択してください。選択後「②みる」に遷移します。
@@ -48,13 +48,13 @@
 
 		<p>
 			<label>ストーリーのソート
-					<select onchange="sort_page_sel_table()" id="way_sel">
+					<select onchange="sort_story_select_table()" id="way_sel">
 						<option value="ascend">昇順</option>
 						<option value="descend" selected>降順</option>
 					</select>
 
 
-				<select onchange="sort_page_sel_table()" id="category_sel">
+				<select onchange="sort_story_select_table()" id="category_sel">
 					<option value="made" selected>作成順</option>
 					<option value="series">シリーズ順</option>
 					<option value="history">時系列順</option>
@@ -62,7 +62,7 @@
 			</label>
 		</p>
 
-		<table class="page_sel_table" id="page_sel_table">
+		<table class="story_select_table" id="story_select_table">
 			<tr>
 				<th>補助タイトル</th>
         <th>ファイル名</th>
@@ -122,7 +122,7 @@
 	<!-- ================================ -->
 	<!--Introduction表示用のモーダルウィンドウ  -->
 		
-	<div id="modal_abst" class="modal_abst_ran" >
+	<div id="modalDiv" class="modalDiv" >
 		  
 		<div onclick="close_modal()" class="modal_abst_btn">閉じる</div>
 		  
@@ -131,7 +131,7 @@
 		
 		
   <!-- 設定欄================================================================ -->
-	<div class="ran" style="padding-top:12px;" id="ran_setting">
+	<div class="tabDiv" style="padding-top:12px;" id="tabDiv_setting">
 
     <h2>ストーリーの表示設定</h2>
 
@@ -143,11 +143,11 @@
 
         <p>
             <label>横幅の調整（ディスプレイの横幅に占めるパーセント。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
-            <!-- 以下の、min or max or value を変更した場合、change_ranwidthも変更すること！-->
-            <input type="range" id="ran_width_range" min="25" max="100" value="60" step="1"
-                 onchange="change_ranwidth(this.value)">
-            <input type="number" id="ran_width_number" min="25" max="100" value="60" step="1"
-                  onchange="change_ranwidth(this.value)">
+            <!-- 以下の、min or max or value を変更した場合、change_tabDivwidthも変更すること！-->
+            <input type="range" id="tabDiv_width_range" min="25" max="100" value="60" step="1"
+                 onchange="change_tabDivwidth(this.value)">
+            <input type="number" id="tabDiv_width_number" min="25" max="100" value="60" step="1"
+                  onchange="change_tabDivwidth(this.value)">
         </p>
 
 		<p>
@@ -211,7 +211,7 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
 
   <!-- ストーリー欄================================================================ -->
 
-	<div class="ran" id="ran_page">
+	<div class="tabDiv" id="tabDiv_page">
 
     <div style="width:100%;display:inline-block" id="desc_and_item">
 
@@ -266,7 +266,7 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
 	</div>
 
 <!-- まとめ欄 =========================================================-->
-  <div class="ran" id="ran_summary">
+  <div class="tabDiv" id="tabDiv_summary">
     <h1>参考資料</h1>
     <p>
       <a href="https://drive.google.com/drive/folders/1nqxwojH-HQ0KTHJ9tkGanrT1ldLg5fmZ?usp=sharing" class="system_hl">Googleドライブでファイルを見る</a>

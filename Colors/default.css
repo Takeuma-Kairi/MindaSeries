@@ -39,13 +39,13 @@ header {
 }
 
 /* 新規アイテム入手時のアラート色 */
-.geti_alert{
+.get_item_alert{
 	background-color:  #b32c2d;
 	color: #eaeaea;
 }
 
 /* ページ選択用の表 枠の色、フォントの色 */
-.page_sel_table tr, td, th{
+.story_select_table tr, td, th{
   border: gray solid 1px;
   color: black;
 }

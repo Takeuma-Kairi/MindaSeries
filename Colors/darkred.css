@@ -31,14 +31,14 @@ header {
 }
 
 
-.page_sel_table tr{
+.story_select_table tr{
   border: #6A8088 solid 1px;
 	color: white;
 }
 
-.page_sel_table tr td{
+.story_select_table tr td{
   border:#6A8088 solid 1px;
 }
-.page_sel_table tr th{
+.story_select_table tr th{
   border:#6A8088 solid 1px;
 }

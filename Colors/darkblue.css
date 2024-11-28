@@ -56,20 +56,20 @@ header {
 	color: #2E2E2E;
 }
 
-.geti_alert{
+.get_item_alert{
 	background-color:  #E6E7E7;
 	color: #2E2E2E;
 }
 
-.page_sel_table tr{
+.story_select_table tr{
   border: #70EBDE solid 1px;
 }
 
-.page_sel_table tr td{
+.story_select_table tr td{
   border:#70EBDE solid 1px;
 }
 
-.page_sel_table tr th{
+.story_select_table tr th{
   border:#70EBDE solid 1px;
 }
 
