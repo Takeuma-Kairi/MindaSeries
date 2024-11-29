@@ -202,6 +202,18 @@ onclick="all_page_mode_change()">→全ページ閲覧モード</button>
     </p>
 
     <hr>
+	
+	<p>
+		<h2>テキスト形式のストーリーファイル読み込み</h2>
+        <form id="form_page">
+            <label>ストーリーファイルを選択してください<br>
+                <input id="myfile" type="file" onchange="load_txt_data()"/>
+            </label>
+        </form>
+    </p>
+	
+    <hr>
+	
     <p>
         <h2>開発者モード</h2>
         <button onclick="password_insert()">パスワード入力…</button>

@@ -959,6 +959,26 @@ function mapping(mokuji){
     }
   }
 
+	//テキスト形式のストーリーファイル読み込み
+	function load_txt_data(){
+		try{
+		  var myFile = document.getElementById("myfile").files[0];
+		  
+		  var reader = new FileReader();
+		  
+		  reader.onload = function (evt){
+			var txt = evt.target.result;
+			load_data(txt);   //load_dataへとテキストを送る
+		  }
+		  
+		  reader.readAsText(myFile, "utf-8");
+		  document.getElementById("form_page").reset();
+		  
+		}catch{
+		  alert("ファイル選択にエラーがあります。");
+		}
+	}
+	
   //スクリプトでかける関数=========================================================-
   //マップ移動
   function mov(tow) {
