@@ -1,146 +1,185 @@
-var flagArr = [];  //フラグ
-var itemArr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有]
-var pageArr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, 実行文章]]
-var page_number = 0;      //フィールド番号
-var numArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
+//====================
+//# ページ処理関係 ###########
 
-//---------------
-var map_src = "";
-var local_mapArr =[];
-//----------------
+let flagArr = [];  //フラグ
+let itemArr = [];  //アイテム[nam:名前, exp:説明, hav:true/falseで所有]
+let pageArr = [];  //フィールド[nam:名前, exp:説明, sel:[選択肢名, 実行文章]]
+let page_number = 0;      //フィールド番号
+let numArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];  //番号配列（フラグの補助的）
 
-var if_under_writable = false;
+//====================
+//# ミニマップ関係 ###########
 
-    //gotoタブを実装
-var tabnamearr = {};
-    //ーーーーー
+let map_src = ""; //ミニマップのsrc。Assist/XXX/map/の中にマップ画像群が入っている。この変数には、文字列XXXが入る。
+let local_mapArr =[]; //ミニマップの現在位置を表す画像群を配列にする
 
-var ifAuthor = false;
+//====================
 
-var breadcrumbs = []; //セーブデータの配列。パンくず。
+let if_under_writable = false;  //下に積み上げて表示の可否。デフォルトではfalse、つまりページを分けて表示していく
+
+let tob_nameArr = {}; //tob関数用の配列。構造→[タブ名: ページ番号]
+
+let ifAuthor = false; //開発者モードか否か。
+
+let save_data_breadcrumbArr = []; //「戻る」用。セーブデータ文字列を入れる配列。パンくず(breadcrumb)リスト。
 
 
-//通常モード、前ページ閲覧モードの文章
+//====================
+//# 通常モード、前ページ閲覧モードの文章 ###
 const ToTSUJO= "→通常モード";
-const ToZENPAGE="→全ページ閲覧モード";
+const ToZENPAGE= "→全ページ閲覧モード";
+
+
+//まずページ選択テーブルのソートをする
+window.addEventListener('DOMContentLoaded', function() {
+  sort_story_select_table();
+});
+
+
+
+
+
+
+
 
 //ページ選択テーブルのソート======================================================
 function sort_story_select_table(){
-		var way = document.getElementById("way_sel").value; //降順？昇順？
-		var category = document.getElementById("category_sel").value; //どのカテゴリーでソート？
-		var table = document.getElementById("story_select_table"); //表
+		const table = document.getElementById("story_select_table"); //表
+    
+		let way = document.getElementById("way_sel").value; //降順？昇順？
+		let category = document.getElementById("category_sel").value; //どのカテゴリーでソート？
 
-    //定数欄=====================
-		const sub_name_clm = 0;
-    const file_name_clm = 1;
-		const series_clm = 2;
-		const made_clm = 3;
-		const history_clm = 4;
+    //カテゴリー番号================
+		const sub_name_column = 0;
+    const file_name_column = 1;
+		const series_column = 2;
+		const made_column = 3;
+		const history_column = 4;
     //==========================
-		if(way == "ascend"){
+    
+		if(way == "ascend"){  //昇順ならば
 			way = 1;
 		}else{
-			way = -1;
+			way = -1; //この-1は、あとで掛け算することで方向の符号反転させるためのもの。
 		}
 
 		switch (category){
-			case "made":
-				category = made_clm;break;
-			case "series":
-				category = series_clm;break;
-			case "history":
-				category = history_clm;break;
+			case "made":  //作成順
+				category = made_column;break;
+			case "series":  //シリーズ順
+				category = series_column;break;
+			case "history": //時系列順
+				category = history_column;break;
 			default:
 				break;
 		}
-
-    //新しい表の順番を記録する配列
-		var jun=[];
-    //[ rowのクリック時処理, [innerHTML、innerText] ]
-  
+    
+    //=====================================
+    //# 表の順番を記録する配列 ##############
+    
+		let junArr=[]; 
+    
+    //構造は３重配列→ [ [ rowのクリック時処理, [セルのinnerHTML、セルのinnerText] ], ...]
+    // innerHTMLは単純にそのままコピペ用。
+    // innerTextはソート用(後述junArr.sort内部)
+    
+    //現在の表の情報をjunArrに転記する
 		for (i = 1; i < table.rows.length; i++) {
-			temp_jun = [table.rows[i].onclick];
+			temp_junArr = [table.rows[i].onclick];
 			for(j = 0; j<table.rows[i].cells.length; j++){
-				temp_jun.push(
+				temp_junArr.push(
 				[table.rows[i].cells[j].innerHTML,
 				table.rows[i].cells[j].innerText]);
 			}
-			jun.push(temp_jun);
+			junArr.push(temp_junArr);
 		}
+    //=====================================
 
-		jun.sort(function(a, b) {
+    //↓なぜ動いているのかよくわからない====================
+		junArr.sort(function(a, b) {
 			if (parseInt(a[category+1][1]) > parseInt(b[category+1][1])) {
 				return 1*way;
 			} else {
 				return -1*way;
 			}
 		});
+    //↑ソートをしてくれていると言うことは分かる====================
 
 
+    //新しい表の情報をjunArrから転記する====================
 		for (i = 1; i < table.rows.length; i++) {
-      table.rows[i].onclick = jun[i-1][0];
+      table.rows[i].onclick = junArr[i-1][0];
 			for(j = 0; j < table.rows[i].cells.length; j++){
-				table.rows[i].cells[j].innerHTML = jun[i-1][j+1][0];
+				table.rows[i].cells[j].innerHTML = junArr[i-1][j+1][0];
 			}
 		}
 	}
-//=タブを閉じる================================================================
+  
+  
+//=上のタブ選択リボン(header)を開閉する=========================================
 	function tab_close(){
-		var tab_close= document.getElementById("tab_close_button");
-		var header= document.getElementById("header");
-		var tabDiv_select = document.getElementById("tabDiv_select");
-		var tabDiv_setting = document.getElementById("tabDiv_setting");
-		var tabDiv_page = document.getElementById("tabDiv_page");
+		const tab_close= document.getElementById("tab_close_button");
+		const header= document.getElementById("header");
+		const tabDiv_select = document.getElementById("tabDiv_select");
+		const tabDiv_setting = document.getElementById("tabDiv_setting");
+		const tabDiv_page = document.getElementById("tabDiv_page");
 		
-		if(header.style.display == "none"){
-			tab_close.innerHTML = "↑非表示";
+		if(header.style.display == "none"){ //もしリボンが非表示なら、表示させる
 			header.style.display = "block";
-
-			tabDiv_select.className= "tabDiv";
-			tabDiv_setting.className= "tabDiv";
-			tabDiv_page.className = "tabDiv";
-		}else{
-			tab_close.innerHTML = "↑ 表示";
+			tab_close.innerHTML = "↑非表示"; //表示されているので、ボタンは「非表示にさせるならここを押す」旨を表示する     
+			tabDiv_page.className = "tabDiv"; //リボン表示に合わせて配置する
+      
+		}else{  //もしリボンが表示なら、非表示にさせる
 			header.style.display = "none";
-
-			tabDiv_select.className= "tabDiv tabDiv_without_header";
-			tabDiv_setting.className= "tabDiv tabDiv_without_header";
-			tabDiv_page.className = "tabDiv tabDiv_without_header";
+			tab_close.innerHTML = "↑ 表示";
+			tabDiv_page.className = "tabDiv tabDiv_without_header";//リボン非表示に合わせて配置する
 		}
 
 	}
-//ヘッダータブの変更=========================================================
-	function change_tab(selected_tab){
-		var li_setting = document.getElementById("li_setting");
-		var li_select = document.getElementById("li_select");
-		var li_page = document.getElementById("li_page");
-		var li_summary = document.getElementById("li_summary");
+  
+ 
+//タブの変更=========================================================
+	function change_tab(selected_tab){  
+    //引数のselected_tabは整数。 0:設定、1:選ぶ、2:みる、3:まとめ
+    //数字の振り方は開発してきた順。（左側から表示されている順ではない！）
     
-		var tabDiv_setting = document.getElementById("tabDiv_setting");
-		var tabDiv_select = document.getElementById("tabDiv_select");
-		var tabDiv_page = document.getElementById("tabDiv_page");
-		var tabDiv_summary = document.getElementById("tabDiv_summary");
+    //========================
+    //# タブ選択リボンの各ボタン #####
+		const li_setting = document.getElementById("li_setting");
+		const li_select = document.getElementById("li_select");
+		const li_page = document.getElementById("li_page");
+		const li_summary = document.getElementById("li_summary");
+    
+    //========================
+    //# それぞれのタブ #############
+		const tabDiv_setting = document.getElementById("tabDiv_setting");
+		const tabDiv_select = document.getElementById("tabDiv_select");
+		const tabDiv_page = document.getElementById("tabDiv_page");
+		const tabDiv_summary = document.getElementById("tabDiv_summary");
 
-		var li_arr = [li_setting, li_select, li_page, li_summary];
-		var tabDiv_arr = [tabDiv_setting, tabDiv_select, tabDiv_page, tabDiv_summary];
+    //========================
+    //# ボタン、タブを配列にする #############
+    //# この順番は変更してはいけない。新しくタブを作る場合、第5項目以降に追加していく。
+		const li_Arr = [li_setting, li_select, li_page, li_summary];
+		const tabDiv_Arr = [tabDiv_setting, tabDiv_select, tabDiv_page, tabDiv_summary];
 
-		//選ばれたタブに当たるli要素と、それ以外の要素の見た目を変更する
+		//選ばれたタブにあたるli要素と、それ以外の要素の見た目を変更する
 		//また、選ばれたタブを表示し、それ以外は非表示にする
-		for(var i = 0; i < li_arr.length; i++){
+		for(let i = 0; i < li_Arr.length; i++){
 			if(i==selected_tab){
-				li_arr[i].className = "active-li";
-				tabDiv_arr[i].style.display="block";
+				li_Arr[i].className = "active-li";
+				tabDiv_Arr[i].style.display="block";
 			}else{
-				li_arr[i].className = "non-active_li";
-				tabDiv_arr[i].style.display="none";
+				li_Arr[i].className = "non-active_li";
+				tabDiv_Arr[i].style.display="none";
 			}
 		}
 	}
 
 //ページを左揃えにする--================================================================
   function change_align_center(){
-    var chb_align_center = document.getElementById("chb_align_center");
-    var desc_and_item = document.getElementById("desc_and_item");
+    const chb_align_center = document.getElementById("chb_align_center");
+    const desc_and_item = document.getElementById("desc_and_item");
 
     if(chb_align_center.checked){
       desc_and_item.style.textAlign = "center";
@@ -150,14 +189,15 @@ function sort_story_select_table(){
   }
 
 
-//フォントサイズの変更==========================================================
+//フォントサイズの変更===============================================
+//最大30、最小12、デフォルト18にしている。深い意味はない。================
 function change_fontsize(p = "18"){
 	const MAX = "30";
 	const VALUE = "18";
 	const MIN = "12";
 
-	var parseInt_result = parseInt(p);
-	if (isNaN(parseInt_result)){
+	let parseInt_result = parseInt(p);
+	if (isNaN(parseInt_result)){  //数字じゃないものが入力された場合、デフォルト値に上書きする
 		p = VALUE;
 	}else{
 		if(parseInt_result < 12){
@@ -166,27 +206,29 @@ function change_fontsize(p = "18"){
 			p = MAX;
 		}
 	}
+  
+  //===========================================
+	//# スクロールバーなどに反映する ###################
+	const tabDiv_page = document.getElementById("tabDiv_page");
+	const reibun = document.getElementById("reibun");
+	const fontsize_range = document.getElementById("fontsize_range");
+	const fontsize_number = document.getElementById("fontsize_number");
 
-	var fontsize_range = document.getElementById("fontsize_range");
-	var fontsize_number = document.getElementById("fontsize_number");
-	var tabDiv_page = document.getElementById("tabDiv_page");
-	var reibun = document.getElementById("reibun");
+	tabDiv_page.style.fontSize = p + "px";  //本文のフォントサイズ
+	reibun.style.fontSize = p + "px";  //「フォントサイズ確認サンプル文章」のフォントサイズ
 
-	// スクロールバーなどに反映し直す
-	tabDiv_page.style.fontSize = p + "px";
-	reibun.style.fontSize = p + "px";
-
-	fontsize_range.value = p;
-	fontsize_number.value = p;
+	fontsize_range.value = p; //スクロールバーフォーム
+	fontsize_number.value = p;//数値入力フォーム
 
 }
 
-//画面(tabDiv)横幅の変更==========================================================
+//画面(tabDiv)横幅の変更=================================
+//デフォルト60%にしている。深い意味はない。=====================
 function change_tabDivwidth(p="60"){
 
-	var parseInt_result = parseInt(p);
+	let parseInt_result = parseInt(p);
 
-	if (isNaN(parseInt_result)){
+	if (isNaN(parseInt_result)){  //数字じゃないものが入力された場合、デフォルト値に上書きする
 		p = "60";
 	}else{
 		if(parseInt_result < 0){
@@ -196,81 +238,91 @@ function change_tabDivwidth(p="60"){
 		}
 	}
 
-	// スクロールバーなどに反映し直す
-	var tabDiv_width_range = document.getElementById("tabDiv_width_range");
-	var tabDiv_width_number = document.getElementById("tabDiv_width_number");
+  //===========================================
+	//# スクロールバーなどに反映する ###################
+	const tabDiv_width_range = document.getElementById("tabDiv_width_range");
+	const tabDiv_width_number = document.getElementById("tabDiv_width_number");
 
 	tabDiv_width_range.value = p;
 	tabDiv_width_number.value = p;
 
 	//各tabDivクラスのものに横幅を設定していく
-	var tabDiv_select = document.getElementById("tabDiv_select");
-	var tabDiv_setting = document.getElementById("tabDiv_setting");
-	var tabDiv_page = document.getElementById("tabDiv_page");
-	var tabDiv_arr = [tabDiv_select, tabDiv_setting, tabDiv_page];
+	const tabDiv_select = document.getElementById("tabDiv_select");
+	const tabDiv_setting = document.getElementById("tabDiv_setting");
+	const tabDiv_page = document.getElementById("tabDiv_page");
+	const tabDiv_Arr = [tabDiv_select, tabDiv_setting, tabDiv_page];
 
 
-	for(var i=0; i<tabDiv_arr.length; i++){
-		tabDiv_arr[i].style.width = p + "%";
+	for(let i=0; i<tabDiv_Arr.length; i++){
+		tabDiv_Arr[i].style.width = p + "%";
 	}
 }
 
 //設定のリセット(横幅、左揃え、フォントサイズ)==========================================================
 function reset_setting(){
- 	var chb_yokohaba = document.getElementById("chb_yokohaba");
-	var chb_align_center = document.getElementById("chb_align_center");
-
+ 	//let chb_yokohaba = document.getElementById("chb_yokohaba");
+	const chb_align_center = document.getElementById("chb_align_center");
+  const DEFAULT_COLORSCHEME ="default"; //デフォルトのカラースキーム
+  
 	chb_align_center.checked = false;
 
 	change_align_center();
 	change_fontsize();
 	change_tabDivwidth();
-}
-//アイテム欄の表示・非表示(3関数で1セット)==========================================================
-function hide_item(){
-	var d_item = document.getElementById("d_item");
-  var button_openitem = document.getElementById("button_openitem");
-
-	d_item.style.display = "none";
-  button_openitem.innerHTML = "↓アイテムを表示";
+  
+  //カラースキームの変更
+  change_colorscheme(DEFAULT_COLORSCHEME);
+  document.getElementById("colorscheme_select").value=DEFAULT_COLORSCHEME;
 }
 
+//==============================================================
+//# アイテム欄の表示・非表示(3関数で1セット)  ###################
+
+//アイテム欄を表示
 function unvail_item(){
-	var d_item = document.getElementById("d_item");
-  var button_openitem = document.getElementById("button_openitem");
+	let d_item = document.getElementById("d_item");
+  let button_openitem = document.getElementById("button_openitem");
 
 	d_item.style.display = "inline-block";
   button_openitem.innerHTML = "↑アイテムを非表示";
 }
 
-  function show_item(){
-    var d_item = document.getElementById("d_item");
-    var button_openitem = document.getElementById("button_openitem");
+//アイテム欄を非表示
+function hide_item(){
+	let d_item = document.getElementById("d_item");
+  let button_openitem = document.getElementById("button_openitem");
 
-		get_item_alert(false);
+	d_item.style.display = "none";
+  button_openitem.innerHTML = "↓アイテムを表示";
+}
 
-	  if(d_item.style.display == "none"){
-      unvail_item();
-    }else{
-      hide_item();
-    }
+//button_openitemのボタン（上で「アイテムを（非）表示」と書いてあるやつ）を押したときの動作
+function show_item(){
+  let d_item = document.getElementById("d_item");
+  let button_openitem = document.getElementById("button_openitem");
+
+  get_item_alert(false);  //新規のアイテムがあるというアラートを消す
+
+  if(d_item.style.display == "none"){ //アイテム欄が表示されていない場合、表示させる。その逆もしかり。
+    unvail_item();
+  }else{
+    hide_item();
   }
-//カラースキームの変更==========================================================
+}
+
+//=============================================
+//カラースキームの変更==============================
 function change_colorscheme(colorscheme_name) {
-	var colorscheme = document.getElementById("colorscheme");
+	let colorscheme = document.getElementById("colorscheme");
 	colorscheme.href = "Colors/" + colorscheme_name + ".css";
 }
 
 
-window.addEventListener('DOMContentLoaded', function() {
-  sort_story_select_table();
-});
-
 //開発者モード==================================================================
 function password_insert(){
-	var password = prompt("パスワード？");
-	if(password == "mmm"){
-		ifAuthor= true;
+	let password = prompt("パスワード？");
+	if(password == "mmm"){  //そうですパスワードは「mmm」。ソースコードの中に書くなんて、脆弱だねえ！
+		ifAuthor= true; //開発者モードであることを示すフラグ
 
 		//全ページ閲覧モード
 		document.getElementById("all_page_mode").textContent= ToZENPAGE;
@@ -282,30 +334,36 @@ function password_insert(){
 	}
 }
 
-//全ページモードで、セレクトリストで選んだ時================================================
-function all_page_mov(tow){
-  tow = parseInt(tow);
-  mov(tow);
-}
 
-//全ページモードで、←、→ボタンで選んだ時=======================================
-function all_page_step(step){
-  var all_page_sel = document.getElementById("all_page_sel");
+//==========================================================
+//# 全ページ閲覧モード #####################################
+
+
+
+//←、→ボタンで選んだ時 ==============
+function all_page_step(step){ //stepは1か-1。つまり、前に1つ進むか、後ろに1つ進むか。
+  let all_page_sel = document.getElementById("all_page_sel");
   tow_temp=page_number+step;
 
-  //選択ページ番号がオーバーフローしないか
+  //選択ページ番号がオーバーフローしない限り移動できる
   if(tow_temp >=0 && tow_temp<pageArr.length){
     mov(tow_temp);
   }
 }
 
+//セレクトリストで選んだ時 ==============
+function all_page_mov(tow){
+  tow = parseInt(tow);
+  mov(tow);
+}
+
 //セレクト リストのリセットと書き直し=====================================================
 function all_page_sel_clean(){
-  var all_page_sel = document.getElementById("all_page_sel");
+  let all_page_sel = document.getElementById("all_page_sel");
 
   all_page_sel.length = 0;
 
-  for(var i=0; i<pageArr.length;i++){
+  for(let i=0; i<pageArr.length;i++){ //ページ番号をひとつひとつリストに追加していく
     let op = document.createElement('option');
     op.text=i;
     op.value=i;
@@ -317,15 +375,15 @@ function all_page_sel_clean(){
 }
 
 
-//通常モード、前ページ閲覧モードの入れ替え=================================================
+//通常モード、全ページ閲覧モードの入れ替え=================================================
 function all_page_mode_change(){
 
 
-  var all_page_mode = document.getElementById("all_page_mode");
-  var all_page_sel = document.getElementById("all_page_sel");
-  var all_page_view = document.getElementById("all_page_view");
+  const all_page_mode = document.getElementById("all_page_mode");
+  const all_page_sel = document.getElementById("all_page_sel");
+  const all_page_view = document.getElementById("all_page_view");
 
-  //全ページ閲覧モードへの移行
+  //~~~~~ 全ページ閲覧モードへの移行 ~~~~~~~
   if (all_page_mode.textContent== ToZENPAGE){
     all_page_mode.textContent= ToTSUJO;
     all_page_view.style.display ="inline-block";
@@ -335,20 +393,51 @@ function all_page_mode_change(){
       all_page_sel_clean();
     }
 
-  //通常モードへの移行
+  //~~~~~ 通常モードへの移行 ~~~~~~
   }else{
     all_page_mode.textContent= ToZENPAGE;
     all_page_view.style.display ="none";
   }
 }
 
+//========================================
+//# セーブデータ #########################
 
-//================
-//セーブデータの書き出し
+//セーブデータの文字列を作る==============
+function makesave(){
+  let ans = "flg:";    //フラグ
+  for(let i=0;i<flagArr.length;i++){
+    if(flagArr[i]){
+      ans += "t";
+    }else{
+      ans += "f";
+    }
+  }
+
+  ans += "\nite:";     //アイテム
+  for(let i=0;i<itemArr.length;i++){
+    if(itemArr[i]["hav"]){
+      ans += "t";
+    }else{
+      ans += "f";
+    }
+  }
+
+  ans += "\nfie:" + page_number + "";  //ページ番号
+
+  ans += "\nnum:" + numArr[0];     //番号
+  for(let i = 1;i < numArr.length; i++){
+    ans += "," + numArr[i];
+  }
+
+  return(ans);
+}
+
+//セーブデータのフォームへの書き出し ===============
 function write_savefile(){
     try{
-      var savedata = makesave();
-      var t_savedata = document.getElementById("t_savedata")
+      let savedata = makesave();
+      let t_savedata = document.getElementById("t_savedata")
 
       t_savedata.innerHTML = "";
       t_savedata.innerHTML = savedata;
@@ -361,18 +450,17 @@ function write_savefile(){
     }
   }
 
-//================
-//セーブデータのロード
+//セーブデータのロード================
   function load_savefile(txt){
     document.getElementById("t_savedata").textContent = txt;
 
   txt = txt.replace(/\r\n/g,'\n'); //改行コードの統一
   txt = txt.replace(/\r/g, '\n');	 //改行コードの統一
 
-    var arr = txt.split("\n");
-    for(var i = 0;i < arr.length;i++){
-      if(arr[i].match(/flg:(.*)/)){             //フラグ
-        for(var j = 0;j < RegExp.$1.length;j++){
+    let Arr = txt.split("\n");
+    for(let i = 0;i < Arr.length;i++){
+      if(Arr[i].match(/flg:(.*)/)){  //フラグ
+        for(let j = 0;j < RegExp.$1.length;j++){
           if(RegExp.$1.charAt(j) == "f"){
             flagArr[j] = false;
           }else{
@@ -380,8 +468,8 @@ function write_savefile(){
           }
         }
 
-      }else if(arr[i].match(/ite:(.*)/)){       //道具
-        for(var j = 0; j < RegExp.$1.length; j++){
+      }else if(Arr[i].match(/ite:(.*)/)){       //道具
+        for(let j = 0; j < RegExp.$1.length; j++){
           if(RegExp.$1.charAt(j) == "f"){
             //itemArr[j]["hav"] = false;
             losi(j);
@@ -390,9 +478,9 @@ function write_savefile(){
             geti(j);
           }
         }
-      }else if(arr[i].match(/fie:(.*)/)){       //ページ名
+      }else if(Arr[i].match(/fie:(.*)/)){       //ページ名
         page_number = parseInt(RegExp.$1);
-      }else if(arr[i].match(/num:(.*)/)){       //ページ名
+      }else if(Arr[i].match(/num:(.*)/)){       //ページ名
         numArr = RegExp.$1.split(",");
       }
     }
@@ -402,56 +490,14 @@ function write_savefile(){
   }
 
 
-
-  //セーブデータ書き込み=========================================================
-  function makesave(){
-    var ans = "flg:";    //フラグ
-    for(var i=0;i<flagArr.length;i++){
-      if(flagArr[i]){
-        ans += "t";
-      }else{
-        ans += "f";
-      }
-    }
-
-    ans += "\nite:";     //アイテム
-    for(var i=0;i<itemArr.length;i++){
-      if(itemArr[i]["hav"]){
-        ans += "t";
-      }else{
-        ans += "f";
-      }
-    }
-
-    ans += "\nfie:" + page_number + "";  //ページ番号
-
-    ans += "\nnum:" + numArr[0];     //番号
-    for(var i = 1;i < numArr.length; i++){
-      ans += "," + numArr[i];
-    }
-
-    return(ans);
-  }
-
-
+//###################################################
+//###################################################
+//###################################################
+//###################################################
   //=======================================
   //ページデータを整形して得る
   function load_data(scr, temp_if_under_writable=false){
-    
-    /* 下に積み上げて表示するか(するならtrue) */
-    if_under_writable = temp_if_under_writable;
-
-    //最初からボタンを表示（この前後で、straight_movで非表示になる可能性がある）
-    document.getElementById("fromScratch").style.display="inline-block";
-
-    
-    scr = scr.replace(/\r\n/g,'\n'); //改行コードの統一
-    scr = scr.replace(/\r/g, '\n');	 //改行コードの統一
-    
-    document.getElementById("map_button").style.display="none"; //「マップ」ボタンは基本的に出さない
-    var arr = scr.split("\n");
-    var myRE = new RegExp("flag:(.+)>");
-
+    //初期化==============================
 		flagArr = [];
 		itemArr = [];
 		pageArr = [];
@@ -459,42 +505,57 @@ function write_savefile(){
     map_src="";
     local_mapArr= [];
     
-		breadcrumbs = [];
+		save_data_breadcrumbArr = [];
 
-    //gotoタブを実装
-    tabnamearr = {};
-    //ーーーーー
+    tob_nameArr = {};
 
 		page_number = 0;
+    //===================================
+    
+    /* 下に積み上げて表示するか(するならtrue) */
+    if_under_writable = temp_if_under_writable;
+
+    //「最初から」ボタンを表示
+    //この前後で、straight_mov()によって非表示になっている可能性があるので、改めて表示しておく
+    document.getElementById("fromScratch").style.display="inline-block";
+
+    
+    scr = scr.replace(/\r\n/g,'\n'); //改行コードの統一
+    scr = scr.replace(/\r/g, '\n');	 //改行コードの統一
+    
+    document.getElementById("map_button").style.display="none"; //「マップ」ボタンは基本的に出さない
+    let file_lineArr = scr.split("\n");  //テキストを改行で切る
+    let myRE = new RegExp("flag:(.+)>");
+
 
 		//アイテム欄の非表示
 		hide_item();
 		document.getElementById("button_openitem").style.display="none";
 
-    if(!arr[0].match(/flag:(.+)>/)){
+    if(!file_lineArr[0].match(/flag:(.+)>/)){
       alert("ページデータとして不適なものが選択されました。");
     }else{
 
-      //走査する
-      for(i=0;i<arr.length;i++){
+      //テキストを一行一行、走査する
+      for(i=0;i<file_lineArr.length;i++){
         //「フラグ」タグ
-        if(arr[i].match(/flag:(.+)>/)){
-          flagArr = new Array(parseInt(RegExp.$1));
-          for(var j=0;j<flagArr.length;j++){
-            flagArr[j]=false;   //flagarrの初期化
+        if(file_lineArr[i].match(/flag:(.+)>/)){
+          flagfile_lineArr = new Array(parseInt(RegExp.$1));
+          for(let j=0;j<flagArr.length;j++){
+            flagArr[j]=false;   //flagArrの初期化
           }
           i++;
         }
         //「アイテム」タグ
-        if(arr[i].match(/item:(.+)>/)){
+        if(file_lineArr[i].match(/item:(.+)>/)){
           itemArr = new Array(parseInt(RegExp.$1));
 
-          for(;i<arr.length;i++){     //タグの終わりまでforを続行する
-            if(arr[i].match(/<\/item>/)){  //タグの終わり
+          for(;i<file_lineArr.length;i++){     //タグの終わりまでforを続行する
+            if(file_lineArr[i].match(/<\/item>/)){  //タグの終わり
               break;
             }else{
               //アイテムタグを、名前と説明に分ける
-              if(arr[i].match(/\[(.+?)\](.+?)#(.+)/)){
+              if(file_lineArr[i].match(/\[(.+?)\](.+?)#(.+)/)){
                 itemArr[parseInt(RegExp.$1)] =
 									{nam: OpenInlineTag(RegExp.$2),
 									exp: OpenInlineTag(RegExp.$3),
@@ -506,56 +567,56 @@ function write_savefile(){
           i++;
         }
         
-        if(arr[i].match(/mapimg:(.+)>/)){//マップがあるとき、「マップ」ボタンを出し、表示させる
+        if(file_lineArr[i].match(/mapimg:(.+)>/)){//マップがあるとき、「マップ」ボタンを出し、表示させる
           document.getElementById("map_button").style.display="inline-block";
           map_src = "Assist/" + RegExp.$1 + "/map/";
           
         }
         
-        if(arr[i].match(/BFmap:([0-9]+)>/)){
-            arr = BFtoBTAP(arr, i);
+        if(file_lineArr[i].match(/BFmap:([0-9]+)>/)){
+            file_lineArr = BFtoBTAP(file_lineArr, i);
 				}
 
 				//「マップ(フィールド)」タグ
-				if(arr[i].match(/map:([0-9]+)>/)){
+				if(file_lineArr[i].match(/map:([0-9]+)>/)){
 					pageArr = new Array(parseInt(RegExp.$1));
-					var temp_map=0;
+					let temp_map=0;
 
-					for(;i<arr.length;i++){    //タグの終わりまでforを続行する
-						if(arr[i] == "</map>"){  //タグの終わり
+					for(;i<file_lineArr.length;i++){    //タグの終わりまでforを続行する
+						if(file_lineArr[i] == "</map>"){  //タグの終わり
 							break;
 						}else{
 
-							if(arr[i].match(/\[(.+?)\]/)){  //フィールド番号
+							if(file_lineArr[i].match(/\[(.+?)\]/)){  //フィールド番号
 								temp_map=parseInt(RegExp.$1);
 								pageArr[temp_map]={nam: "", exp:"", sel:[]};
 
               //Gotoタブ実装==第0ページの上(<map>タグ直下)には、タブをおかない！tob()しても第「1」ページに飛んでしまう！
-              }else if(arr[i].match(/===(.+)===/)){
-                tabnamearr[RegExp.$1] = temp_map + 1;
+              }else if(file_lineArr[i].match(/===(.+)===/)){
+                tob_nameArr[RegExp.$1] = temp_map + 1;
 
               //======================================================
-							}else if(arr[i].match(/n:(.+)/)) {  //名前
+							}else if(file_lineArr[i].match(/n:(.+)/)) {  //名前
 								pageArr[temp_map]["nam"] = OpenInlineTag(RegExp.$1);
 
-							}else if(arr[i].match(/e:(.+)/)) {  //説明文
+							}else if(file_lineArr[i].match(/e:(.+)/)) {  //説明文
 								pageArr[temp_map]["exp"] = OpenInlineTag(RegExp.$1);
 
-							}else if(arr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
+							}else if(file_lineArr[i].match(/\^\^(.*)$/)){  //改行を簡潔にした説明文
 								pageArr[temp_map]["exp"] += OpenInlineTag(RegExp.$1);
 
-							}else if(arr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
+							}else if(file_lineArr[i].match(/\^(.*)$/)){  //改行を簡潔にした説明文
 								pageArr[temp_map]["exp"] += OpenInlineTag(RegExp.$1) + "<br>";
 
-							}else if(arr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
+							}else if(file_lineArr[i].match(/v:(.*)$/)){  //v要素（道具の内容を描写タブ部にかく）
 								pageArr[temp_map]["exp"] += itemArr[parseInt(RegExp.$1)]["exp"] + "<br>";
 
-							}else if(arr[i].match(/s:(.+)#(.+)/)) { //選択肢
+							}else if(file_lineArr[i].match(/s:(.+)#(.+)/)) { //選択肢
 								pageArr[temp_map]["sel"].push(new Array(RegExp.$1, RegExp.$2));
                 
-							}else if(arr[i].match(/m:(.+)m(.+)/)) { //マップのレイヤー
+							}else if(file_lineArr[i].match(/m:(.+)m(.+)/)) { //マップのレイヤー
 								local_mapArr.push(new Array(temp_map, RegExp.$1, parseInt(RegExp.$2)));
-							}else if(arr[i].match(/m:(.+)/)) { //マップのレイヤー
+							}else if(file_lineArr[i].match(/m:(.+)/)) { //マップのレイヤー
 								local_mapArr.push(new Array(temp_map, RegExp.$1, 1));
 							}
 						}
@@ -565,12 +626,12 @@ function write_savefile(){
 
 
       //pageArrとitemArrの内容を、＊JSON形式で＊、d_descに表示するには…
-      /*var jstr = JSON.stringify({"fie": pageArr,"ite":itemArr});
+      /*let jstr = JSON.stringify({"fie": pageArr,"ite":itemArr});
       document.getElementById("d_desc").innerText = jstr;
       break; */
 			document.getElementById("button_redo_and_skip").style.display="inline-block";
 
-      var all_page_mode = document.getElementById("all_page_mode");
+      let all_page_mode = document.getElementById("all_page_mode");
 
       if(all_page_mode.textContent==ToZENPAGE){
         show_introduction();
@@ -583,63 +644,63 @@ function write_savefile(){
   
 
   //BFstyle to BTAP=========================================================
-  function BFtoBTAP(arr,n){
-  var ifpage = 0; //ページ編集中？（空白文字が改行かページ区切りかの判別に）
-  var temp_num = -1;
-  var back_num = temp_num-1;
-  var front_num = temp_num+1;
+  function BFtoBTAP(BF_lineArr,n){
+  let ifpage = 0; //ページ編集中？（空白文字が改行かページ区切りかの判別に）
+  let temp_num = -1;
+  let back_num = temp_num-1;
+  let front_num = temp_num+1;
 
-  for(var i = n; i< arr.length;i++){
-    if(arr[n].match(/BFmap:([0-9]+)/)){  //改行を簡潔にした説明文
-      arr[n].replace(/BFmap:([0-9]+)/g, "map:($1)");
+  for(let i = n; i< BF_lineArr.length;i++){
+    if(BF_lineArr[n].match(/BFmap:([0-9]+)/)){  //改行を簡潔にした説明文
+      BF_lineArr[n].replace(/BFmap:([0-9]+)/g, "map:($1)");
     }
 
-    //map部おわり
-    if(arr[i] == "</map>"){
+    //map部おわり→走査終了
+    if(BF_lineArr[i] == "</map>"){
       break;
     }
 
     //ページ開始
-    if(arr[i].match(/\[(.+)/)){
+    if(BF_lineArr[i].match(/\[(.+)/)){
       temp_num++;
       back_num = temp_num - 1;
       front_num = temp_num + 1;
-      arr[i] = "[" + temp_num + "]" ;
-      arr.splice(i+1, 0, "n:" + RegExp.$1); //"n:" + RegExp.$1);//n要素の追加
+      BF_lineArr[i] = "[" + temp_num + "]" ;
+      BF_lineArr.splice(i+1, 0, "n:" + RegExp.$1); //"n:" + RegExp.$1);//n要素の追加
       i++;
       ifpage = 1;
 
-    }else if(arr[i].match(/\]/)){
-      if(arr[i].match(/bf/)){//前後に壁
-        arr[i] = "";
-      }else if(arr[i].match(/b\]/)){//後ろに壁
-        arr[i] = "s:次へ#mov(" + front_num + ")";
-      }else if(arr[i].match(/f\]/)){//後ろに壁
-        arr[i] = "s:戻る#mov(" + back_num + ")";
+    }else if(BF_lineArr[i].match(/\]/)){
+      if(BF_lineArr[i].match(/bf/)){//前後に壁
+        BF_lineArr[i] = "";
+      }else if(BF_lineArr[i].match(/b\]/)){//後ろに壁
+        BF_lineArr[i] = "s:次へ#mov(" + front_num + ")";
+      }else if(BF_lineArr[i].match(/f\]/)){//後ろに壁
+        BF_lineArr[i] = "s:戻る#mov(" + back_num + ")";
       }else{//前後に壁無し
-        arr.splice(i,1,"s:次へ#mov(" + front_num +")", "s:戻る#mov(" + back_num +")");
+        BF_lineArr.splice(i,1,"s:次へ#mov(" + front_num +")", "s:戻る#mov(" + back_num +")");
       }
       ifpage = 0;
     }else if((ifpage == 1) &&
-            !(arr[i].match(/s:/)) &&
-            !(arr[i].match(/v:/)) &&
-            !(arr[i].match(/m:/))){ //e要素に「^」を追加
-      arr[i] = "^" + arr[i];
+            !(BF_lineArr[i].match(/s:/)) &&
+            !(BF_lineArr[i].match(/v:/)) &&
+            !(BF_lineArr[i].match(/m:/))){ //e要素に「^」を追加
+      BF_lineArr[i] = "^" + BF_lineArr[i];
     }
   }
 
-  return(arr);
+  return(BF_lineArr);
   }
 
 //ルビやハイパーリンクなどのBTAPタブをHTMLになおす。==============================
 
 	function OpenInlineTag(scr){
-		var ans = scr;
+		let ans = scr;
 
-		//ルビの設定<r> => <ruby>
+		//ルビの設定<r> → <ruby>
 		ans = ans.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
 
-		//ハイパーリンクの設定 <hl> => <span>
+		//ハイパーリンクの設定 <hl> → <span>
 		ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, "<span onclick=\"$2\" class=\"hl-border\">$1</span>");
 
 		return(ans);
@@ -648,24 +709,26 @@ function write_savefile(){
   //==============================================================================
   //「ページ」タブの表示
   function show_page(){
-    var page=document.getElementById("d_desc");
+    let page=document.getElementById("d_desc");
     //ページ名＆ページ説明div
-
-		if(!ifAuthor){
-			var ans = '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
+    
+    let ans = "";
+		if(!ifAuthor){  //開発者モードではないなら、ふつうに表示する。
+			ans = '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
 					+ pageArr[page_number]["nam"]
 					+ "</span></p><div>"
                     + pageArr[page_number]["exp"]
 					+ '</div><div style="display:inline-block;text-align:left"><ul>';
-		}else{
+          
+		}else{ //開発者モードなら、一部のマークアップタグを外したり別の者に変換してから表示する
 			exp_for_textarea = pageArr[page_number]["exp"];
-			exp_for_textarea = exp_for_textarea.replace(/<br>/g,'\n');
+			exp_for_textarea = exp_for_textarea.replace(/<br>/g,'\n');  
 			exp_for_textarea = exp_for_textarea.replace(/<\/?ruby>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rt>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?rp>/g,'');
 			exp_for_textarea = exp_for_textarea.replace(/<\/?b>/g,'**');
-			//exp_for_textarea = exp_for_textarea.replace("<br>","\n");
-			var ans = '<button style="font-size:150%" onclick="copy_textarea_memo()">コピー</button>'
+      
+			ans = '<button style="font-size:150%" onclick="copy_textarea_memo()">コピー</button>'
           +'<button style="font-size:150%" onclick="delete_textarea_memo()">クリア</button>'
           +'<textarea id="title_textarea" style="font-size:36px;font-weight:bold;width:368px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="1">'
 					+ pageArr[page_number]["nam"]
@@ -675,8 +738,9 @@ function write_savefile(){
 
 
 		}
-    //ページの選択肢
-    for(var i=0;i<pageArr[page_number]["sel"].length;i++){
+    
+    //ページの選択肢をつくっていく
+    for(let i=0;i<pageArr[page_number]["sel"].length;i++){
       ans += '<li class="li_sel" onclick="' + pageArr[page_number]["sel"][i][1] + '">'
                         + pageArr[page_number]["sel"][i][0] + "</li>";
     }
@@ -687,13 +751,13 @@ function write_savefile(){
 
   }
 
-//クリップボードにコピー==================================================================
+//開発者モード用  クリップボードにコピー================================================
 function copy_textarea_memo() {
 
-  var titl = document.getElementById("title_textarea");
-  var desc = document.getElementById("desc_textarea");
+  let titl = document.getElementById("title_textarea");
+  let desc = document.getElementById("desc_textarea");
 
-  var ans = "[" 
+  let ans = "[" 
     + titl.value
     + "\n"
     + desc.value
@@ -701,83 +765,86 @@ function copy_textarea_memo() {
     
   navigator.clipboard.writeText(ans)
 }
-//================================================================================
+//開発者モード用  テキストエリアの文字消去===================================================
 function delete_textarea_memo() {
 
-  var desc = document.getElementById("desc_textarea");
+  let desc = document.getElementById("desc_textarea");
 
   desc.innerHTML = "";
 }
-  //=============================================================================
-  function fie_title_write(page_number){
-    var temp = 
-          '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
-            + pageArr[page_number]["nam"]
-            + "</span></p>";
-    return(temp);
-  }
-  //=============================================================================
-  function fie_exp_write(page_number){
-    var temp = "<div>" 
-          + pageArr[page_number]["exp"]
-          + '</div>';
-    return(temp);
+
+//積み上げ表示用のタイトル表示==================================================
+function fie_title_write(page_number){
+  let temp = 
+        '<p class="page-title"><span style="font-size:200%;font-weight:bold;">'
+          + pageArr[page_number]["nam"]
+          + "</span></p>";
+  return(temp);
+}
+
+//積み上げ表示用の本文表示====================================================
+function fie_exp_write(page_number){
+  let temp = "<div>" 
+        + pageArr[page_number]["exp"]
+        + '</div>';
+  return(temp);
+}
+
+//===========================================================================
+function straight_mov(){  //movという名前だが、下に積み上げ式のfie表示
+  page_number = 0;
+  
+  //下に積み上げて表示するなら、「最初から」ボタンは表示しないで良い
+  document.getElementById("fromScratch").style.display="none";
+  
+  let page=document.getElementById("d_desc"); 
+  let ans ="";  //最終表示内容
+  
+  
+  //====[ 表示する内容 ]=====
+  //0ページ目、および、前のページとタイトルが違うページ： タイトル(nam) & 内容(exp)
+  //                               それ以外： 内容(exp)のみ
+  //
+  //全ページをforで走査して、ansに表示事項を積み上げる。
+  
+  for(let each_page_number=0; each_page_number< pageArr.length; each_page_number++){
+    if(each_page_number != 0){ 
+      if(pageArr[each_page_number-1]["nam"] == pageArr[each_page_number]["nam"]){ 
+        ans += "<br>" + fie_exp_write(each_page_number)+ "<br><hr>"; //0ページ目ではなく、名前は前と同じな場合
+      }else{
+        ans += fie_title_write(each_page_number) +  fie_exp_write(each_page_number) + "<br><hr>"; //0ページ目ではなく、名前は前と違う場合
+      }
+    }else{
+      ans += fie_title_write(each_page_number) +  fie_exp_write(each_page_number) + "<br><hr>"; //0ページの場合
+    }
   }
   
-  //===========================================================================
-  function straight_mov(){  //movという名前だが、下に積み上げ式のfie表示
-    page_number = 0;
-    
-    //下に積み上げて表示するなら、「最初から」ボタンは表示しないで良い
-    document.getElementById("fromScratch").style.display="none";
-    
-    var page=document.getElementById("d_desc"); 
-    var ans ="";  //最終表示内容
-    
-    
-    //====[ 表示する内容 ]=====
-    //0ページ目、および、前のページとタイトルが違うページ： タイトル(nam) & 内容(exp)
-    //                               それ以外： 内容(exp)のみ
-    //
-    //全ページをforで走査して、ansに表示事項を積み上げる。
-    
-    for(var each_page_number=0; each_page_number< pageArr.length; each_page_number++){
-      if(each_page_number != 0){ 
-        if(pageArr[each_page_number-1]["nam"] == pageArr[each_page_number]["nam"]){ 
-          ans += "<br>" + fie_exp_write(each_page_number)+ "<br><hr>"; //0ページ目ではなく、名前は前と同じな場合
-        }else{
-          ans += fie_title_write(each_page_number) +  fie_exp_write(each_page_number) + "<br><hr>"; //0ページ目ではなく、名前は前と違う場合
-        }
-      }else{
-        ans += fie_title_write(each_page_number) +  fie_exp_write(each_page_number) + "<br><hr>"; //0ページの場合
-      }
-    }
-    
-    page.innerHTML = ans; //表示
-    
-  }
+  page.innerHTML = ans; //表示
+  
+}
 
-	//========================================================================
-	//イントロダクションのモーダルメニューを閉じる
+//========================================================================
+//イントロダクションのモーダルメニューを閉じる
 function close_modal() {
   document.getElementById("modalDiv").style.display = "none";
 }
-
+//おなじく閉じる
 function open_map(){
   document.getElementById("modalDiv").style.display = "block";
 }
 
-	//ローカルマップ============================================================
-function mapping(mokuji){
-  var page=document.getElementById("abst_desc");
+//====================================
+//# ミニマップ ######################
+function mapping(mokuji){ //引数mokujiは整数。ページ固有画像名の番号。
+  let page=document.getElementById("abst_desc");
   
-  var map = "";
-  var ifmapappoint = false; //m:タグでマップが指定されている？されていなければ1に。
+  let map = "";
+  let ifmapappoint = false; //m:タグでマップが指定されている？されていなければ1に。
   
   if(map_src==""){
     map = "このページではマップが用意されておりません。";
   }else{
-    for(var i=0;i<local_mapArr.length; i++){
+    for(let i=0;i<local_mapArr.length; i++){
       if(local_mapArr[i][0]==mokuji){
         map += '<img src="' + map_src + local_mapArr[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
         map += '<img src="' +  map_src  + 'map' + local_mapArr[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
@@ -797,10 +864,10 @@ function mapping(mokuji){
 
 	//イントロダクションを表示
 	function show_introduction(){
-    var page=document.getElementById("abst_desc");
+    let page=document.getElementById("abst_desc");
     document.getElementById("modalDiv").style.display="inline-block";
     
-		var abst = '<p><span style="font-size:200%;font-weight:bold;">' + pageArr[page_number]["nam"] + "</span></p>";
+		let abst = '<p><span style="font-size:200%;font-weight:bold;">' + pageArr[page_number]["nam"] + "</span></p>";
 
 		abst += '<div style="display:inline-block;text-align:left;"><ul><li class="li_sel" onclick="close_modal();change_tab(2);scrollTo(0,0);mov(0);">始める</li>';
     
@@ -829,12 +896,12 @@ function mapping(mokuji){
 
   //アイテムの有無でオプションボタンを変える===========================================
   function display_ite(){
-    var item_sel = document.getElementById("d_item_sel");
-    var item_exp = document.getElementById("d_item_exp");
+    let item_sel = document.getElementById("d_item_sel");
+    let item_exp = document.getElementById("d_item_exp");
     item_exp.innerHTML="";
     item_sel.innerHTML="";
 
-    for(var i=0;i<itemArr.length;i++){
+    for(let i=0;i<itemArr.length;i++){
       if(itemArr[i]["hav"]){
         //「もちもの」タブにラジオボタンを追加する。
         item_sel.innerHTML += '<label><input type="radio" name="item" onclick="' +
@@ -846,7 +913,7 @@ function mapping(mokuji){
   }
   //新アイテム獲得！アラートを発する==============================
   function get_item_alert(ifalert){
-		var button_openitem = document.getElementById("button_openitem");
+		let button_openitem = document.getElementById("button_openitem");
 
 		button_openitem.style.display="inline-block";
 
@@ -860,9 +927,9 @@ function mapping(mokuji){
 
   //アイテム欄をリフレッシュする。戻るなど==============================
   function ite_reflesh(){
-    var if_hav_any_item = false;  
+    let if_hav_any_item = false;  
     //アイテムが存在していないなら、「アイテムを表示」ボタンは表示させないための判定
-    for(var i=0; i< itemArr.length;i++){
+    for(let i=0; i< itemArr.length;i++){
       if(itemArr[i]["hav"]){
         geti(i);
         if_hav_any_item = true;
@@ -871,7 +938,7 @@ function mapping(mokuji){
 
     hide_item();
     
-    var button_openitem = document.getElementById("button_openitem");
+    let button_openitem = document.getElementById("button_openitem");
 		button_openitem.className="tool_button openitem";
     
     //アイテムが存在していないなら、「アイテムを表示」ボタンは表示させない
@@ -882,27 +949,28 @@ function mapping(mokuji){
 
   //もとに戻す==================================
   function remov(){
-    if (breadcrumbs.length <= 1){ //セーブパンくずがない場合（初期値）
+    if (save_data_breadcrumbArr.length <= 1){ //セーブパンくずがない場合（初期値）
       alert("戻せません");
     }else{
-      breadcrumbs.shift();
-      load_savefile(breadcrumbs.shift());//セーブパンくずの最初の要素が１つ前のセーブデータ
+      save_data_breadcrumbArr.shift();
+      load_savefile(save_data_breadcrumbArr.shift());//セーブパンくずの最初の要素が１つ前のセーブデータ
 	  
-	  /*　やっていることは何か
-	  　breadcrumbs(これまで進んできたページのパンくずリスト)には、セーブデータの文字列が入っている。
-	  　仮にＡページ→Ｂページ→Cページの順に移動する場合を考える。
-	  それぞれのページにいるときのセーブデータ文字列をa, b, cとすると
+	  /* やっていることは何か?
+	  save_data_breadcrumbArr(これまで進んできたページのパンくずリスト)には、セーブデータの文字列が入っている。
+	  仮にＡページ→Ｂページ→Cページの順に移動する場合を考える。
+	  それぞれのページにいるときのセーブデータ文字列をa, b, cとすると以下のように処理が行われる。
 		
-	  　1. Aページにいるとき			breadcrumbs=[a]
-	  　2. Bページに移動したあと		breadcrumbs=[b,a]
-	  　3. Cページに移動したあと		breadcrumbs=[c,b,a]
+    1. Aページにいるとき			save_data_breadcrumbArr=[a]
+    2. Bページに移動したあと		save_data_breadcrumbArr=[b,a]
+    3. Cページに移動したあと		save_data_breadcrumbArr=[c,b,a]
 		↑
-		3.でremov()実行時	① まずbreadcrumbs.shift()→ [b,a]だけ残る
-							② つぎにload_savefile(breadcrumbs.shift()) ←load_savefile(b)と同じ
-								shiftによりbreadcrumbsは一時的に[a]のみ残る。
-							③ load_savefile(b)によりBページに移動
-							④ movによりbreadcrumbsの先頭にbがunshiftされる
-							⑤ 結果としてBページに移動したうえでbreadcrumbs=[b,a]。上のリストでいうところの2.に移動する
+		3.でremov()実行時、
+      ① まずsave_data_breadcrumbArr.shift()→ [b,a]だけ残る
+			② つぎにload_savefile(save_data_breadcrumbArr.shift()) ←load_savefile(b)と同じことをしている
+        shiftによりsave_data_breadcrumbArrは一時的に[a]のみ残る。
+      ③ load_savefile(b)によりBページに移動
+			④ movによりsave_data_breadcrumbArrの先頭にbがunshiftされる
+			⑤ 結果としてBページに移動したうえでsave_data_breadcrumbArr=[b,a]。上のリストでいうところの2.に移動する
 	  */
     }
   }
@@ -917,7 +985,7 @@ function mapping(mokuji){
 		}else if(pageArr[page_number]["sel"].length != 1){
 			alert("現在のページには選択肢が複数あるため、スキップできません。");
 		}else{
-			var ifskip = window.confirm("次に来る、選択肢が複数あるページまでスキップしますか？（この先にそのようなページがない場合は、最後のページまでスキップされます）");
+			let ifskip = window.confirm("次に来る、選択肢が複数あるページまでスキップしますか？（この先にそのようなページがない場合は、最後のページまでスキップされます）");
 
 			if(ifskip){
 				while(1){
@@ -934,24 +1002,23 @@ function mapping(mokuji){
 
   //選択肢スキップ==============================
   function fromScratch(){
-    var ifscratch = window.confirm("進捗を最初に戻しますか？この操作は取り消せません。");
-    breadcrumbs = [];
+    let ifscratch = window.confirm("進捗を最初に戻しますか？この操作は取り消せません。");
+    save_data_breadcrumbArr = [];
     if(ifscratch){
-      //load_data(scr, if_under_writable);
-      var temp_save= "flg:";
+      let temp_save= "flg:";
       
-      for(var i = 0; i<flagArr.length;i++){
+      for(let i = 0; i<flagArr.length;i++){
         temp_save +="f";
       }
       
       temp_save +="\nite:";
       
-      for(var j = 0; j<itemArr.length;j++){
+      for(let j = 0; j<itemArr.length;j++){
         temp_save +="f";
       }
       
       temp_save += "\nfie:0\nnum:0"
-      for(var k = 0; k<numArr.length-1;k++){
+      for(let k = 0; k<numArr.length-1;k++){
         temp_save +=",0";
       }
       
@@ -962,12 +1029,12 @@ function mapping(mokuji){
 	//テキスト形式のストーリーファイル読み込み
 	function load_txt_data(){
 		try{
-		  var myFile = document.getElementById("myfile").files[0];
+		  let myFile = document.getElementById("myfile").files[0];
 		  
-		  var reader = new FileReader();
+		  let reader = new FileReader();
 		  
 		  reader.onload = function (evt){
-			var txt = evt.target.result;
+			let txt = evt.target.result;
 			load_data(txt);   //load_dataへとテキストを送る
 		  }
 		  
@@ -983,14 +1050,14 @@ function mapping(mokuji){
   //マップ移動
   function mov(tow) {
     page_number = tow;
-    var temp  =makesave();
-    breadcrumbs.unshift(temp);  //セーブを追加、パンくずを追加する
+    let temp  =makesave();
+    save_data_breadcrumbArr.unshift(temp);  //セーブを追加、パンくずを追加する
     
     //========-
     mapping(tow);
     //=========
     //全ページ閲覧モードなら、セレクト リストに反映する
-    var all_page_mode = document.getElementById("all_page_mode");
+    let all_page_mode = document.getElementById("all_page_mode");
     if(all_page_mode.textContent == ToTSUJO){
       all_page_sel.selectedIndex=tow;
     }
@@ -1000,7 +1067,7 @@ function mapping(mokuji){
 
   //タブGoto実装-=-----------------------------------------------------------------
   function tob(tow){
-    mov(tabnamearr[tow]);
+    mov(tob_nameArr[tow]);
   }
   //===========================================================================
   //アイテム獲得

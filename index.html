@@ -19,14 +19,14 @@
 </head>
 
 <body>
-	<!--====== 画面上部のタブ選択リボン　===============================-->
+	<!--====== 画面上部のタブ選択リボン ===============================-->
 	<!--====== 最初は「①選ぶ」タブがアクティブになっている======================-->
 	<header id="header">		
 		<nav>
 			<ul>
-                <li onclick="change_tab(1)" id="li_select" class="active-li">①選ぶ</li>
+        <li onclick="change_tab(1)" id="li_select" class="active-li">①選ぶ</li>
 				<li onclick="change_tab(2)" id="li_page" class="non-active_li">②みる</li>
-				<hr>　<!--区切り線-->
+				<hr> <!--区切り線-->
 				<li onclick="change_tab(3)" id="li_summary" class="non-active_li">まとめ</li>
 				<li onclick="change_tab(0)" id="li_setting" class="non-active_li">設定</li>
 			</ul>
@@ -163,8 +163,8 @@
 
 		<p>
 			<label>色合いの変更<br>
-			<select onchange="change_colorscheme(this.value)">
-				<option value="default">ライト</option>
+			<select id="colorscheme_select" onchange="change_colorscheme(this.value)">
+				<option value="default" selected>ライト</option>
 				<option value="dark">ダーク</option>
 				<option value="lightblue">ライト ブルー</option>
 				<option value="darkblue">ダーク ブルー</option>
@@ -183,8 +183,7 @@
     <br>
     ボタンを押すと通常／全ページ閲覧モードを入れ替えます。
     <br>
-    <button id="all_page_mode"
-onclick="all_page_mode_change()">→全ページ閲覧モード</button>
+    <button id="all_page_mode" onclick="all_page_mode_change()">→全ページ閲覧モード</button>
     </p>
     <hr>
 
