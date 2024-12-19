@@ -42,149 +42,149 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
-//ページ選択テーブルのソート======================================================
+//ストーリー選択テーブルのソート======================================================
 function sort_story_select_table(){
-		const table = document.getElementById("story_select_table"); //表
-    
-		let way = document.getElementById("way_sel").value; //降順？昇順？
-		let category = document.getElementById("category_sel").value; //どのカテゴリーでソート？
+  const STORY_SELECT_TABLE = document.getElementById("story_select_table"); //表
+  
+  let way = document.getElementById("way_sel").value; //降順？昇順？
+  let category = document.getElementById("category_sel").value; //どのカテゴリーでソート？
 
-    //カテゴリー番号================
-		const sub_name_column = 0;
-    const file_name_column = 1;
-		const series_column = 2;
-		const made_column = 3;
-		const history_column = 4;
-    //==========================
-    
-		if(way == "ascend"){  //昇順ならば
-			way = 1;
-		}else{
-			way = -1; //この-1は、あとで掛け算することで方向の符号反転させるためのもの。
-		}
+  //カテゴリー番号================
+  //const SUB_NAME_COLUMN = 0;
+  //const FILE_NAME_COLUMN = 1;
+  const SERIES_COLUMN = 2;
+  const MADE_COLUMN = 3;
+  const HISTORY_COLUMN = 4;
+  //==========================
+  
+  if(way == "ascend"){  //昇順ならば
+    way = 1;
+  }else{
+    way = -1; //この-1は、あとで掛け算することで方向の符号反転させるためのもの。
+  }
 
-		switch (category){
-			case "made":  //作成順
-				category = made_column;break;
-			case "series":  //シリーズ順
-				category = series_column;break;
-			case "history": //時系列順
-				category = history_column;break;
-			default:
-				break;
-		}
-    
-    //=====================================
-    //# 表の順番を記録する配列 ##############
-    
-		let junArr=[]; 
-    
-    //構造は３重配列→ [ [ rowのクリック時処理, [セルのinnerHTML、セルのinnerText] ], ...]
-    // innerHTMLは単純にそのままコピペ用。
-    // innerTextはソート用(後述junArr.sort内部)
-    
-    //現在の表の情報をjunArrに転記する
-		for (i = 1; i < table.rows.length; i++) {
-			temp_junArr = [table.rows[i].onclick];
-			for(j = 0; j<table.rows[i].cells.length; j++){
-				temp_junArr.push(
-				[table.rows[i].cells[j].innerHTML,
-				table.rows[i].cells[j].innerText]);
-			}
-			junArr.push(temp_junArr);
-		}
-    //=====================================
+  switch (category){
+    case "made":  //作成順
+      category = MADE_COLUMN;break;
+    case "series":  //シリーズ順
+      category = SERIES_COLUMN;break;
+    case "history": //時系列順
+      category = HISTORY_COLUMN;break;
+    default:
+      break;
+  }
+  
+  //=====================================
+  //# 表の順番を記録する配列 ##############
+  
+  let junArr=[]; 
+  
+  //構造は３重配列→ [ [ rowのクリック時処理, [セルのinnerHTML、セルのinnerText] ], ...]
+  // innerHTMLは単純にそのままコピペ用。
+  // innerTextはソート用(後述junArr.sort内部)
+  
+  //現在の表の情報をjunArrに転記する
+  for (i = 1; i < STORY_SELECT_TABLE.rows.length; i++) {
+    temp_junArr = [STORY_SELECT_TABLE.rows[i].onclick];
+    for(j = 0; j<STORY_SELECT_TABLE.rows[i].cells.length; j++){
+      temp_junArr.push(
+      [STORY_SELECT_TABLE.rows[i].cells[j].innerHTML,
+      STORY_SELECT_TABLE.rows[i].cells[j].innerText]);
+    }
+    junArr.push(temp_junArr);
+  }
+  //=====================================
 
-    //↓なぜ動いているのかよくわからない====================
-		junArr.sort(function(a, b) {
-			if (parseInt(a[category+1][1]) > parseInt(b[category+1][1])) {
-				return 1*way;
-			} else {
-				return -1*way;
-			}
-		});
-    //↑ソートをしてくれていると言うことは分かる====================
+  //↓なぜ動いているのかよくわからない====================
+  junArr.sort(function(a, b) {
+    if (parseInt(a[category+1][1]) > parseInt(b[category+1][1])) {
+      return 1*way;
+    } else {
+      return -1*way;
+    }
+  });
+  //↑ソートをしてくれていると言うことは分かる====================
 
 
-    //新しい表の情報をjunArrから転記する====================
-		for (i = 1; i < table.rows.length; i++) {
-      table.rows[i].onclick = junArr[i-1][0];
-			for(j = 0; j < table.rows[i].cells.length; j++){
-				table.rows[i].cells[j].innerHTML = junArr[i-1][j+1][0];
-			}
-		}
-	}
+  //新しい表の情報をjunArrから転記する====================
+  for (i = 1; i < STORY_SELECT_TABLE.rows.length; i++) {
+    STORY_SELECT_TABLE.rows[i].onclick = junArr[i-1][0];
+    for(j = 0; j < STORY_SELECT_TABLE.rows[i].cells.length; j++){
+      STORY_SELECT_TABLE.rows[i].cells[j].innerHTML = junArr[i-1][j+1][0];
+    }
+  }
+}
   
   
 //=上のタブ選択リボン(header)を開閉する=========================================
-	function tab_close(){
-		const tab_close= document.getElementById("tab_close_button");
-		const header= document.getElementById("header");
-		const tabDiv_select = document.getElementById("tabDiv_select");
-		const tabDiv_setting = document.getElementById("tabDiv_setting");
-		const tabDiv_page = document.getElementById("tabDiv_page");
-		
-		if(header.style.display == "none"){ //もしリボンが非表示なら、表示させる
-			header.style.display = "block";
-			tab_close.innerHTML = "↑非表示"; //表示されているので、ボタンは「非表示にさせるならここを押す」旨を表示する     
-			tabDiv_page.className = "tabDiv"; //リボン表示に合わせて配置する
-      
-		}else{  //もしリボンが表示なら、非表示にさせる
-			header.style.display = "none";
-			tab_close.innerHTML = "↑ 表示";
-			tabDiv_page.className = "tabDiv tabDiv_without_header";//リボン非表示に合わせて配置する
-		}
+function tab_close(){
+  const HEADER = document.getElementById("header");
+  const TAB_CLOSE = document.getElementById("tab_close_button");
+  //const tabDiv_select = document.getElementById("tabDiv_select");
+  //const tabDiv_setting = document.getElementById("tabDiv_setting");
+  const TABDIV_PAGE = document.getElementById("tabDiv_page");
+  
+  if(header.style.display == "none"){ //もしリボンが非表示なら、表示させる
+    HEADER.style.display = "block";
+    TAB_CLOSE.innerHTML = "↑非表示"; //表示されているので、ボタンは「非表示にさせるならここを押す」旨を表示する     
+    TABDIV_PAGE.className = "tabDiv"; //リボン表示に合わせて配置する
+    
+  }else{  //もしリボンが表示なら、非表示にさせる
+    HEADER.style.display = "none";
+    TAB_CLOSE.innerHTML = "↑ 表示";
+    TABDIV_PAGE.className = "tabDiv tabDiv_without_header";//リボン非表示に合わせて配置する
+  }
 
-	}
+}
   
  
 //タブの変更=========================================================
-	function change_tab(selected_tab){  
-    //引数のselected_tabは整数。 0:設定、1:選ぶ、2:みる、3:まとめ
-    //数字の振り方は開発してきた順。（左側から表示されている順ではない！）
-    
-    //========================
-    //# タブ選択リボンの各ボタン #####
-		const li_setting = document.getElementById("li_setting");
-		const li_select = document.getElementById("li_select");
-		const li_page = document.getElementById("li_page");
-		const li_summary = document.getElementById("li_summary");
-    
-    //========================
-    //# それぞれのタブ #############
-		const tabDiv_setting = document.getElementById("tabDiv_setting");
-		const tabDiv_select = document.getElementById("tabDiv_select");
-		const tabDiv_page = document.getElementById("tabDiv_page");
-		const tabDiv_summary = document.getElementById("tabDiv_summary");
+function change_tab(selected_tab){  
+  //引数のselected_tabは整数。 0:設定、1:選ぶ、2:みる、3:まとめ
+  //数字の振り方は開発してきた順。（左側から表示されている順ではない！）
+  
+  //========================
+  //# タブ選択リボンの各ボタン #####
+  const LI_SETTING = document.getElementById("li_setting");
+  const LI_SELECT = document.getElementById("li_select");
+  const LI_PAGE = document.getElementById("li_page");
+  const LI_SUMMARY = document.getElementById("li_summary");
+  
+  //========================
+  //# それぞれのタブ #############
+  const TABDIV_SETTING = document.getElementById("tabDiv_setting");
+  const TABDIV_SELECT = document.getElementById("tabDiv_select");
+  const TABDIV_PAGE = document.getElementById("tabDiv_page");
+  const TABDIV_SUMMARY = document.getElementById("tabDiv_summary");
 
-    //========================
-    //# ボタン、タブを配列にする #############
-    //# この順番は変更してはいけない。新しくタブを作る場合、第5項目以降に追加していく。
-		const li_Arr = [li_setting, li_select, li_page, li_summary];
-		const tabDiv_Arr = [tabDiv_setting, tabDiv_select, tabDiv_page, tabDiv_summary];
+  //========================
+  //# ボタン、タブを配列にする #############
+  //# この順番は変更してはいけない。新しくタブを作る場合、第5項目以降に追加していく。
+  const LI_ARR = [LI_SETTING, LI_SELECT, LI_PAGE, LI_SUMMARY];
+  const TABDIV_ARR = [TABDIV_SETTING, TABDIV_SELECT, TABDIV_PAGE, TABDIV_SUMMARY];
 
-		//選ばれたタブにあたるli要素と、それ以外の要素の見た目を変更する
-		//また、選ばれたタブを表示し、それ以外は非表示にする
-		for(let i = 0; i < li_Arr.length; i++){
-			if(i==selected_tab){
-				li_Arr[i].className = "active-li";
-				tabDiv_Arr[i].style.display="block";
-			}else{
-				li_Arr[i].className = "non-active_li";
-				tabDiv_Arr[i].style.display="none";
-			}
-		}
-	}
+  //選ばれたタブにあたるli要素と、それ以外の要素の見た目を変更する
+  //また、選ばれたタブを表示し、それ以外は非表示にする
+  for(let i = 0; i < LI_ARR.length; i++){
+    if(i==selected_tab){
+      LI_ARR[i].className = "active-li";
+      TABDIV_ARR[i].style.display="block";
+    }else{
+      LI_ARR[i].className = "non-active_li";
+      TABDIV_ARR[i].style.display="none";
+    }
+  }
+}
 
 //ページを左揃えにする--================================================================
   function change_align_center(){
-    const chb_align_center = document.getElementById("chb_align_center");
-    const desc_and_item = document.getElementById("desc_and_item");
+    const CHB_ALIGN_CENTER = document.getElementById("chb_align_center");
+    const DESC_AND_ITEM = document.getElementById("desc_and_item");
 
-    if(chb_align_center.checked){
-      desc_and_item.style.textAlign = "center";
+    if(CHB_ALIGN_CENTER.checked){
+      DESC_AND_ITEM.style.textAlign = "center";
     }else{
-      desc_and_item.style.textAlign = "left";
+      DESC_AND_ITEM.style.textAlign = "left";
     }
   }
 
@@ -209,16 +209,16 @@ function change_fontsize(p = "18"){
   
   //===========================================
 	//# スクロールバーなどに反映する ###################
-	const tabDiv_page = document.getElementById("tabDiv_page");
-	const reibun = document.getElementById("reibun");
-	const fontsize_range = document.getElementById("fontsize_range");
-	const fontsize_number = document.getElementById("fontsize_number");
+	const TABDIV_PAGE = document.getElementById("tabDiv_page");
+	const REIBUN = document.getElementById("reibun");
+	const FONTSIZE_RANGE = document.getElementById("fontsize_range");
+	const FONTSIZE_NUMBER = document.getElementById("fontsize_number");
 
-	tabDiv_page.style.fontSize = p + "px";  //本文のフォントサイズ
-	reibun.style.fontSize = p + "px";  //「フォントサイズ確認サンプル文章」のフォントサイズ
+	TABDIV_PAGE.style.fontSize = p + "px";  //本文のフォントサイズ
+	REIBUN.style.fontSize = p + "px";  //「フォントサイズ確認サンプル文章」のフォントサイズ
 
-	fontsize_range.value = p; //スクロールバーフォーム
-	fontsize_number.value = p;//数値入力フォーム
+	FONTSIZE_RANGE.value = p; //スクロールバーフォーム
+	FONTSIZE_NUMBER.value = p;//数値入力フォーム
 
 }
 
@@ -240,21 +240,21 @@ function change_tabDivwidth(p="60"){
 
   //===========================================
 	//# スクロールバーなどに反映する ###################
-	const tabDiv_width_range = document.getElementById("tabDiv_width_range");
-	const tabDiv_width_number = document.getElementById("tabDiv_width_number");
+	const TABDIV_WIDTH_RANGE = document.getElementById("tabDiv_width_range");
+	const TABDIV_WIDTH_NUMBER = document.getElementById("tabDiv_width_number");
 
-	tabDiv_width_range.value = p;
-	tabDiv_width_number.value = p;
+	TABDIV_WIDTH_RANGE.value = p;
+	TABDIV_WIDTH_NUMBER.value = p;
 
 	//各tabDivクラスのものに横幅を設定していく
-	const tabDiv_select = document.getElementById("tabDiv_select");
-	const tabDiv_setting = document.getElementById("tabDiv_setting");
-	const tabDiv_page = document.getElementById("tabDiv_page");
-	const tabDiv_Arr = [tabDiv_select, tabDiv_setting, tabDiv_page];
+	const TABDIV_SELECT = document.getElementById("tabDiv_select");
+	const TABDIV_SETTING = document.getElementById("tabDiv_setting");
+	const TABDIV_PAGE = document.getElementById("tabDiv_page");
+	const TABDIV_ARR = [tabDiv_select, tabDiv_setting, tabDiv_page];
 
 
-	for(let i=0; i<tabDiv_Arr.length; i++){
-		tabDiv_Arr[i].style.width = p + "%";
+	for(let i=0; i<TABDIV_ARR.length; i++){
+		TABDIV_ARR[i].style.width = p + "%";
 	}
 }
 
@@ -497,6 +497,8 @@ function write_savefile(){
   //=======================================
   //ページデータを整形して得る
   function load_data(scr, temp_if_under_writable=false){
+    //temp_if_under_writable=false: 下に積み上げて表示は、初期値はfalse、とりあえず無しで
+    
     //初期化==============================
 		flagArr = [];
 		itemArr = [];
@@ -632,8 +634,8 @@ function write_savefile(){
 			document.getElementById("button_redo_and_skip").style.display="inline-block";
 
       let all_page_mode = document.getElementById("all_page_mode");
-
       if(all_page_mode.textContent==ToZENPAGE){
+        
         show_introduction();
       }else{
         all_page_sel_clean();
@@ -730,9 +732,9 @@ function write_savefile(){
       
 			ans = '<button style="font-size:150%" onclick="copy_textarea_memo()">コピー</button>'
           +'<button style="font-size:150%" onclick="delete_textarea_memo()">クリア</button>'
-          +'<textarea id="title_textarea" style="font-size:36px;font-weight:bold;width:368px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="1">'
+          +'<textarea id="title_textarea" class="Author_title_textarea" rows="1">'
 					+ pageArr[page_number]["nam"]
-					+ '</textarea><textarea id="desc_textarea" style="width:368px;font-size:18px;border-radius:0px;border:gray solid 1px;padding:0px;" rows="20">'
+					+ '</textarea><textarea id="desc_textarea" class="Author_desc_textarea" rows="20">'
                     + exp_for_textarea
 					+ '</textarea>';
 
@@ -846,8 +848,8 @@ function mapping(mokuji){ //引数mokujiは整数。ページ固有画像名の�
   }else{
     for(let i=0;i<local_mapArr.length; i++){
       if(local_mapArr[i][0]==mokuji){
-        map += '<img src="' + map_src + local_mapArr[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2"/>';
-        map += '<img src="' +  map_src  + 'map' + local_mapArr[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1"/>';
+        map += '<img src="' + map_src + local_mapArr[i][1] + '.png" style="position:absolute; width:80%; left:10%;z-index:2" alt="エラー：ページ固有画像"/>';
+        map += '<img src="' +  map_src  + 'map' + local_mapArr[i][2] + '.png" style="position:absolute;  width:80%; left:10%;z-index:1" alt="エラー：マップ背景画像"/>';
         ifmapappoint = true;
         break;
       }

@@ -1,4 +1,4 @@
-
+@charset "utf-8";
 /* =========================================================== */
 body{
   font-family: 'Noto Sans JP', 'Yu Gothic Medium', '游ゴシック Medium', sans-serif;
@@ -20,11 +20,9 @@ header {
 /* タブ選択リボン内部。この中に<li>を横に並べて表示する */
 nav ul { 
   display: flex;
-  /* height: 50px; */
   list-style: none; /* <li>による黒丸「・」を表示しない */
   padding: 0;
   margin: 0;
-  /* justify-content: center; */
 }
 
 /* タブ選択リボン内部選択肢<li> */
@@ -33,22 +31,22 @@ nav ul li {
   font-size: 1.1em;
   border-radius: 15px;
   
-  /*　下の2つは文字がちょっと上のほうに行ってしまうのを防ぐのに要る */
+  /*下の2つは文字がちょっと上のほうに行ってしまうのを防ぐのに要る */
   margin: 7px;
   line-height: 34px;	
 }
 
 /* タブ */
 .tabDiv{
-    display: none;
-    margin-top: 60px; /* 上のリボンの下にもぐりこんでしまうのを防ぐ */
-    width: 60%;
-    min-width: 360px;   /* iPhone8の画面の横幅 */
+  display: none;
+  margin-top: 60px; /* 上のリボンの下にもぐりこんでしまうのを防ぐ */
+  width: 60%;
+  min-width: 360px;   /* iPhone8の画面の横幅 */
 	padding: 0px;
 	
-	/*　中央揃え　*/
-    margin-left: auto;  
-    margin-right: auto; 
+	/*中央揃え*/
+  margin-left: auto;  
+  margin-right: auto; 
 }
 
 /* ↓↓↓リボン非表示時は、tabDivに合わせて以下も↓↓↓ */
@@ -56,6 +54,34 @@ nav ul li {
   margin-top: 0px;  /* タブがなく、下にずらす必要がないため */
 }
 
+/*以下、特にそれぞれのタブについて*/
+.tD_select{ /*「選ぶ」タブ */
+  display:block;  /*最初から表示しておく*/
+  text-align:center;
+  padding-top:12px;
+  margin-bottom:60px;
+}
+
+.tD_setting{  /*「設定」タブ */
+  padding-top:12px;
+  margin-bottom:60px;
+}
+
+
+.tD_summary{ /*「まとめ」タブ*/
+  margin-bottom:60px;
+}
+
+/* ================================================ */
+
+.desc_and_item{
+  width:100%;
+  display:inline-block;
+}
+
+.d_item{
+  display:none;
+}
 /* =========================================================== */
 /*ページの選択肢（太字、下線、大き目）*/
 .li_sel{
@@ -75,10 +101,17 @@ nav ul li {
   padding:5px;
 }
 
-.story_select_table tr th{	/* 見出し */
+
+/* 見出し */
+.story_select_table tr th{	
   padding:10px;
 }
 
+
+/* 作成順と時系列順は隠しておく */
+.hidden_th{
+  display:none;
+}
 /* =========================================================== */
 /* コマンドボタン */
 .tool_button{
@@ -89,12 +122,30 @@ nav ul li {
   display: inline-block;
 }
 
+.buttons_area{
+  display:none; /* 本来はボタンたちは非表示 */
+  width:100%;
+  text-align:right;
+}
+
 /* 戻す＆スキップ */
 .redo_and_skip{
   width: 4em;
   margin: 0px;
   margin-left: 2px;
   text-align:center;
+}
+
+/* ミニマップ表示ボタンはデフォルトでは表示しない */
+.map_button{
+  display:none; 
+}
+
+
+/* 下のアイテム表示ボタンを右の方に寄せる用 */
+.item_button_area{
+  width:100%;
+  text-align:right;
 }
 
 /* アイテムを表示 */
@@ -105,8 +156,8 @@ nav ul li {
   display: none;
 }
 
-/*モーダルなウィンドウ
-/*introduction、アブストラクトを表示する*/
+/*モーダルなウィンドウ =================*/
+/*イントロダクション、アブストラクトを表示するのが存在意義です*/
 .modalDiv{
   background-color: white;
   border:#474747 solid 9px;
@@ -151,10 +202,6 @@ nav ul li {
 }
 
 /* =========================================================== */
-/* .page_title{
-  margin:20px;
-} */
-
 /*ハイパーリンクのテキスト*/
 .hl-border{
   font-weight: bold;
@@ -165,6 +212,7 @@ nav ul li {
   color:#7378ff;
   text-decoration: underline;
 }
+
 /* =========================================================== */
 /* テーブルのセルの色 */
 .series_color_tag{
@@ -179,7 +227,7 @@ nav ul li {
 }           
 
 /* =========================================================== */
-
+/*区切り線*/
 hr{
   border: dashed #b5b5b5 1px;
 }
@@ -219,4 +267,46 @@ hr{
 .kazasaki{
   background-color: #8cf08c;
   color:#343010;
+}
+
+
+/* ================================= */
+/* 全ページ閲覧モード */
+.all_page_view{
+  display: none;
+  margin-top:20px;
+}
+  
+/* ================================= */
+/* 開発者モードで表示されるテキストエリア（タイトルと描写） */
+.Author_title_textarea{
+  font-size:36px;
+  font-weight:bold;
+  width:368px;
+  border-radius:0px;
+  border:gray solid 1px;
+  padding:0px;
+}
+
+.Author_desc_textarea{
+  width:368px;
+  font-size:18px;
+  border-radius:0px;
+  border:gray solid 1px;
+  padding:0px;
+}
+
+/* ================================= */
+/* 使い方ガイド文章用 */
+.guide_sentence1{
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.guide_sentence2{
+  font-size: 0.8em;
+}
+
+.guide_sentence3{
+  margin-top:30px;
 }

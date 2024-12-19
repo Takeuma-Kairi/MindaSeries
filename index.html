@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="ja">
 
 <head>
   <!--日本語対応-->
@@ -10,9 +10,10 @@
   <link rel="stylesheet" href="style.css" type="text/css">
   
   <!--NotoSansフォント導入-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+
   
   <!--ファビコン-->
   <link rel="shortcut icon" href="BTAicon.png" type="image/png"> 
@@ -36,30 +37,31 @@
 
   <!-- ストーリーを選択する欄================================================================ -->
 
-	<div class="tabDiv" style="display:block;text-align:center;padding-top:12px;" id="tabDiv_select">
-	  <p style="font-size: 1.1em;font-weight: bold;">まずは<span onclick="load_data(UserTour);" class="system_hl">画面説明</span>をご覧ください。</p>
-		<p style="font-size: 1.1em;font-weight: bold;">
+	<div class="tabDiv tD_select" id="tabDiv_select">
+	  <p class="guide_sentence1">まずは<span onclick="load_data(UserTour);" class="system_hl">画面説明</span>をご覧ください。</p>
+		<p class="guide_sentence1">
             下の表でストーリーを選択してください。選択後「②みる」に遷移します。
         </p>
-        <p style="font-size: 0.8em">
+        <p class="guide_sentence2">
             デフォルトでは、最近作ったものから順に並んでいます（降順-作成順）。<br>
             また「シリーズ」「時系列」は目安であり、厳密な規定はありません。
 		</p>
 
-		<p>
-			<label>ストーリーのソート
-					<select onchange="sort_story_select_table()" id="way_sel">
-						<option value="ascend">昇順</option>
-						<option value="descend" selected>降順</option>
-					</select>
+		<p>表のソート／
+      <label>順序: 
+          <select onchange="sort_story_select_table()" id="way_sel" tabindex="0">
+            <option value="ascend">昇順</option>
+            <option value="descend" selected>降順</option>
+          </select>
+      </label>
 
-
-				<select onchange="sort_story_select_table()" id="category_sel">
-					<option value="made" selected>作成順</option>
-					<option value="series">シリーズ順</option>
-					<option value="history">時系列順</option>
-				</select>
-			</label>
+      <label>ルール: 
+          <select onchange="sort_story_select_table()" id="category_sel" tabindex="0">
+            <option value="made" selected>作成順</option>
+            <option value="series">シリーズ順</option>
+            <option value="history">時系列順</option>
+          </select>
+      </label>
 		</p>
 
 		<table class="story_select_table" id="story_select_table">
@@ -67,56 +69,58 @@
 				<th>補助タイトル</th>
         <th>ファイル名</th>
 				<th>シリーズ</th>
-				<th style="display:none">作成順</th>
-				<th style="display:none">時系列順</th>
+        
+        <!--↓↓作成順と時系列順は、煩雑になるので表示はしないが、ソート用にデータは書いておく-->
+				<th class="hidden_th">作成順</th>  
+				<th class="hidden_th">時系列順</th>
 			</tr>
 
-<tr onclick='load_data(Kazasaki2)'>	<td>第二章後編</td>	<td>Kazasaki2</td>	<td><div class='series_color_tag kazasaki'>5.風咲</div></td>	<td style='display:none'>38</td>	<td style='display:none'>2</td></tr>
-<tr onclick='load_data(Kazasaki)'>	<td>第二章前編</td>	<td>Kazasaki</td>	<td><div class='series_color_tag kazasaki'>5.風咲</div></td>	<td style='display:none'>37</td>	<td style='display:none'>3</td></tr>
-<tr onclick='load_data(Mitsuyoshi, true)'>	<td>第一章</td>	<td>Mitsuyoshi</td>	<td><div class='series_color_tag kazasaki'>5.風咲</div></td>	<td style='display:none'>36</td>	<td style='display:none'>1</td></tr>
-<tr onclick='load_data(Nitori, true)'>	<td>二鳥からの手紙</td>	<td>Nitori</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>35</td>	<td style='display:none'>26</td></tr>
-<tr onclick='load_data(RNakia, true)'>	<td>伝説の復古</td>	<td>RNakia</td>	<td><div class='series_color_tag sana'>4.サナ</div></td>	<td style='display:none'>34</td>	<td style='display:none'>16</td></tr>
-<tr onclick='load_data(Habaic, true)'>	<td>流星の夜</td>	<td>Habaic</td>	<td><div class='series_color_tag sana'>4.サナ</div></td>	<td style='display:none'>33</td>	<td style='display:none'>17</td></tr>
-<tr onclick='load_data(Utagemaru, true)'>	<td>宴丸の使命</td>	<td>Utagemaru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>32</td>	<td style='display:none'>8</td></tr>
-<tr onclick='load_data(Meiju)'>	<td>空船なりの忠誠</td>	<td>Meiju</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>31</td>	<td style='display:none'>4</td></tr>
-<tr onclick='load_data(Seri)'>	<td>カッターの戦略</td>	<td>Seri</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>30</td>	<td style='display:none'>7</td></tr>
-<tr onclick='load_data(Uzinos)'>	<td>永王の衝撃</td>	<td>Uzinos</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>29</td>	<td style='display:none'>6</td></tr>
-<tr onclick='load_data(Goeibara)'>	<td>永王への帰依</td>	<td>Goeibara</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>28</td>	<td style='display:none'>37</td></tr>
-<tr onclick='load_data(Gerufaru, true)'>	<td>ゲルファルの身の上</td>	<td>Gerufaru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>27</td>	<td style='display:none'>34</td></tr>
-<tr onclick='load_data(Gebu, true)'>	<td>迷い子ゲブ</td>	<td>Gebu</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>26</td>	<td style='display:none'>5</td></tr>
-<tr onclick='load_data(Paripero, true)'>	<td>禁忌知見集</td>	<td>Paripero</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>25</td>	<td style='display:none'>15</td></tr>
-<tr onclick='load_data(Akisato, true)'>	<td>ばせる様の進軍</td>	<td>Akisato</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>24</td>	<td style='display:none'>12</td></tr>
-<tr onclick='load_data(Baseru, true)'>	<td>あらわれるばせる様</td>	<td>Baseru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>23</td>	<td style='display:none'>11</td></tr>
-<tr onclick='load_data(Yoshine2, true)'>	<td>ばせる様の暴動と芦音</td>	<td>Yoshine2</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>22</td>	<td style='display:none'>14</td></tr>
-<tr onclick='load_data(Umiao, true)'>	<td>緑ヶ淵の閉山</td>	<td>Umiao</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>21</td>	<td style='display:none'>13</td></tr>
-<tr onclick='load_data(Minda5_2)'>	<td>おわり、その先へ2</td>	<td>Minda5_2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>20</td>	<td style='display:none'>36</td></tr>
-<tr onclick='load_data(Minda5_1)'>	<td>おわり、その先へ1</td>	<td>Minda5_1</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>19</td>	<td style='display:none'>35</td></tr>
-<tr onclick='load_data(Minda4)'>	<td>光の足音と背後</td>	<td>Minda4</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>18</td>	<td style='display:none'>33</td></tr>
-<tr onclick='load_data(Hitami2, true)'>	<td>煙石様の再来</td>	<td>Hitami2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>17</td>	<td style='display:none'>30</td></tr>
-<tr onclick='load_data(Kurokasa)'>	<td>大鹿が呼ぶ</td>	<td>Kurokasa</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>16</td>	<td style='display:none'>32</td></tr>
-<tr onclick='load_data(Inome3, true)'>	<td>猪目の失態と動揺</td>	<td>Inome3</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>15</td>	<td style='display:none'>25</td></tr>
-<tr onclick='load_data(Minda3, true)'>	<td>ミンダの夢と黒傘の不安</td>	<td>Minda3</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>14</td>	<td style='display:none'>24</td></tr>
-<tr onclick='load_data(Inome2)'>	<td>揺れ動く猪目</td>	<td>Inome2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>13</td>	<td style='display:none'>9</td></tr>
-<tr onclick='load_data(Hitami, true)'>	<td>ひたみの苦悩</td>	<td>Hitami</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td style='display:none'>12</td>	<td style='display:none'>27</td></tr>
-<tr onclick='load_data(Yoshine)'>	<td>爆薬運搬任務</td>	<td>Yoshine</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>11</td>	<td style='display:none'>29</td></tr>
-<tr onclick='load_data(Ippu)'>	<td>大鉱機の計画</td>	<td>Ippu</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>10</td>	<td style='display:none'>28</td></tr>
-<tr onclick='load_data(Suihoun, true)'>	<td>乾いた大地、氷の大地</td>	<td>Suihoun</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>9</td>	<td style='display:none'>20</td></tr>
-<tr onclick='load_data(Fumi)'>	<td>五黒家と根の教会</td>	<td>Fumi</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>8</td>	<td style='display:none'>21</td></tr>
-<tr onclick='load_data(Baruru)'>	<td>バルルとニシン</td>	<td>Baruru</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>7</td>	<td style='display:none'>31</td></tr>
-<tr onclick='load_data(Sachi)'>	<td>白霧鉄山にて</td>	<td>Sachi</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>6</td>	<td style='display:none'>23</td></tr>
-<tr onclick='load_data(Sakuma)'>	<td>池家さくまの雑務</td>	<td>Sakuma</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>5</td>	<td style='display:none'>22</td></tr>
-<tr onclick='load_data(Inome)'>	<td>猪目 遥音の出張</td>	<td>Inome</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>4</td>	<td style='display:none'>18</td></tr>
-<tr onclick='load_data(Minda2)'>	<td>ミンダと赤い魚</td>	<td>Minda2</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>3</td>	<td style='display:none'>19</td></tr>
-<tr onclick='load_data(Minda)'>	<td>黒縄のミンダ</td>	<td>Minda</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td style='display:none'>2</td>	<td style='display:none'>10</td></tr>
-<tr onclick='load_data(Kunugi)'>	<td>櫟木の一日</td>	<td>Kunugi</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td style='display:none'>1</td>	<td style='display:none'>38</td></tr>
-<tr onclick='load_data(UserTour)'>	<td>画面説明</td>	<td>UserTour</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
-<tr onclick='load_data(Abstract)'>	<td>あらすじ</td>	<td>Abstract</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
-<tr onclick='load_data(Dictionary)'>	<td>辞書</td>	<td>Dictionary</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td style='display:none'>0</td>	<td style='display:none'>0</td></tr>
+<tr onclick='load_data(Kazasaki2)'>	<td>第二章後編</td>	<td>Kazasaki2</td>	<td><div class='series_color_tag kazasaki'>5.風咲</div></td>	<td class='hidden_th'>38</td>	<td class='hidden_th'>2</td></tr>
+<tr onclick='load_data(Kazasaki)'>	<td>第二章前編</td>	<td>Kazasaki</td>	<td><div class='series_color_tag kazasaki'>5.風咲</div></td>	<td class='hidden_th'>37</td>	<td class='hidden_th'>3</td></tr>
+<tr onclick='load_data(Mitsuyoshi, true)'>	<td>第一章</td>	<td>Mitsuyoshi</td>	<td><div class='series_color_tag kazasaki'>5.風咲</div></td>	<td class='hidden_th'>36</td>	<td class='hidden_th'>1</td></tr>
+<tr onclick='load_data(Nitori, true)'>	<td>二鳥からの手紙</td>	<td>Nitori</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>35</td>	<td class='hidden_th'>26</td></tr>
+<tr onclick='load_data(RNakia, true)'>	<td>伝説の復古</td>	<td>RNakia</td>	<td><div class='series_color_tag sana'>4.サナ</div></td>	<td class='hidden_th'>34</td>	<td class='hidden_th'>16</td></tr>
+<tr onclick='load_data(Habaic, true)'>	<td>流星の夜</td>	<td>Habaic</td>	<td><div class='series_color_tag sana'>4.サナ</div></td>	<td class='hidden_th'>33</td>	<td class='hidden_th'>17</td></tr>
+<tr onclick='load_data(Utagemaru, true)'>	<td>宴丸の使命</td>	<td>Utagemaru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>32</td>	<td class='hidden_th'>8</td></tr>
+<tr onclick='load_data(Meiju)'>	<td>空船なりの忠誠</td>	<td>Meiju</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>31</td>	<td class='hidden_th'>4</td></tr>
+<tr onclick='load_data(Seri)'>	<td>カッターの戦略</td>	<td>Seri</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>30</td>	<td class='hidden_th'>7</td></tr>
+<tr onclick='load_data(Uzinos)'>	<td>永王の衝撃</td>	<td>Uzinos</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>29</td>	<td class='hidden_th'>6</td></tr>
+<tr onclick='load_data(Goeibara)'>	<td>永王への帰依</td>	<td>Goeibara</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>28</td>	<td class='hidden_th'>37</td></tr>
+<tr onclick='load_data(Gerufaru, true)'>	<td>ゲルファルの身の上</td>	<td>Gerufaru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>27</td>	<td class='hidden_th'>34</td></tr>
+<tr onclick='load_data(Gebu, true)'>	<td>迷い子ゲブ</td>	<td>Gebu</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>26</td>	<td class='hidden_th'>5</td></tr>
+<tr onclick='load_data(Paripero, true)'>	<td>禁忌知見集</td>	<td>Paripero</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>25</td>	<td class='hidden_th'>15</td></tr>
+<tr onclick='load_data(Akisato, true)'>	<td>ばせる様の進軍</td>	<td>Akisato</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>24</td>	<td class='hidden_th'>12</td></tr>
+<tr onclick='load_data(Baseru, true)'>	<td>あらわれるばせる様</td>	<td>Baseru</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>23</td>	<td class='hidden_th'>11</td></tr>
+<tr onclick='load_data(Yoshine2, true)'>	<td>ばせる様の暴動と芦音</td>	<td>Yoshine2</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>22</td>	<td class='hidden_th'>14</td></tr>
+<tr onclick='load_data(Umiao, true)'>	<td>緑ヶ淵の閉山</td>	<td>Umiao</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>21</td>	<td class='hidden_th'>13</td></tr>
+<tr onclick='load_data(Minda5_2)'>	<td>おわり、その先へ2</td>	<td>Minda5_2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>20</td>	<td class='hidden_th'>36</td></tr>
+<tr onclick='load_data(Minda5_1)'>	<td>おわり、その先へ1</td>	<td>Minda5_1</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>19</td>	<td class='hidden_th'>35</td></tr>
+<tr onclick='load_data(Minda4)'>	<td>光の足音と背後</td>	<td>Minda4</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>18</td>	<td class='hidden_th'>33</td></tr>
+<tr onclick='load_data(Hitami2, true)'>	<td>煙石様の再来</td>	<td>Hitami2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>17</td>	<td class='hidden_th'>30</td></tr>
+<tr onclick='load_data(Kurokasa)'>	<td>大鹿が呼ぶ</td>	<td>Kurokasa</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>16</td>	<td class='hidden_th'>32</td></tr>
+<tr onclick='load_data(Inome3, true)'>	<td>猪目の失態と動揺</td>	<td>Inome3</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>15</td>	<td class='hidden_th'>25</td></tr>
+<tr onclick='load_data(Minda3, true)'>	<td>ミンダの夢と黒傘の不安</td>	<td>Minda3</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>14</td>	<td class='hidden_th'>24</td></tr>
+<tr onclick='load_data(Inome2)'>	<td>揺れ動く猪目</td>	<td>Inome2</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>13</td>	<td class='hidden_th'>9</td></tr>
+<tr onclick='load_data(Hitami, true)'>	<td>ひたみの苦悩</td>	<td>Hitami</td>	<td><div class='series_color_tag minda2'>2.ミンダ後編</div></td>	<td class='hidden_th'>12</td>	<td class='hidden_th'>27</td></tr>
+<tr onclick='load_data(Yoshine)'>	<td>爆薬運搬任務</td>	<td>Yoshine</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>11</td>	<td class='hidden_th'>29</td></tr>
+<tr onclick='load_data(Ippu)'>	<td>大鉱機の計画</td>	<td>Ippu</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>10</td>	<td class='hidden_th'>28</td></tr>
+<tr onclick='load_data(Suihoun, true)'>	<td>乾いた大地、氷の大地</td>	<td>Suihoun</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>9</td>	<td class='hidden_th'>20</td></tr>
+<tr onclick='load_data(Fumi)'>	<td>五黒家と根の教会</td>	<td>Fumi</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>8</td>	<td class='hidden_th'>21</td></tr>
+<tr onclick='load_data(Baruru)'>	<td>バルルとニシン</td>	<td>Baruru</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>7</td>	<td class='hidden_th'>31</td></tr>
+<tr onclick='load_data(Sachi)'>	<td>白霧鉄山にて</td>	<td>Sachi</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>6</td>	<td class='hidden_th'>23</td></tr>
+<tr onclick='load_data(Sakuma)'>	<td>池家さくまの雑務</td>	<td>Sakuma</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>5</td>	<td class='hidden_th'>22</td></tr>
+<tr onclick='load_data(Inome)'>	<td>猪目 遥音の出張</td>	<td>Inome</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>4</td>	<td class='hidden_th'>18</td></tr>
+<tr onclick='load_data(Minda2)'>	<td>ミンダと赤い魚</td>	<td>Minda2</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>3</td>	<td class='hidden_th'>19</td></tr>
+<tr onclick='load_data(Minda)'>	<td>黒縄のミンダ</td>	<td>Minda</td>	<td><div class='series_color_tag minda1'>1.ミンダ前編</div></td>	<td class='hidden_th'>2</td>	<td class='hidden_th'>10</td></tr>
+<tr onclick='load_data(Kunugi)'>	<td>櫟木の一日</td>	<td>Kunugi</td>	<td><div class='series_color_tag variation'>3.多様</div></td>	<td class='hidden_th'>1</td>	<td class='hidden_th'>38</td></tr>
+<tr onclick='load_data(UserTour)'>	<td>画面説明</td>	<td>UserTour</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td class='hidden_th'>0</td>	<td class='hidden_th'>0</td></tr>
+<tr onclick='load_data(Abstract)'>	<td>あらすじ</td>	<td>Abstract</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td class='hidden_th'>0</td>	<td class='hidden_th'>0</td></tr>
+<tr onclick='load_data(Dictionary)'>	<td>辞書</td>	<td>Dictionary</td>	<td><div class='series_color_tag meta'>0.メタ</div></td>	<td class='hidden_th'>0</td>	<td class='hidden_th'>0</td></tr>
 
 
 
 		</table>
-		 <br><br><br><!--スマホの下メニューに被らせないための空白-->
+		 <!-- <div style="height:60px"></div><!--スマホの下メニューに被らせないための空白--> 
 	</div>
 	
 	<!-- ================================ -->
@@ -131,140 +135,148 @@
 		
 		
   <!-- 設定欄================================================================ -->
-	<div class="tabDiv" style="padding-top:12px;" id="tabDiv_setting">
+	<div class="tabDiv tD_setting" id="tabDiv_setting">
 
     <h2>ストーリーの表示設定</h2>
 
     <p>
       <label>表示を中央揃え／左揃えにする<br>
-        <input type="checkbox" id="chb_align_center" onchange="change_align_center()"/>中央揃えにする
+        <input type="checkbox" id="chb_align_center" onchange="change_align_center()" value="1"/>中央揃えにする
       </label>
     </p>
 
-        <p>
-            <label>横幅の調整（ディスプレイの横幅に占めるパーセント。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
+        <p>横幅の調整（ディスプレイの横幅に占めるパーセント。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
             <!-- 以下の、min or max or value を変更した場合、change_tabDivwidthも変更すること！-->
-            <input type="range" id="tabDiv_width_range" min="25" max="100" value="60" step="1"
-                 onchange="change_tabDivwidth(this.value)">
-            <input type="number" id="tabDiv_width_number" min="25" max="100" value="60" step="1"
+            
+            <label>スライダー：
+              <input type="range" id="tabDiv_width_range" min="25" max="100" value="60" step="1"
                   onchange="change_tabDivwidth(this.value)">
+            </label>
+            
+            <label>／数値：
+              <input type="number" id="tabDiv_width_number" min="25" max="100" value="60" step="1"
+                  onchange="change_tabDivwidth(this.value)">
+            </label>
         </p>
 
 		<p>
 			<label>ストーリーのフォントサイズの変更<br>
             <!-- 以下の、min or max or value を変更した場合、change_fontsize()も変更すること！-->
-			<input type="range" id="fontsize_range" min="12" max="30" value="18" step="1"
+        <label>スライダー：  
+            <input type="range" id="fontsize_range" min="12" max="30" value="18" step="1"
              onchange="change_fontsize(this.value)">
+        </label>
+        
+        <label>／数値：
             <input type="number" id="fontsize_number" min="12" max="30" value="18" step="1"
              onchange="change_fontsize(this.value)">
+        </label>
             <br>
             <span id="reibun">フォントサイズ確認サンプル文章</span>
 		</p>
 
 		<p>
 			<label>色合いの変更<br>
-			<select id="colorscheme_select" onchange="change_colorscheme(this.value)">
-				<option value="default" selected>ライト</option>
-				<option value="dark">ダーク</option>
-				<option value="lightblue">ライト ブルー</option>
-				<option value="darkblue">ダーク ブルー</option>
-			</select>
-
+        <select id="colorscheme_select" onchange="change_colorscheme(this.value)" tabindex="0">
+          <option value="default" selected>ライト</option>
+          <option value="dark">ダーク</option>
+          <option value="lightblue">ライト ブルー</option>
+          <option value="darkblue">ダーク ブルー</option>
+        </select>
+      </label>
 		</p>
 
 		<p>
-			<button onclick="reset_setting()"/>設定のリセット</button>
+			<button onclick="reset_setting()" tabindex="0" accesskey="r"/>設定のリセット(<u>R</u>)</button>
 		</p>
+    
     <hr>
 
-    <p>
+
     <h2>通常モード、全ページ閲覧モード</h2>
-    全ページ閲覧モード：「②みる」タブで、そのストーリーの内容全てを確認できます。
+      全ページ閲覧モード：「②みる」タブで、そのストーリーの内容全てを確認できます。
     <br>
-    ボタンを押すと通常／全ページ閲覧モードを入れ替えます。
+      ボタンを押すと通常／全ページ閲覧モードを入れ替えます。
     <br>
-    <button id="all_page_mode" onclick="all_page_mode_change()">→全ページ閲覧モード</button>
-    </p>
+    <button id="all_page_mode" onclick="all_page_mode_change()" tabindex="0" accesskey="p">→全ページ閲覧モード</button>
+
+    
     <hr>
 
-    <p>
-      <h2>セーブ機能</h2>
-      <p>
-        <label>セーブデータ処理選択<br>
-          <button onclick="write_savefile()" style="border-width:1px;margin-bottom:5px;">セーブデータ取得</button>
-          <button onclick="load_savefile(document.getElementById('t_savedata').value)" style="border-width:1px;margin-bottom:5px;">再ロード</button><br>
-        </label>
-        <label>セーブデータ入出力<br>
-          <textarea id="t_savedata" rows="3" cols="20"></textarea>
-        </label>
-      </p>
-    </p>
-
+    <h2>セーブ機能</h2>
+    <label>セーブデータ処理選択<br>
+      <button onclick="write_savefile()" tabindex="0" accesskey="g">セーブデータ取得(<u>G</u>)</button>
+      <button onclick="load_savefile(document.getElementById('t_savedata').value)" tabindex="0" accesskey="l">再ロード(<u>L</u>)</button><br>
+    </label>
+    
+    <label>セーブデータ入出力<br>
+      <textarea id="t_savedata" rows="3" cols="20"></textarea>
+    </label>
+    
     <hr>
 	
-	<p>
 		<h2>テキスト形式のストーリーファイル読み込み</h2>
-        <form id="form_page">
-            <label>ストーリーファイルを選択してください<br>
-                <input id="myfile" type="file" onchange="load_txt_data()"/>
-            </label>
-        </form>
-    </p>
-	
+      <form id="form_page">
+        <label>ストーリーファイルを選択してください<br>
+            <input id="myfile" type="file" onchange="load_txt_data()"/>
+        </label>
+      </form>
     <hr>
 	
-    <p>
-        <h2>開発者モード</h2>
-        <button onclick="password_insert()">パスワード入力…</button>
-    </p>
-   <br><br><br>
+    <h2>開発者モード</h2>
+    <button onclick="password_insert()" tabindex="0" accesskey="d">パスワード入力…(<u>D</u>)</button>
+
 	</div>
 
   <!-- ストーリー欄================================================================ -->
 
 	<div class="tabDiv" id="tabDiv_page">
 
-    <div style="width:100%;display:inline-block" id="desc_and_item">
+    <div style="width:100%;display:inline-block" id="desc_and_item" style="desc_and_item">
 
-      <div id="button_redo_and_skip" style="display:none;width:100%; text-align:right;">
+      <div id="button_redo_and_skip" class="buttons_area">
         <div class="tool_button redo_and_skip" id="tab_close_button" onclick="tab_close()">↑非表示</div>
         <div class="tool_button redo_and_skip" onclick="remov()">戻る</div>
         <div class="tool_button redo_and_skip" onclick="pageskip()">とばす</div>
         <div class="tool_button redo_and_skip" id="fromScratch" onclick="fromScratch()">最初から</div>
-        <div class="tool_button redo_and_skip" style="display:none;" id="map_button" onclick="open_map()">マップ</div>
+        <div class="tool_button redo_and_skip" class="map_button" id="map_button" onclick="open_map()">マップ</div>
       </div>
 
-      <!-- 全ページモード - - - - - - - - - - - - - - - - - - - - - - - -  - - -->
-      <div id="all_page_view" style="display: none;margin-top:20px;">
+      <!-- 全ページモード ========================================== -->
+      <div id="all_page_view" class="all_page_view">
+      
         <!--セレクト リスト-->
-        全ページリスト：
-        <select id="all_page_sel" size="1" onchange="all_page_mov(this.value)">
-        </select>
+        <label>全ページリスト：
+          <select id="all_page_sel" name="all_page_sel" size="1" onchange="all_page_mov(this.value)" tabindex="0">
+            <option>この項目が表示されているのはバグだと思う</option>
+          </select>
+        </label>
 
-            <!--ボタン 「←」 「→」 -->
-            <button id="all_page_down" onclick="all_page_step(-1);">←</button>
-            <button id="all_page_up" onclick="all_page_step(1);">→</button>
-            <!--ストーリーの意義 未定-->
-            <div id="all_page_mean">
-            </div>
+        <!--ボタン 「←」 「→」 -->
+        <button id="all_page_down" onclick="all_page_step(-1);" tabindex="0" accesskey="b">←(<u>B</u>)</button>
+        <button id="all_page_up" onclick="all_page_step(1);" tabindex="0" accesskey="a">→(<u>A</u>)</button>
+        <!--ストーリーの意義 未定-->
+        <div id="all_page_mean">
+        </div>
       </div>
-      <!----------------------------------------------------->
+      <!--====================================================-->
 
       <!--描写 -->
       <div id="d_desc">
-				<div style="margin-top:30px;">
-                    まだストーリーのデータがありません。「①選ぶ」タブに戻って、ストーリーを選択してください。
-                </div>
+				<div class="guide_sentence3">
+          まだストーリーのデータがありません。「①選ぶ」タブに戻って、ストーリーを選択してください。
+        </div>
       </div>
 
 
-      <div style="width:100%; text-align:right;">
-        <div class="tool_button openitem" style="display:none;" id="button_openitem" onclick="show_item()">
+      <div class="item_button_area">
+        <div class="tool_button openitem" id="button_openitem" onclick="show_item()">
             ↓アイテムを表示
         </div>
       </div>
+      
       <!-- アイテム -->
-        <div id="d_item" style="display:none">
+        <div id="d_item" class="d_item">
           <div id="d_item_sel">
           </div>
           <hr>
@@ -277,7 +289,7 @@
 	</div>
 
 <!-- まとめ欄 =========================================================-->
-  <div class="tabDiv" id="tabDiv_summary">
+  <div class="tabDiv tD_summary" id="tabDiv_summary">
     <h1>参考資料</h1>
     <p>
       <a href="https://drive.google.com/drive/folders/1nqxwojH-HQ0KTHJ9tkGanrT1ldLg5fmZ?usp=sharing" class="system_hl">Googleドライブでファイルを見る</a>
@@ -289,45 +301,53 @@
   ストーリーではなく、補助するための設定集などです。
     </p>
     
-    <p>
+
     <h2 class='series_color_tag variation'>多様</h2>
   以下の、他シリーズに示すシリーズに当てはまらないストーリーです。
-      <p>
-        <img src='Assist/Matome/Tayo.png' class='matome_img'>
-        <img src='Assist/Matome/Tayo2.png' class='matome_img'>
-        <img src='Assist/Matome/Tayo3.png' class='matome_img'>
-      </p>
-    </p>
-    
     <p>
+      <img src='Assist/Matome/Tayo.png' class='matome_img'
+        alt="管轄がおこる前に、ばせる様が生まれ、同時期に北岸防衛作戦がある">
+      <img src='Assist/Matome/Tayo2.png' class='matome_img'
+        alt="管轄がおこったあと、ばせる様が暴動を起こす">
+      <img src='Assist/Matome/Tayo3.png' class='matome_img'
+        alt="ミンダシリーズのあとにもいろいろなうごきがある">
+    </p>
+
+    
+
     <h2 class='series_color_tag minda1'>ミンダシリーズ前半</h2>
     <h2 class='series_color_tag minda2'>ミンダシリーズ後半</h2>
   ミンダからはじまり、様々な思惑が交錯しながら、ある一つの目標に向かって突き進んでいくシリーズです。<br>
   複数の組織、思想を複合しており、大陸物語のガイダンス的な役割も担っています。
-        <p>
-        <img src='Assist/Matome/Minda.png' class='matome_img'>
-        <img src='Assist/Matome/Minda2.png' class='matome_img'>
-        <img src='Assist/Matome/Minda3.png' class='matome_img'>
-      </p>
-    </p>
-    
     <p>
+      <img src='Assist/Matome/Minda.png' class='matome_img' 
+        alt="池家ひたみが黒縄様の儀式を行い、猪目が接触する。">
+      <img src='Assist/Matome/Minda2.png' class='matome_img'
+        alt="ミンダが黒縄様に攻撃され、徐々に大陸になっていく。">
+      <img src='Assist/Matome/Minda3.png' class='matome_img'
+        alt="様々な思惑が交錯しながら大鹿と黒縄に集結する。">
+    </p>
+
+    
+
     <h2 class='series_color_tag sana'>サナ</h2>
   ルストラル・セイバル サナを中心としたストーリーです。
-        <p>
-        <img src='Assist/Matome/Seibal.png' class='matome_img'>
-      </p>
-    </p>
-    
     <p>
+      <img src='Assist/Matome/Seibal.png' class='matome_img'
+        alt="サナの復活に際して様々な動きがある。">
+    </p>
+
+    
     <h2 class='series_color_tag kazasaki'>風咲</h2>
     風咲を中心としたストーリーです。
-      <p>
-        <img src='Assist/Matome/Kazasaki.png' class='matome_img'>
-      </p>
+    <p>
+      <img src='Assist/Matome/Kazasaki.png' class='matome_img'
+        alt="サナの復活に際して様々な動きがある。">
     </p>
+
     
-    <br><br><br>
+    <!-- 
+		<div style="height:60px"></div> --><!--スマホの下メニューに被らせないための空白-->
   </div>
   
 <!--主要なJSコード-->
@@ -376,7 +396,8 @@
 <script src="StoryJS/Kazasaki.js" defer></script>
 <script src="StoryJS/Kazasaki2.js" defer></script>
 
+</body>
+
 <link id="colorscheme" rel="stylesheet" href="Colors/default.css" type="text/css">
 
-</body>
 </html>
