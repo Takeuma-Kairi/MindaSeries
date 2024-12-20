@@ -1,0 +1,312 @@
+@charset "utf-8";
+/* =========================================================== */
+body{
+  font-family: 'Noto Sans JP', 'Yu Gothic Medium', '游ゴシック Medium', sans-serif;
+  font-size: 18px;
+}
+
+/* =========================================================== */
+/* タブ選択リボン */
+header {
+  text-align: center;
+  position: fixed;  /* スクロールしても固定 */
+  
+  /* 下の３つは、上部＆左右にめいっぱい広げるために必要 */
+  top: -1px;
+  left: 0; 
+  right: 0;
+}
+
+/* タブ選択リボン内部。この中に<li>を横に並べて表示する */
+nav ul { 
+  display: flex;
+  list-style: none; /* <li>による黒丸「・」を表示しない */
+  padding: 0;
+  margin: 0;
+}
+
+/* タブ選択リボン内部選択肢<li> */
+nav ul li {
+  width:20%;
+  font-size: 1.1em;
+  border-radius: 15px;
+  
+  /*下の2つは文字がちょっと上のほうに行ってしまうのを防ぐのに要る */
+  margin: 7px;
+  line-height: 34px;	
+}
+
+/* タブ */
+.tabDiv{
+  display: none;
+  margin-top: 60px; /* 上のリボンの下にもぐりこんでしまうのを防ぐ */
+  width: 60%;
+  min-width: 360px;   /* iPhone8の画面の横幅 */
+	padding: 0px;
+	
+	/*中央揃え*/
+  margin-left: auto;  
+  margin-right: auto; 
+}
+
+/* ↓↓↓リボン非表示時は、tabDivに合わせて以下も↓↓↓ */
+.tabDiv_without_header{
+  margin-top: 0px;  /* タブがなく、下にずらす必要がないため */
+}
+
+/*以下、特にそれぞれのタブについて*/
+.tD_select{ /*「選ぶ」タブ */
+  display:block;  /*最初から表示しておく*/
+  text-align:center;
+  padding-top:12px;
+  margin-bottom:60px;
+}
+
+.tD_setting{  /*「設定」タブ */
+  padding-top:12px;
+  margin-bottom:60px;
+}
+
+
+.tD_summary{ /*「まとめ」タブ*/
+  margin-bottom:60px;
+}
+
+/* ================================================ */
+
+.desc_and_item{
+  width:100%;
+  display:inline-block;
+}
+
+.d_item{
+  display:none;
+}
+/* =========================================================== */
+/*ページの選択肢（太字、下線、大き目）*/
+.li_sel{
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 150%;
+}
+
+/* =========================================================== */
+/* ページ選択表 */
+.story_select_table{
+  border-collapse:collapse;	/* 表内部の隣接するセルのボーダーを重ねて表示する */
+  margin:auto;
+}
+
+.story_select_table tr td{
+  padding:5px;
+}
+
+
+/* 見出し */
+.story_select_table tr th{	
+  padding:10px;
+}
+
+
+/* 作成順と時系列順は隠しておく */
+.hidden_th{
+  display:none;
+}
+/* =========================================================== */
+/* コマンドボタン */
+.tool_button{
+  padding: 5px;
+  margin: 5px;
+  border-radius: 15px;
+  font-size: 75%;
+  display: inline-block;
+}
+
+.buttons_area{
+  display:none; /* 本来はボタンたちは非表示 */
+  width:100%;
+  text-align:right;
+}
+
+/* 戻す＆スキップ */
+.redo_and_skip{
+  width: 4em;
+  margin: 0px;
+  margin-left: 2px;
+  text-align:center;
+}
+
+/* ミニマップ表示ボタンはデフォルトでは表示しない */
+.map_button{
+  display:none; 
+}
+
+
+/* 下のアイテム表示ボタンを右の方に寄せる用 */
+.item_button_area{
+  width:100%;
+  text-align:right;
+}
+
+/* アイテムを表示 */
+.openitem{
+  margin-top:2em;
+  width: 12em;
+  text-align: center;
+  display: none;
+}
+
+/*モーダルなウィンドウ =================*/
+/*イントロダクション、アブストラクトを表示するのが存在意義です*/
+.modalDiv{
+  background-color: white;
+  border:#474747 solid 9px;
+  position:fixed;
+  margin:auto;
+  inset:0;  /*margin:autoとinset:0とで、中央ぞろえ配置にする*/
+  margin-top:100px; /*上のタブにかからないような、ちょうどいい位置がここだ！多分*/
+  height:65%;
+  width:80%;
+  max-width: 580px;
+  min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
+  display:none; 
+  overflow-y: scroll;
+  padding-top: 40px;  /*introductionのタイトルを見切れさせない余白*/
+  border-radius:10px;
+}
+
+/*モーダルウィンドウを閉じるボタン*/
+.modal_abst_btn{
+  text-align: center;
+ font-size: 15px;
+ background-color:#6c6c6c;
+ color:white;
+ border:#6c6c6c solid 9px;
+ position:fixed;
+ margin:auto;
+ inset:0; /*margin:autoとinset:0とで、中央ぞろえ*/
+ margin-top:100px; /*上のタブにかからないような、ちょうどいい位置*/
+ height:20px;
+ width:80%;
+ max-width: 580px;
+ min-width:360px;  /*iPhone14の縦長画面でちょうどいい幅*/
+ margin-top: 100px;
+ border-radius: 10px 10px 0px 0px;/*左上、右上だけ角を丸くする*/
+  z-index: 10;  /*一番上にボタンが来るように*/
+}
+
+.modal_abst_desc{
+  font-size: 80%;
+  text-align: left;
+  padding: 20px;
+}
+
+/* =========================================================== */
+/*ハイパーリンクのテキスト*/
+.hl-border{
+  font-weight: bold;
+}
+
+/* ハイパーリンクのテキスト */
+.system_hl{
+  color:#7378ff;
+  text-decoration: underline;
+}
+
+/* =========================================================== */
+/* テーブルのセルの色 */
+.series_color_tag{
+  padding: 3px;
+}
+/* =========================================================== */                           
+ /* まとめ内の画像について */
+.matome_img{
+  border:black double 5px;
+  /*max-width:360px;*/
+  height:235px;
+}           
+
+/* =========================================================== */
+/*区切り線*/
+hr{
+  border: dashed #b5b5b5 1px;
+}
+
+/* =========================================================== */
+
+/* メタ */
+.meta{
+  background-color:#fdeaea;
+  border: #e56565 solid 2px;
+  color:#ee0000;
+}
+/* 多様 */
+.variation{
+	background-color:#243444;
+	color:#fdfdff;
+}
+/* ミンダ前編 */
+.minda1{
+	background-color:#f4eaff;
+	color:#000000;
+}
+
+/* ミンダ後編 */
+.minda2{
+	background-color:#ad301c;
+	color:#EEEEEE;
+}
+
+/* サナ */
+.sana{
+  background-color: #c9f0ff;
+  color:#1b0313;
+}
+
+/* 風咲 */
+.kazasaki{
+  background-color: #8cf08c;
+  color:#343010;
+}
+
+
+/* ================================= */
+/* 全ページ閲覧モード */
+.all_page_view{
+  display: none;
+  margin-top:20px;
+}
+  
+/* ================================= */
+/* 開発者モードで表示されるテキストエリア（タイトルと描写） */
+.Author_title_textarea{
+  font-size:36px;
+  font-weight:bold;
+  width:368px;
+  border-radius:0px;
+  border:gray solid 1px;
+  padding:0px;
+}
+
+.Author_desc_textarea{
+  width:368px;
+  font-size:18px;
+  border-radius:0px;
+  border:gray solid 1px;
+  padding:0px;
+}
+
+/* ================================= */
+/* 使い方ガイド文章用 */
+.guide_sentence1{
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.guide_sentence2{
+  font-size: 0.8em;
+}
+
+.guide_sentence3{
+  margin-top:30px;
+}

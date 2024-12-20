@@ -7,12 +7,16 @@
   
   <title>大陸シリーズ BTAP4</title>
   <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet" href="style.css" type="text/css">
+  <link rel="stylesheet" href="sources/style.css" type="text/css">
+  
+  <!-- デフォルトのカラースキーム -->
+  <link id="colorscheme" rel="stylesheet" href="Colors/default.css" type="text/css">
+
   
   <!--NotoSansフォント導入-->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
 
   
   <!--ファビコン-->
@@ -27,7 +31,7 @@
 			<ul>
         <li onclick="change_tab(1)" id="li_select" class="active-li">①選ぶ</li>
 				<li onclick="change_tab(2)" id="li_page" class="non-active_li">②みる</li>
-				<hr> <!--区切り線-->
+				<hr> <!--区切り線。この要素はここにあるべきではないと警告されているが、うまく表示されているので無視して入れている。-->
 				<li onclick="change_tab(3)" id="li_summary" class="non-active_li">まとめ</li>
 				<li onclick="change_tab(0)" id="li_setting" class="non-active_li">設定</li>
 			</ul>
@@ -120,7 +124,6 @@
 
 
 		</table>
-		 <!-- <div style="height:60px"></div><!--スマホの下メニューに被らせないための空白--> 
 	</div>
 	
 	<!-- ================================ -->
@@ -148,26 +151,25 @@
         <p>横幅の調整（ディスプレイの横幅に占めるパーセント。可読性確保のため、横幅が狭すぎる(360px未満)場合、見た目が変化しません。）<br>
             <!-- 以下の、min or max or value を変更した場合、change_tabDivwidthも変更すること！-->
             
-            <label>スライダー：
+            <label>(%)：
               <input type="range" id="tabDiv_width_range" min="25" max="100" value="60" step="1"
                   onchange="change_tabDivwidth(this.value)">
             </label>
             
-            <label>／数値：
+            <label>：
               <input type="number" id="tabDiv_width_number" min="25" max="100" value="60" step="1"
                   onchange="change_tabDivwidth(this.value)">
             </label>
         </p>
 
-		<p>
-			<label>ストーリーのフォントサイズの変更<br>
+		<p>ストーリーのフォントサイズの変更<br>
             <!-- 以下の、min or max or value を変更した場合、change_fontsize()も変更すること！-->
-        <label>スライダー：  
+        <label>(px)：  
             <input type="range" id="fontsize_range" min="12" max="30" value="18" step="1"
              onchange="change_fontsize(this.value)">
         </label>
         
-        <label>／数値：
+        <label>：
             <input type="number" id="fontsize_number" min="12" max="30" value="18" step="1"
              onchange="change_fontsize(this.value)">
         </label>
@@ -204,14 +206,21 @@
     <hr>
 
     <h2>セーブ機能</h2>
-    <label>セーブデータ処理選択<br>
-      <button onclick="write_savefile()" tabindex="0" accesskey="g">セーブデータ取得(<u>G</u>)</button>
-      <button onclick="load_savefile(document.getElementById('t_savedata').value)" tabindex="0" accesskey="l">再ロード(<u>L</u>)</button><br>
-    </label>
+    <p>
+      <label>セーブデータ取得：
+        <button onclick="write_savefile()" tabindex="0" accesskey="g">セーブデータ取得(<u>G</u>)</button>
+      </label>
+      <br>
+      <label>ロード：
+        <button onclick="load_savefile(document.getElementById('t_savedata').value)" tabindex="0" accesskey="l">ロード(<u>L</u>)</button>
+      </label>
+    </p>
     
-    <label>セーブデータ入出力<br>
-      <textarea id="t_savedata" rows="3" cols="20"></textarea>
-    </label>
+    <p>
+      <label>セーブデータ入出力(<u>N</u>)<br>
+        <textarea id="t_savedata" rows="3" cols="20" tabindex="0" accesskey="n">ここにデータを入力</textarea>
+      </label>
+    </p>
     
     <hr>
 	
@@ -232,7 +241,7 @@
 
 	<div class="tabDiv" id="tabDiv_page">
 
-    <div style="width:100%;display:inline-block" id="desc_and_item" style="desc_and_item">
+    <div id="desc_and_item" style="desc_and_item">
 
       <div id="button_redo_and_skip" class="buttons_area">
         <div class="tool_button redo_and_skip" id="tab_close_button" onclick="tab_close()">↑非表示</div>
@@ -248,7 +257,7 @@
         <!--セレクト リスト-->
         <label>全ページリスト：
           <select id="all_page_sel" name="all_page_sel" size="1" onchange="all_page_mov(this.value)" tabindex="0">
-            <option>この項目が表示されているのはバグだと思う</option>
+            <option selected>この項目が表示されているのはバグだと思う</option>
           </select>
         </label>
 
@@ -297,8 +306,8 @@
   
     <h1>シリーズについて</h1>
     <p>
-    <h2 class='series_color_tag meta'>メタ</h2>
-  ストーリーではなく、補助するための設定集などです。
+      <h2 class='series_color_tag meta'>メタ</h2>
+    ストーリーではなく、補助するための設定集などです。
     </p>
     
 
@@ -306,11 +315,11 @@
   以下の、他シリーズに示すシリーズに当てはまらないストーリーです。
     <p>
       <img src='Assist/Matome/Tayo.png' class='matome_img'
-        alt="管轄がおこる前に、ばせる様が生まれ、同時期に北岸防衛作戦がある">
+        alt="管轄がおこる前に、ばせる様が生まれ、同時期に北岸防衛作戦がある"/>
       <img src='Assist/Matome/Tayo2.png' class='matome_img'
-        alt="管轄がおこったあと、ばせる様が暴動を起こす">
+        alt="管轄がおこったあと、ばせる様が暴動を起こす"/>
       <img src='Assist/Matome/Tayo3.png' class='matome_img'
-        alt="ミンダシリーズのあとにもいろいろなうごきがある">
+        alt="ミンダシリーズのあとにもいろいろなうごきがある"/>
     </p>
 
     
@@ -321,11 +330,11 @@
   複数の組織、思想を複合しており、大陸物語のガイダンス的な役割も担っています。
     <p>
       <img src='Assist/Matome/Minda.png' class='matome_img' 
-        alt="池家ひたみが黒縄様の儀式を行い、猪目が接触する。">
+        alt="池家ひたみが黒縄様の儀式を行い、猪目が接触する。"/>
       <img src='Assist/Matome/Minda2.png' class='matome_img'
-        alt="ミンダが黒縄様に攻撃され、徐々に大陸になっていく。">
+        alt="ミンダが黒縄様に攻撃され、徐々に大陸になっていく。"/>
       <img src='Assist/Matome/Minda3.png' class='matome_img'
-        alt="様々な思惑が交錯しながら大鹿と黒縄に集結する。">
+        alt="様々な思惑が交錯しながら大鹿と黒縄に集結する。"/>
     </p>
 
     
@@ -334,7 +343,7 @@
   ルストラル・セイバル サナを中心としたストーリーです。
     <p>
       <img src='Assist/Matome/Seibal.png' class='matome_img'
-        alt="サナの復活に際して様々な動きがある。">
+        alt="サナの復活に際して様々な動きがある。"/>
     </p>
 
     
@@ -342,7 +351,7 @@
     風咲を中心としたストーリーです。
     <p>
       <img src='Assist/Matome/Kazasaki.png' class='matome_img'
-        alt="サナの復活に際して様々な動きがある。">
+        alt="サナの復活に際して様々な動きがある。"/>
     </p>
 
     
@@ -351,7 +360,10 @@
   </div>
   
 <!--主要なJSコード-->
-<script src="script.js" defer></script>
+<script src="sources/main.js" defer></script>
+<script src="sources/BTAP_interactive_control.js" defer></script>
+<script src="sources/BTAP_import_and_format.js" defer></script>
+<script src="sources/BTAP_script.js" defer></script>
 
 	<!-- ストーリーのJS -->
 <script src="StoryJS/Kunugi.js" defer></script>
@@ -397,7 +409,4 @@
 <script src="StoryJS/Kazasaki2.js" defer></script>
 
 </body>
-
-<link id="colorscheme" rel="stylesheet" href="Colors/default.css" type="text/css">
-
 </html>
