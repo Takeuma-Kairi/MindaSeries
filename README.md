@@ -15,13 +15,17 @@ HTML, CSS, JavaScriptで構成されています。
 ```
 TanoContSeries-TanoContBTAP/
 ├── index.html    # メインHTMLファイル
-├── style.css    # スタイルシート
-├── script.js    # スクリプト
-├──BTAicon.png    # アイコン画像
-├──大陸シリーズ目次順番    # 保守用
-├──StoryJS/    # ストーリーファイル
-├──Assist/    # ストーリー補助ファイル(添付画像など)
-└── Colors/    # カラースキームファイル
+├── BTAicon.png    # アイコン画像
+├── 大陸シリーズ目次順番    # 保守用
+├── StoryJS/    # ストーリーファイル
+├── Assist/    # ストーリー補助ファイル(添付画像など)
+├── Colors/    # カラースキームファイル
+└── sources/
+        ├── main.js # HTMLの制御とグローバス変数・定数
+        ├── BTAP_interactive_control.js #ユーザー、BTAP間のインタラクティブな処理
+        ├── BTAP_import_and_format.js #ストーリー読み込みやデータ整形などの処理
+        ├── BTAP_script.js #ストーリーファイル内で使う制御用スクリプト
+        └── style.css    # スタイルシート
 ```
 ## ライセンス
 このプロジェクトは [MITライセンス](https://licenses.opensource.jp/MIT/MIT.html) のもとで公開されています。
