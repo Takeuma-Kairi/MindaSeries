@@ -51,15 +51,15 @@
             また「シリーズ」「時系列」は目安であり、厳密な規定はありません。
 		</p>
 
-		<p>表のソート／
-      <label>順序: 
+		<p>
+      <label>ソート順: 
           <select onchange="sort_story_select_table()" id="way_sel" tabindex="0">
             <option value="ascend">昇順</option>
             <option value="descend" selected>降順</option>
           </select>
       </label>
 
-      <label>ルール: 
+      <label>／条件: 
           <select onchange="sort_story_select_table()" id="category_sel" tabindex="0">
             <option value="made" selected>作成順</option>
             <option value="series">シリーズ順</option>
@@ -71,7 +71,7 @@
 		<table class="story_select_table" id="story_select_table">
 			<tr>
 				<th>補助タイトル</th>
-        <th>ファイル名</th>
+				<th>ファイル名</th>
 				<th>シリーズ</th>
         
         <!--↓↓作成順と時系列順は、煩雑になるので表示はしないが、ソート用にデータは書いておく-->
@@ -299,6 +299,11 @@
 
 <!-- まとめ欄 =========================================================-->
   <div class="tabDiv tD_summary" id="tabDiv_summary">
+    <h1>GitHubサイト</h1>
+    <p>
+      <a href="https://github.com/Takeuma-Kairi/TanoContSeries.git" class="system_hl">TanoContBTAP</a>
+    </p>
+	
     <h1>参考資料</h1>
     <p>
       <a href="https://drive.google.com/drive/folders/1nqxwojH-HQ0KTHJ9tkGanrT1ldLg5fmZ?usp=sharing" class="system_hl">Googleドライブでファイルを見る</a>
