@@ -4,7 +4,8 @@ body{
 	color: #FFFFFF;
 }
 
-.modal_abst_ran {
+/* モーダルウインドウ */
+.modalDiv{
   background-color: #293134;
   border-color: #6D84BD;
 }
@@ -42,12 +43,9 @@ header {
 .yajirushi_open{
 	filter:invert(100%);
 }
-/*ハイパーリンクのテキスト*/
-.hl-border{
-  border-bottom: #c1e3ff solid 2px;
-}
 
-.li_sel{
+
+.li_sel, .li_sel a, .hl-border{
 	color:	#c1e3ff;
 }
 

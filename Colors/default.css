@@ -22,15 +22,17 @@ header {
   color: #303030; 
 }
 
+/* モーダルウインドウ */
+.modalDiv{
+  background-color: white;
+  border-color:#474747;
+}
+
 /* ページの選択肢、ハイパーリンクのテキストのフォントカラー */
-.li_sel, .hl-border{
+.li_sel,.li_sel a, .hl-border{
 	color:	#911616;
 }
 
-/*ハイパーリンクのテキストの下線 */
-.hl-border{
-  border-bottom: #911616 solid 1px;
-}
 
 /* 戻る、スキップ、アイテム表示などのツールボタンの色 */
 .tool_button{

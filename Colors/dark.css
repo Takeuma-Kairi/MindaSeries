@@ -4,7 +4,8 @@ body{
 	color: #f1f1f1;
 }
 
-.modal_abst_ran {
+/* モーダルウインドウ */
+.modalDiv{
   background-color: #1e2022;
   border-color: #A88080;
 }
@@ -43,12 +44,8 @@ header {
 }
 
 
-/*ハイパーリンクのテキスト*/
-.hl-border{
-  border-bottom: #e18181 solid 1px;
-}
 
-.li_sel{
+.li_sel, .li_sel a,.hl-border{
 	color:	#e18181;
 }
 

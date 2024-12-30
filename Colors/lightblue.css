@@ -1,4 +1,4 @@
-
+/* 全体 */
 body{
 	background-color: #FFFFFF;
 	color: #0A1C2E;
@@ -28,22 +28,29 @@ header {
 	background-color:  #C1CEE1;
 }
 
-/*ハイパーリンクのテキスト*/
-.hl-border{
-  border-bottom: #03A9F4 solid 2px;
+
+.modalDiv{
+  background-color: white;
+  border-color:#474747;
 }
 
-.li_sel{
+
+/* 選択肢 */
+.li_sel, .li_sel a, .hl-border{
 	color:	#1a66b3;
 }
+
 .tool_button{
   background-color: #8395A7;
 	color: #FAFBFD;
 }
+
 .get_item_alert{
 	background-color: #347D9F;
 	color: #EBEBEB;
 }
+
+/* ストーリー選択テーブル */
 .story_select_table tr{
   border: #123354 solid 1px;
 	color: black;
