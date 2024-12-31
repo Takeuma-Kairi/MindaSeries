@@ -29,7 +29,7 @@ header {
 }
 
 /* ページの選択肢、ハイパーリンクのテキストのフォントカラー */
-.li_sel,.li_sel a, .hl-border{
+.li_sel, .hl-border{
 	color:	#911616;
 }
 
