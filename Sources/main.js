@@ -26,8 +26,8 @@ let save_data_breadcrumbArr = []; //「戻る」用。セーブデータ文字�
 
 //====================
 //# 通常モード、前ページ閲覧モードの文章 ###
-const ToTSUJO= "→通常モード";
-const ToZENPAGE= "→全ページ閲覧モード";
+const ToTSUJO= "→通常モード(<u>a</u>)";
+const ToZENPAGE= "→全ページ閲覧モード(<u>a</u>)";
 
 
 
@@ -128,12 +128,12 @@ function tab_close(){
   
   if(header.style.display == "none"){ //もしリボンが非表示なら、表示させる
     HEADER.style.display = "block";
-    TAB_CLOSE.innerHTML = "↑非表示"; //表示されているので、ボタンは「非表示にさせるならここを押す」旨を表示する     
+    TAB_CLOSE.innerText = "↑非表示"; //表示されているので、ボタンは「非表示にさせるならここを押す」旨を表示する     
     TABDIV_PAGE.className = "tabDiv"; //リボン表示に合わせて配置する
     
   }else{  //もしリボンが表示なら、非表示にさせる
     HEADER.style.display = "none";
-    TAB_CLOSE.innerHTML = "↑ 表示";
+    TAB_CLOSE.innerText = "↑ 表示";
     TABDIV_PAGE.className = "tabDiv tabDiv_without_header";//リボン非表示に合わせて配置する
   }
 
@@ -313,8 +313,8 @@ function password_insert(){
 		ifAuthor= true; //開発者モードであることを示すフラグ
 
 		//全ページ閲覧モード
-		document.getElementById("all_page_mode").textContent= ToZENPAGE;
-		alert(document.getElementById("all_page_mode").textContent);
+		document.getElementById("all_page_mode").innerHTML= ToZENPAGE;
+		alert(document.getElementById("all_page_mode").innerHTML);
 		all_page_mode_change();
 
 	}else{
@@ -372,8 +372,8 @@ function all_page_mode_change(){
   const all_page_view = document.getElementById("all_page_view");
 
   //~~~~~ 全ページ閲覧モードへの移行 ~~~~~~~
-  if (all_page_mode.textContent== ToZENPAGE){
-    all_page_mode.textContent= ToTSUJO;
+  if (all_page_mode.innerHTML== ToZENPAGE){
+    all_page_mode.innerHTML= ToTSUJO;
     all_page_view.style.display ="inline-block";
 
     //ページがロードされているならば、いったんリセットしてセレクト リストを書き直す。さもなくば何もしない
@@ -383,7 +383,7 @@ function all_page_mode_change(){
 
   //~~~~~ 通常モードへの移行 ~~~~~~
   }else{
-    all_page_mode.textContent= ToZENPAGE;
+    all_page_mode.innerHTML= ToZENPAGE;
     all_page_view.style.display ="none";
   }
 }

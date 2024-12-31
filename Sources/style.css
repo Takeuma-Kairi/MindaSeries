@@ -6,6 +6,17 @@ body{
 }
 
 /* =========================================================== */
+
+
+a, a:visited{
+  color: inherit;
+}
+
+.a_without_underline{
+  text-decoration: none;
+}
+
+
 /* タブ選択リボン */
 header {
   text-align: center;

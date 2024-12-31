@@ -145,8 +145,7 @@ function load_data(scr, temp_if_under_writable=false){
 		document.getElementById("button_redo_and_skip").style.display="inline-block";
 
 		let all_page_mode = document.getElementById("all_page_mode");
-		
-		if(all_page_mode.textContent==ToZENPAGE){
+		if(all_page_mode.innerHTML==ToZENPAGE){
 			show_introduction();
 		}else{
 			all_page_sel_clean();
@@ -250,7 +249,8 @@ function OpenInlineTag(scr){
 	ans = ans.replace(/<r>(.+?)#(.+?)<\/r>/g, "<ruby>$1<rp>(</rp><rt>$2</rt><rp>)</rp></ruby>");
 
 	//ハイパーリンクの設定 <hl> → <span>
-	ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, "<a href='#' onclick=\"$2\" class=\"hl-border\">$1</a>");
+	ans = ans.replace(/<hl>(.+?)#(.+?)<\/hl>/g, 
+    "<span  class=\"hl-border\"><a href='#' onclick=\"$2\" class=\"hl-border\" tabindex=\"0\">$1</a></span>");
 
 	return(ans);
 }
@@ -445,17 +445,17 @@ function mapping(mokuji){ //引数mokujiは整数。ページ固有画像名の�
 	function show_introduction(){
     let page=document.getElementById("abst_desc");
     document.getElementById("modalDiv").style.display="inline-block";
-    
+
 		let abst = '<p><span class="page_nam">' + pageArr[page_number]["nam"] + "</span></p>";
 
 		abst += '<div><ul>'
             +'<li class="li_sel">'
-            + '<a href="#" onclick="mov_from_introduction();" tabindex="0">始める</a>'
+            + '<a href="#" onclick="mov_from_introduction();" tabindex="0" accesskey="s">始める(<u>s</u>)</a>'
             + '</li>';
     
     if(if_under_writable){  //下に積み上げて表示が可能なら、そのオプションも追加で表示する
       abst += '<li class="li_sel">'
-            + '<a href="#" onclick="straight_mov_from_introduction();" tabindex="0">下に積み上げて表示</a>'
+            + '<a href="#" onclick="straight_mov_from_introduction();" tabindex="0" accesskey="u">下に積み上げて表示(<u>u</u>)</a>'
             + '</li>';
     }
     
