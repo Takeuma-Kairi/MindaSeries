@@ -1,6 +1,28 @@
 <!doctype html>
 <html lang="ja">
 
+<!--
+ショートカットキーについて。＜Alt+当該キー＞。ブラウザの既定でe、d、ｆは設定しないこと。
+
+モーダルウインドウ：
+  閉じる(X)  
+  始める（S)  start
+  下に積み上げて表示(U)  under
+  
+全ページ閲覧モード：
+  ～への変更(A)  all ←！！このショートカットキーを変更する場合、main.jsのToTSUJOやToZENPAGEも変更すること！！
+  一つ前のページ(H)  hidari
+  一つ後ろのページ(M) migi
+
+セーブデータ：
+  取得（Ｇ） get
+  ロード(L) load
+
+設定のリセット(R)  reset
+テキストでのファイル選択(T) text
+開発者モード(P) password
+-->
+
 <head>
   <!--日本語対応-->
   <meta charset="UTF-8"> 
@@ -207,7 +229,7 @@
 		</p>
 
 		<p>
-			<button onclick="reset_setting()" tabindex="0" accesskey="r"/>設定のリセット(<u>r</u>)</button>
+			<button onclick="reset_setting()" tabindex="0" accesskey="r"/>設定のリセット(<u>R</u>)</button>
 		</p>
     
     <hr>
@@ -218,7 +240,7 @@
     <br>
       ボタンを押すと通常／全ページ閲覧モードを入れ替えます。
     <br>
-    <button id="all_page_mode" onclick="all_page_mode_change()" tabindex="0" accesskey="a">→全ページ閲覧モード(<u>a</u>)</button>
+    <button id="all_page_mode" onclick="all_page_mode_change()" tabindex="0" accesskey="a">→全ページ閲覧モード(<u>A</u>)</button>
 
     
     <hr>
@@ -226,11 +248,11 @@
     <h2>セーブ機能</h2>
     <p>
       <label>セーブデータ取得：
-        <button onclick="write_savefile()" tabindex="0" accesskey="g">セーブデータ取得(<u>g</u>)</button>
+        <button onclick="write_savefile()" tabindex="0" accesskey="g">セーブデータ取得(<u>G</u>)</button>
       </label>
       <br>
       <label>ロード：
-        <button onclick="load_savefile(document.getElementById('t_savedata').value)" tabindex="0" accesskey="l">ロード(<u>l</u>)</button>
+        <button onclick="load_savefile(document.getElementById('t_savedata').value)" tabindex="0" accesskey="l">ロード(<u>L</u>)</button>
       </label>
     </p>
     
@@ -244,14 +266,14 @@
 	
 		<h2>テキスト形式のストーリーファイル読み込み</h2>
       <form id="form_page">
-        <label>ストーリーファイルを選択してください(<u>t</u>)<br>
+        <label>ストーリーファイルを選択してください(<u>T</u>)<br>
             <input id="myfile" type="file" onchange="load_txt_data()" tabindex="0" accesskey="t"/>
         </label>
       </form>
     <hr>
 	
     <h2>開発者モード</h2>
-    <button onclick="password_insert()" tabindex="0" accesskey="p">パスワード入力…(<u>p</u>)</button>
+    <button onclick="password_insert()" tabindex="0" accesskey="p">パスワード入力…(<u>P</u>)</button>
 
 	</div>
 
@@ -280,8 +302,8 @@
         </label>
 
         <!--ボタン 「←」 「→」 -->
-        <button id="all_page_down" onclick="all_page_step(-1);" tabindex="0" accesskey="h">←(<u>h</u>)</button>
-        <button id="all_page_up" onclick="all_page_step(1);" tabindex="0" accesskey="m">→(<u>m</u>)</button>
+        <button id="all_page_down" onclick="all_page_step(-1);" tabindex="0" accesskey="h">←(<u>H</u>)</button>
+        <button id="all_page_up" onclick="all_page_step(1);" tabindex="0" accesskey="m">→(<u>M</u>)</button>
         <!--ストーリーの意義 未定-->
         <div id="all_page_mean">
         </div>

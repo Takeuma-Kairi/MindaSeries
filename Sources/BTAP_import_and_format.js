@@ -450,12 +450,12 @@ function mapping(mokuji){ //引数mokujiは整数。ページ固有画像名の�
 
 		abst += '<div><ul>'
             +'<li class="li_sel">'
-            + '<a href="#" onclick="mov_from_introduction();" tabindex="0" accesskey="s">始める(<u>s</u>)</a>'
+            + '<a href="#" onclick="mov_from_introduction();" tabindex="0" accesskey="s">始める(<u>S</u>)</a>'
             + '</li>';
     
     if(if_under_writable){  //下に積み上げて表示が可能なら、そのオプションも追加で表示する
       abst += '<li class="li_sel">'
-            + '<a href="#" onclick="straight_mov_from_introduction();" tabindex="0" accesskey="u">下に積み上げて表示(<u>u</u>)</a>'
+            + '<a href="#" onclick="straight_mov_from_introduction();" tabindex="0" accesskey="u">下に積み上げて表示(<u>U</u>)</a>'
             + '</li>';
     }
     

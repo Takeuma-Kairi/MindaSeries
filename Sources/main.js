@@ -26,8 +26,8 @@ let save_data_breadcrumbArr = []; //「戻る」用。セーブデータ文字�
 
 //====================
 //# 通常モード、前ページ閲覧モードの文章 ###
-const ToTSUJO= "→通常モード(<u>a</u>)";
-const ToZENPAGE= "→全ページ閲覧モード(<u>a</u>)";
+const ToTSUJO= "→通常モード(<u>A</u>)";
+const ToZENPAGE= "→全ページ閲覧モード(<u>A</u>)";
 
 
 
