@@ -149,6 +149,7 @@ function load_data(scr, temp_if_under_writable=false){
 			show_introduction();
 		}else{
 			all_page_sel_clean();
+			show_introduction();
 		}
 	}
 }

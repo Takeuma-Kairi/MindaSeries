@@ -314,7 +314,7 @@ function password_insert(){
 
 		//全ページ閲覧モード
 		document.getElementById("all_page_mode").innerHTML= ToZENPAGE;
-		alert(document.getElementById("all_page_mode").innerHTML);
+		alert("おかえりなさい");
 		all_page_mode_change();
 
 	}else{
